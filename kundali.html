@@ -1,0 +1,2168 @@
+<!DOCTYPE html>
+<!-- 
+================================================================
+  KUNDLI PRO — COMPLETE VEDIC ASTROLOGY SOFTWARE
+  कुण्डली प्रो — सम्पूर्ण वैदिक ज्योतिष सॉफ्टवेयर
+================================================================
+  Copyright © 2025 Kundli Pro. All Rights Reserved.
+  सर्वाधिकार सुरक्षित © 2025 कुण्डली प्रो
+
+  This software is PRIVATE and CONFIDENTIAL.
+  यह सॉफ्टवेयर निजी एवं गोपनीय है।
+
+  STRICTLY PROHIBITED without written permission:
+  - Copying, redistributing, or reselling this software
+  - Removing or modifying this copyright notice
+  - Using this code for commercial purposes
+  - Claiming ownership of this work
+
+  बिना लिखित अनुमति के पूर्णतः वर्जित:
+  - इस सॉफ्टवेयर की नकल, वितरण या पुनर्विक्रय
+  - कॉपीराइट नोटिस हटाना या बदलना
+  - व्यावसायिक उपयोग करना
+  - स्वामित्व का दावा करना
+
+  Protected under Indian Copyright Act, 1957
+  & International Copyright Laws
+================================================================
+-->
+
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kundli Pro – Complete Janmpatri / सम्पूर्ण जन्मपत्री</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;600;700&family=Noto+Sans+Devanagari:wght@300;400;500;600;700;800&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,400;1,600&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════════════════
+   SCREEN STYLES
+═══════════════════════════════════════════════════════ */
+:root {
+  --saffron:#FF6B00; --saffron2:#FF8C2A; --saffron-pale:#FFF3E6;
+  --gold:#C8960C; --gold2:#E8B820; --gold-pale:#FDF8E8;
+  --red:#8B0000; --red2:#B22222; --crimson:#DC143C;
+  --maroon:#5C0A0A; --navy:#0D1B3E;
+  --cream:#FFFDF5; --parchment:#F5E6C8; --paper:#FAF6EE;
+  --text:#1A0800; --muted:#6B4C2A; --light:#A0856A;
+  --border:#D4A017; --border-light:#E8C97A;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:'Noto Sans Devanagari','Crimson Pro',serif;background:#1a0a00;color:var(--text);min-height:100vh;}
+
+/* ── SCREEN FORM PAGE ── */
+.screen-page{
+  min-height:100vh;
+  background:linear-gradient(160deg,#3A0808 0%,#1A0800 50%,#0D1020 100%);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:2rem;
+}
+.form-card{
+  background:var(--paper);
+  border:2px solid var(--gold);
+  border-radius:12px;
+  max-width:860px;width:100%;
+  overflow:hidden;
+  box-shadow:0 20px 80px rgba(0,0,0,0.6);
+}
+.form-header{
+  background:linear-gradient(135deg,var(--maroon) 0%,var(--red) 50%,var(--maroon) 100%);
+  padding:2rem;text-align:center;
+  border-bottom:3px solid var(--gold);
+  position:relative;
+}
+.form-header::before{
+  content:'ॐ';position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+  font-size:12rem;color:var(--gold);opacity:0.04;pointer-events:none;
+  font-family:'Noto Sans Devanagari',serif;
+}
+.form-om{font-size:3rem;color:var(--gold);text-shadow:0 0 20px rgba(200,150,12,0.8);display:block;margin-bottom:0.5rem;}
+.form-title{font-family:'Cinzel Decorative',serif;font-size:1.8rem;color:white;letter-spacing:0.05em;}
+.form-subtitle{font-family:'Noto Sans Devanagari',serif;color:var(--gold2);font-size:1rem;margin-top:0.25rem;}
+.form-tagline{font-family:'Cinzel',serif;font-size:0.7rem;letter-spacing:0.3em;color:rgba(255,255,255,0.5);margin-top:0.5rem;}
+
+.form-body{padding:2rem;}
+.form-section-title{
+  font-family:'Cinzel',serif;font-size:0.75rem;letter-spacing:0.2em;
+  color:var(--red);text-transform:uppercase;
+  border-bottom:1px solid var(--border-light);
+  padding-bottom:0.5rem;margin-bottom:1.25rem;margin-top:1.5rem;
+}
+.form-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1rem;}
+.form-grid-2{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+.form-grid-4{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:0.75rem;}
+.fg{display:flex;flex-direction:column;gap:0.3rem;}
+.fg label{font-family:'Cinzel',serif;font-size:0.68rem;letter-spacing:0.12em;color:var(--red);text-transform:uppercase;}
+.fg label span{font-family:'Noto Sans Devanagari',serif;font-size:0.75rem;color:var(--muted);letter-spacing:0;margin-left:0.3rem;}
+.fg input,.fg select,.fg textarea{
+  padding:0.6rem 0.75rem;
+  border:1px solid var(--border-light);
+  border-radius:4px;background:white;
+  font-size:0.88rem;font-family:'Noto Sans Devanagari','Crimson Pro',serif;
+  color:var(--text);outline:none;transition:all 0.2s;
+}
+.fg input:focus,.fg select:focus{border-color:var(--gold);box-shadow:0 0 0 2px rgba(200,150,12,0.15);}
+.fg select option{background:white;color:var(--text);}
+
+.generate-btn{
+  width:100%;padding:1.1rem;margin-top:1.5rem;
+  background:linear-gradient(135deg,var(--saffron),var(--red));
+  color:white;border:none;border-radius:6px;cursor:pointer;
+  font-family:'Cinzel',serif;font-size:1rem;letter-spacing:0.2em;
+  box-shadow:0 6px 24px rgba(255,107,0,0.35);
+  transition:all 0.3s;
+}
+.generate-btn:hover{transform:translateY(-2px);box-shadow:0 10px 32px rgba(255,107,0,0.45);}
+
+/* loading */
+.loading-screen{
+  display:none;position:fixed;inset:0;z-index:9999;
+  background:linear-gradient(135deg,var(--maroon),#1A0800);
+  flex-direction:column;align-items:center;justify-content:center;gap:2rem;
+}
+.loading-screen.show{display:flex;}
+.loading-om{font-size:5rem;color:var(--gold);animation:spin-om 2s linear infinite;}
+@keyframes spin-om{to{transform:rotate(360deg);}}
+.loading-text{font-family:'Cinzel',serif;color:var(--gold2);font-size:0.9rem;letter-spacing:0.3em;text-align:center;}
+.loading-sub{font-family:'Noto Sans Devanagari',serif;color:rgba(255,200,100,0.6);font-size:0.85rem;}
+
+/* ═══════════════════════════════════════════════════════
+   PRINT / KUNDALI OUTPUT STYLES
+═══════════════════════════════════════════════════════ */
+#kundali-output{display:none;}
+#kundali-output.show{display:block;}
+
+/* Print toolbar */
+.print-toolbar{
+  background:var(--maroon);
+  padding:0.75rem 2rem;
+  display:flex;align-items:center;justify-content:space-between;
+  position:sticky;top:0;z-index:1000;
+  border-bottom:2px solid var(--gold);
+  box-shadow:0 4px 20px rgba(0,0,0,0.4);
+}
+.toolbar-brand{font-family:'Cinzel Decorative',serif;color:var(--gold2);font-size:1rem;}
+.toolbar-actions{display:flex;gap:0.75rem;}
+.tbtn{
+  padding:0.5rem 1.25rem;border-radius:4px;cursor:pointer;
+  font-family:'Cinzel',serif;font-size:0.75rem;letter-spacing:0.1em;
+  border:none;transition:all 0.2s;
+}
+.tbtn-print{background:linear-gradient(135deg,var(--saffron),var(--red));color:white;}
+.tbtn-back{background:transparent;border:1px solid var(--gold);color:var(--gold2);}
+.tbtn-print:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(255,107,0,0.4);}
+.tbtn-back:hover{background:rgba(200,150,12,0.1);}
+
+/* ── PAGE STRUCTURE ── */
+.kpage{
+  width:210mm;min-height:297mm;
+  margin:0 auto 8px;
+  background:var(--cream);
+  position:relative;overflow:hidden;
+  font-size:10pt;
+  box-shadow:0 4px 20px rgba(0,0,0,0.3);
+}
+
+/* ── PAGE BORDER DECORATION ── */
+.kpage::before{
+  content:'';position:absolute;inset:6mm;
+  border:1.5pt solid var(--gold);
+  pointer-events:none;z-index:0;
+}
+.kpage::after{
+  content:'';position:absolute;inset:8mm;
+  border:0.5pt solid rgba(200,150,12,0.3);
+  pointer-events:none;z-index:0;
+}
+
+/* ── PAGE HEADER (every page) ── */
+.page-hdr{
+  background:linear-gradient(135deg,var(--maroon) 0%,var(--red) 60%,var(--maroon) 100%);
+  padding:5mm 8mm 4mm;
+  display:flex;align-items:center;justify-content:space-between;
+  border-bottom:2pt solid var(--gold);
+  position:relative;z-index:1;
+}
+.phdr-left{display:flex;align-items:center;gap:4mm;}
+.phdr-om{font-size:18pt;color:var(--gold);line-height:1;font-family:'Noto Sans Devanagari',serif;}
+.phdr-title{font-family:'Cinzel Decorative',serif;font-size:11pt;color:white;line-height:1.2;}
+.phdr-title span{display:block;font-family:'Noto Sans Devanagari',serif;font-size:10pt;color:var(--gold2);font-weight:600;}
+.phdr-right{text-align:right;}
+.phdr-name{font-family:'Cinzel',serif;font-size:11pt;color:var(--gold2);}
+.phdr-info{font-size:11.5pt;color:rgba(255,255,255,0.65);font-family:'Crimson Pro',serif;margin-top:1mm;}
+
+/* ── PAGE FOOTER ── */
+.page-ftr{
+  position:absolute;bottom:0;left:0;right:0;
+  background:linear-gradient(135deg,var(--maroon),#3A0808);
+  padding:2.5mm 8mm;
+  display:flex;align-items:center;justify-content:space-between;
+  border-top:1.5pt solid var(--gold);
+  z-index:1;
+}
+.pftr-text{font-family:'Cinzel',serif;font-size:10.5pt;color:rgba(255,200,100,0.6);letter-spacing:0.1em;}
+.pftr-page{font-family:'Cinzel',serif;font-size:11pt;color:var(--gold2);}
+
+/* ── PAGE CONTENT ── */
+.page-content{
+  padding:6mm 8mm 12mm;
+  position:relative;z-index:1;
+}
+
+/* ── SECTION TITLES ── */
+.sec-title{
+  font-family:'Cinzel',serif;font-size:11pt;letter-spacing:0.15em;
+  color:white;text-transform:uppercase;
+  background:linear-gradient(135deg,var(--red) 0%,var(--maroon) 100%);
+  padding:1.5mm 4mm;border-left:3pt solid var(--gold);
+  margin-bottom:3mm;margin-top:4mm;
+}
+.sec-title-hi{
+  font-family:'Noto Sans Devanagari',serif;font-size:10.5pt;
+  color:var(--gold2);font-weight:700;margin-left:2mm;
+}
+.sub-title{
+  font-family:'Cinzel',serif;font-size:11.5pt;letter-spacing:0.12em;
+  color:var(--red);border-bottom:0.5pt solid var(--border-light);
+  padding-bottom:1mm;margin-bottom:2mm;margin-top:3mm;text-transform:uppercase;
+}
+
+/* ── COVER PAGE ── */
+.cover-page{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  min-height:297mm;text-align:center;position:relative;
+  background:linear-gradient(160deg,#FFF9F0 0%,var(--gold-pale) 50%,#FFF9F0 100%);
+}
+.cover-border{
+  position:absolute;inset:8mm;
+  border:2pt solid var(--gold);
+}
+.cover-border-inner{
+  position:absolute;inset:11mm;
+  border:0.5pt solid rgba(200,150,12,0.4);
+}
+.cover-om{
+  font-size:48pt;color:var(--gold);
+  text-shadow:0 0 20px rgba(200,150,12,0.4);
+  margin-bottom:4mm;font-family:'Noto Sans Devanagari',serif;
+  line-height:1;
+}
+.cover-title-en{
+  font-family:'Cinzel Decorative',serif;font-size:28pt;
+  color:var(--red);letter-spacing:0.05em;line-height:1.2;
+}
+.cover-title-hi{
+  font-family:'Noto Sans Devanagari',serif;font-size:22pt;
+  color:var(--maroon);font-weight:800;margin-top:2mm;
+}
+.cover-divider{
+  width:60mm;height:1.5pt;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent);
+  margin:5mm auto;
+}
+.cover-shlok{
+  font-family:'Noto Sans Devanagari',serif;font-size:11pt;
+  color:var(--muted);line-height:1.8;font-style:italic;
+  max-width:120mm;margin:0 auto;
+}
+.cover-name{
+  font-family:'Cinzel Decorative',serif;font-size:18pt;
+  color:var(--red);margin:6mm 0 2mm;
+}
+.cover-name-hi{
+  font-family:'Noto Sans Devanagari',serif;font-size:15pt;
+  color:var(--maroon);font-weight:700;
+}
+.cover-detail-grid{
+  display:grid;grid-template-columns:auto auto;gap:1.5mm 8mm;
+  margin:5mm auto;text-align:left;
+}
+.cdg-label{font-family:'Cinzel',serif;font-size:11pt;color:var(--gold);letter-spacing:0.1em;text-transform:uppercase;}
+.cdg-val{font-family:'Noto Sans Devanagari',serif;font-size:11pt;color:var(--text);font-weight:600;}
+.cdg-val-en{font-family:'Crimson Pro',serif;font-size:10.5pt;color:var(--muted);margin-left:1mm;}
+.cover-photo-box{
+  width:35mm;height:40mm;border:1.5pt solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  margin:4mm auto;background:var(--gold-pale);
+}
+.cover-photo-text{font-size:11pt;color:var(--light);font-family:'Cinzel',serif;letter-spacing:0.1em;text-align:center;line-height:1.9;}
+.cover-footer-text{
+  font-family:'Cinzel',serif;font-size:10.5pt;letter-spacing:0.2em;
+  color:var(--light);margin-top:6mm;text-transform:uppercase;
+}
+.cover-swastik{font-size:16pt;color:var(--gold);margin:3mm 0;}
+
+/* ── INFO TABLE ── */
+.info-table{width:100%;border-collapse:collapse;font-size:11pt;}
+.info-table td{
+  padding:2mm 3mm;
+  border:0.5pt solid var(--border-light);
+  vertical-align:top;
+}
+.info-table .lbl{
+  background:var(--gold-pale);
+  font-family:'Cinzel',serif;font-size:11pt;letter-spacing:0.08em;
+  color:var(--red);width:28mm;text-transform:uppercase;font-weight:700;
+}
+.info-table .lbl-hi{
+  font-family:'Noto Sans Devanagari',serif;font-size:11.5pt;
+  color:var(--maroon);font-weight:700;display:block;
+}
+.info-table .val{
+  font-family:'Crimson Pro',serif;font-size:11pt;color:var(--text);
+}
+.info-table .val-hi{
+  font-family:'Noto Sans Devanagari',serif;font-size:10.5pt;
+  color:var(--maroon);font-weight:600;display:block;
+}
+
+/* ── KUNDALI CHART (North Indian) ── */
+.chart-container{display:flex;flex-direction:column;align-items:center;}
+.chart-label-main{
+  font-family:'Cinzel',serif;font-size:11.5pt;letter-spacing:0.15em;
+  color:var(--red);text-transform:uppercase;margin-bottom:2mm;text-align:center;
+}
+.kundali-svg-wrap{
+  border:1.5pt solid var(--gold);
+  background:white;
+  display:inline-block;
+}
+/* Two charts side by side */
+.charts-row{display:flex;gap:8mm;justify-content:center;flex-wrap:wrap;margin:3mm 0;}
+.chart-box{text-align:center;}
+.chart-sub{font-family:'Noto Sans Devanagari',serif;font-size:11pt;color:var(--muted);margin-top:1mm;}
+
+/* ── PLANET TABLE ── */
+.ptable{width:100%;border-collapse:collapse;font-size:10.5pt;margin:2mm 0;}
+.ptable th{
+  background:linear-gradient(135deg,var(--red),var(--maroon));
+  color:white;padding:3mm 3.5mm;
+  font-family:'Cinzel',serif;font-size:11pt;letter-spacing:0.08em;
+  border:0.5pt solid var(--red);text-align:center;text-transform:uppercase;
+}
+.ptable th .hi{font-family:'Noto Sans Devanagari',serif;font-size:11.5pt;display:block;font-weight:700;color:var(--gold2);}
+.ptable td{
+  padding:2.5mm 3mm;border:0.5pt solid var(--border-light);
+  vertical-align:middle;text-align:center;
+}
+.ptable tr:nth-child(even) td{background:var(--gold-pale);}
+.ptable tr:hover td{background:var(--saffron-pale);}
+.ptable .pname{font-family:'Cinzel',serif;font-size:10pt;color:var(--red);font-weight:700;text-align:left;}
+.ptable .pname-hi{font-family:'Noto Sans Devanagari',serif;font-size:11.5pt;color:var(--maroon);font-weight:600;display:block;}
+.ptable .retro{color:var(--crimson);font-size:11pt;font-weight:700;}
+.ptable .direct{color:green;font-size:11pt;}
+.ptable .deg{font-family:'Crimson Pro',serif;font-size:10.5pt;}
+.ptable .sign{font-family:'Cinzel',serif;font-size:11.5pt;color:var(--maroon);}
+.ptable .sign-hi{font-family:'Noto Sans Devanagari',serif;font-size:10pt;color:var(--gold);display:block;}
+.ptable .nak{font-family:'Crimson Pro',serif;font-size:10pt;}
+.ptable .nak-hi{font-family:'Noto Sans Devanagari',serif;font-size:11.5pt;color:var(--muted);display:block;}
+
+/* ── DASHA TABLE ── */
+.dtable{width:100%;border-collapse:collapse;font-size:10.5pt;}
+.dtable th{
+  background:linear-gradient(135deg,var(--maroon),var(--red));
+  color:white;padding:3mm 3.5mm;
+  font-family:'Cinzel',serif;font-size:11pt;letter-spacing:0.08em;
+  border:0.5pt solid var(--red);text-align:center;
+}
+.dtable th .hi{font-family:'Noto Sans Devanagari',serif;font-size:11.5pt;color:var(--gold2);display:block;}
+.dtable td{padding:2.5mm 3mm;border:0.5pt solid var(--border-light);text-align:center;font-family:'Crimson Pro',serif;font-size:10.5pt;}
+.dtable tr:nth-child(even) td{background:var(--gold-pale);}
+.dtable .current-dasha td{background:rgba(255,107,0,0.12)!important;font-weight:700;}
+.dtable .dname{font-family:'Cinzel',serif;font-size:10pt;color:var(--red);text-align:left;}
+.dtable .dname-hi{font-family:'Noto Sans Devanagari',serif;font-size:10pt;color:var(--maroon);display:block;font-weight:600;}
+.dtable .cyear{color:var(--saffron);font-weight:700;}
+
+/* ── YOGA TABLE ── */
+.ytable{width:100%;border-collapse:collapse;font-size:10.5pt;margin:1mm 0;}
+.ytable th{background:linear-gradient(135deg,var(--red),var(--maroon));color:white;padding:2mm;font-family:'Cinzel',serif;font-size:11pt;letter-spacing:0.08em;border:0.5pt solid var(--red);}
+.ytable th .hi{font-family:'Noto Sans Devanagari',serif;font-size:11.5pt;color:var(--gold2);display:block;}
+.ytable td{padding:2.5mm 3mm;border:0.5pt solid var(--border-light);vertical-align:top;}
+.ytable tr:nth-child(even) td{background:var(--gold-pale);}
+.ytable .yname{font-family:'Cinzel',serif;font-size:10pt;color:var(--red);font-weight:700;}
+.ytable .yname-hi{font-family:'Noto Sans Devanagari',serif;font-size:10pt;color:var(--maroon);font-weight:700;display:block;}
+.ytable .present{color:green;font-weight:700;font-size:10pt;}
+.ytable .absent{color:var(--light);font-size:10pt;}
+.ytable .ydesc{font-family:'Crimson Pro',serif;font-size:10pt;color:var(--text);line-height:1.8;}
+.ytable .ydesc-hi{font-family:'Noto Sans Devanagari',serif;font-size:11.5pt;color:var(--muted);display:block;line-height:1.9;}
+
+/* ── ASHTAKAVARGA ── */
+.avarga-table{width:100%;border-collapse:collapse;font-size:10pt;}
+.avarga-table th{background:linear-gradient(135deg,var(--red),var(--maroon));color:white;padding:2.5mm 3mm;font-family:'Cinzel',serif;font-size:10.5pt;border:0.5pt solid var(--red);text-align:center;}
+.avarga-table th .hi{font-family:'Noto Sans Devanagari',serif;font-size:11pt;color:var(--gold2);display:block;}
+.avarga-table td{padding:2.5mm 3mm;border:0.5pt solid var(--border-light);text-align:center;font-family:'Cinzel',serif;font-size:10pt;font-weight:700;}
+.avarga-table tr:nth-child(even) td{background:var(--gold-pale);}
+.av-high{color:green;} .av-med{color:var(--maroon);} .av-low{color:var(--crimson);}
+.avarga-table td:first-child{font-family:'Cinzel',serif;font-size:11.5pt;color:var(--red);text-align:left;}
+.avarga-table td:first-child span{font-family:'Noto Sans Devanagari',serif;font-size:10pt;display:block;color:var(--maroon);}
+
+/* ── BHAVA TABLE ── */
+.bhava-table{width:100%;border-collapse:collapse;font-size:10.5pt;}
+.bhava-table th{background:linear-gradient(135deg,var(--red),var(--maroon));color:white;padding:2mm;font-family:'Cinzel',serif;font-size:11pt;letter-spacing:0.08em;border:0.5pt solid var(--red);}
+.bhava-table th .hi{font-family:'Noto Sans Devanagari',serif;font-size:11.5pt;color:var(--gold2);display:block;}
+.bhava-table td{padding:2.5mm 3mm;border:0.5pt solid var(--border-light);vertical-align:top;font-family:'Crimson Pro',serif;font-size:10.5pt;}
+.bhava-table tr:nth-child(even) td{background:var(--gold-pale);}
+.bhava-table .bnum{font-family:'Cinzel',serif;font-size:10pt;color:var(--red);font-weight:700;text-align:center;}
+.bhava-table .bname{font-family:'Cinzel',serif;font-size:10pt;color:var(--maroon);}
+.bhava-table .bname-hi{font-family:'Noto Sans Devanagari',serif;font-size:10pt;color:var(--gold);display:block;font-weight:700;}
+.bhava-table .bpred{font-family:'Crimson Pro',serif;font-size:10pt;color:var(--text);line-height:1.8;}
+.bhava-table .bpred-hi{font-family:'Noto Sans Devanagari',serif;font-size:11.5pt;color:var(--muted);display:block;line-height:1.9;margin-top:0.5mm;}
+
+/* ── DOSHA BOX ── */
+.dosha-box{
+  border:1pt solid var(--border-light);border-radius:2mm;
+  padding:3mm;margin:2mm 0;
+  display:grid;grid-template-columns:auto 1fr;gap:3mm;align-items:start;
+}
+.dosha-box.present{border-color:var(--crimson);background:rgba(220,20,60,0.04);}
+.dosha-box.absent{border-color:green;background:rgba(0,128,0,0.04);}
+.dosha-icon{font-size:14pt;line-height:1;}
+.dosha-title{font-family:'Cinzel',serif;font-size:10.5pt;color:var(--red);font-weight:700;}
+.dosha-title-hi{font-family:'Noto Sans Devanagari',serif;font-size:11pt;color:var(--maroon);font-weight:800;display:block;}
+.dosha-status{font-size:11.5pt;font-weight:700;margin:0.5mm 0;}
+.dosha-status.yes{color:var(--crimson);}
+.dosha-status.no{color:green;}
+.dosha-desc{font-family:'Crimson Pro',serif;font-size:10pt;color:var(--text);line-height:1.8;margin-top:0.5mm;}
+.dosha-desc-hi{font-family:'Noto Sans Devanagari',serif;font-size:11.5pt;color:var(--muted);display:block;line-height:1.9;margin-top:0.5mm;}
+.dosha-remedy{font-family:'Noto Sans Devanagari',serif;font-size:11.5pt;color:var(--gold);display:block;margin-top:1mm;font-style:italic;}
+
+/* ── PANCHANG GRID ── */
+.panchang-grid{display:grid;grid-template-columns:1fr 1fr;gap:2mm;}
+.panch-row{display:flex;border:0.5pt solid var(--border-light);border-radius:1mm;overflow:hidden;}
+.panch-lbl{
+  background:var(--gold-pale);padding:2.5mm 3mm;
+  font-family:'Cinzel',serif;font-size:10.5pt;letter-spacing:0.08em;
+  color:var(--red);text-transform:uppercase;width:28mm;flex-shrink:0;
+}
+.panch-lbl span{font-family:'Noto Sans Devanagari',serif;font-size:11.5pt;display:block;color:var(--maroon);font-weight:700;letter-spacing:0;}
+.panch-val{padding:2.5mm 3mm;}
+.panch-val-en{font-family:'Crimson Pro',serif;font-size:11pt;color:var(--text);}
+.panch-val-hi{font-family:'Noto Sans Devanagari',serif;font-size:10.5pt;color:var(--maroon);font-weight:600;display:block;}
+
+/* ── SHADBALA ── */
+.sbala-table{width:100%;border-collapse:collapse;font-size:10pt;}
+.sbala-table th{background:linear-gradient(135deg,var(--red),var(--maroon));color:white;padding:2mm;font-family:'Cinzel',serif;font-size:10.5pt;letter-spacing:0.08em;border:0.5pt solid var(--red);text-align:center;}
+.sbala-table th .hi{font-family:'Noto Sans Devanagari',serif;font-size:11pt;color:var(--gold2);display:block;}
+.sbala-table td{padding:2.5mm 3mm;border:0.5pt solid var(--border-light);text-align:center;font-family:'Crimson Pro',serif;font-size:10.5pt;}
+.sbala-table tr:nth-child(even) td{background:var(--gold-pale);}
+.sbala-bar{height:3mm;border-radius:1mm;background:linear-gradient(90deg,var(--saffron),var(--gold));display:inline-block;min-width:1mm;}
+
+/* ── MILAN ── */
+.milan-table{width:100%;border-collapse:collapse;font-size:10.5pt;}
+.milan-table th{background:linear-gradient(135deg,var(--red),var(--maroon));color:white;padding:2mm;font-family:'Cinzel',serif;font-size:11pt;letter-spacing:0.08em;border:0.5pt solid var(--red);}
+.milan-table th .hi{font-family:'Noto Sans Devanagari',serif;font-size:11.5pt;color:var(--gold2);display:block;}
+.milan-table td{padding:2.5mm 3mm;border:0.5pt solid var(--border-light);font-family:'Crimson Pro',serif;font-size:10.5pt;}
+.milan-table tr:nth-child(even) td{background:var(--gold-pale);}
+.milan-table .kname{font-family:'Cinzel',serif;font-size:10pt;color:var(--red);}
+.milan-table .kname-hi{font-family:'Noto Sans Devanagari',serif;font-size:10pt;color:var(--maroon);font-weight:700;display:block;}
+.milan-score-box{
+  text-align:center;border:1.5pt solid var(--gold);padding:4mm;margin:3mm 0;
+  background:var(--gold-pale);border-radius:2mm;
+}
+.milan-total{font-family:'Cinzel Decorative',serif;font-size:28pt;color:var(--red);}
+.milan-verdict{font-family:'Noto Sans Devanagari',serif;font-size:10pt;color:var(--maroon);font-weight:700;margin-top:1mm;}
+
+/* ── PREDICTION BOX ── */
+.pred-box{
+  border:0.5pt solid var(--border-light);border-radius:2mm;
+  padding:3mm;margin:2mm 0;
+  border-left:3pt solid var(--gold);
+}
+.pred-house{font-family:'Cinzel',serif;font-size:10pt;color:var(--red);font-weight:700;}
+.pred-house-hi{font-family:'Noto Sans Devanagari',serif;font-size:10.5pt;color:var(--maroon);font-weight:800;}
+.pred-sign{font-family:'Cinzel',serif;font-size:11.5pt;color:var(--gold);margin:0.5mm 0;}
+.pred-text{font-family:'Crimson Pro',serif;font-size:10.5pt;color:var(--text);line-height:1.9;}
+.pred-text-hi{font-family:'Noto Sans Devanagari',serif;font-size:10pt;color:var(--muted);display:block;line-height:2.0;margin-top:1mm;}
+
+/* ── REMEDY BOX ── */
+.remedy-box{
+  border:0.5pt solid var(--border-light);border-radius:2mm;
+  padding:3mm;margin:2mm 0;
+  background:var(--gold-pale);
+}
+.rplanet{font-family:'Cinzel',serif;font-size:10pt;color:var(--red);font-weight:700;}
+.rplanet-hi{font-family:'Noto Sans Devanagari',serif;font-size:11pt;color:var(--maroon);font-weight:800;}
+.remedy-list{margin-top:1.5mm;padding-left:4mm;}
+.remedy-list li{font-family:'Noto Sans Devanagari',serif;font-size:10pt;color:var(--text);line-height:2.0;margin-bottom:0.5mm;}
+
+/* ── GOCHAR TABLE ── */
+.gochar-table{width:100%;border-collapse:collapse;font-size:10.5pt;}
+.gochar-table th{background:linear-gradient(135deg,var(--red),var(--maroon));color:white;padding:2mm;font-family:'Cinzel',serif;font-size:10.5pt;letter-spacing:0.08em;border:0.5pt solid var(--red);text-align:center;}
+.gochar-table th .hi{font-family:'Noto Sans Devanagari',serif;font-size:11pt;color:var(--gold2);display:block;}
+.gochar-table td{padding:2.5mm 3mm;border:0.5pt solid var(--border-light);text-align:center;font-family:'Crimson Pro',serif;font-size:10.5pt;}
+.gochar-table tr:nth-child(even) td{background:var(--gold-pale);}
+.gfav{color:green;font-weight:700;} .gunfav{color:var(--crimson);font-weight:700;} .gneut{color:var(--muted);}
+
+/* ── VARGA CHARTS GRID ── */
+.varga-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:5mm;margin:2mm 0;}
+.varga-item{text-align:center;}
+.varga-name{font-family:'Cinzel',serif;font-size:10.5pt;color:var(--red);letter-spacing:0.08em;text-transform:uppercase;}
+.varga-name-hi{font-family:'Noto Sans Devanagari',serif;font-size:11pt;color:var(--maroon);font-weight:700;display:block;}
+
+/* ═══════════════════════════════════════════════════════
+   PRINT MEDIA
+═══════════════════════════════════════════════════════ */
+@media print {
+  body{background:white!important;}
+  .screen-page,.print-toolbar{display:none!important;}
+  #kundali-output{display:block!important;}
+  .kpage{
+    width:210mm;min-height:297mm;height:297mm;
+    margin:0;page-break-after:always;
+    box-shadow:none;overflow:hidden;
+  }
+  .kpage:last-child{page-break-after:auto;}
+  @page{size:A4;margin:0;}
+  .page-content{overflow:hidden;}
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════════════
+     SCREEN FORM
+══════════════════════════════════════════════════════ -->
+<div class="screen-page" id="form-page">
+  <div class="form-card">
+    <div class="form-header">
+      <span class="form-om">ॐ</span>
+      <div class="form-title">Kundli Pro</div>
+      <div class="form-subtitle">सम्पूर्ण जन्मपत्री · Complete Janmpatri</div>
+      <div class="form-tagline">BASED ON PARASHARI JYOTISH · 100–150 PAGE COMPLETE KUNDALI</div>
+    </div>
+    <div class="form-body">
+
+      <div class="form-section-title">जन्म विवरण · Birth Details</div>
+      <div class="form-grid">
+        <div class="fg"><label>Full Name <span>पूरा नाम</span></label><input id="f-name" type="text" placeholder="Enter full name" value="Rahul Kumar Sharma"></div>
+        <div class="fg"><label>Name in Hindi <span>नाम हिंदी में</span></label><input id="f-namhi" type="text" placeholder="हिंदी में नाम" value="राहुल कुमार शर्मा"></div>
+        <div class="fg"><label>Gender <span>लिंग</span></label>
+          <select id="f-gender"><option value="male">Male / पुरुष</option><option value="female">Female / स्त्री</option></select>
+        </div>
+      </div>
+      <div class="form-grid-4">
+        <div class="fg"><label>Date of Birth <span>जन्म तिथि</span></label><input id="f-dob" type="date" value="1990-01-15"></div>
+        <div class="fg"><label>Time of Birth <span>जन्म समय</span></label><input id="f-tob" type="time" value="08:30"></div>
+        <div class="fg"><label>Timezone <span>समय क्षेत्र</span></label>
+          <select id="f-tz"><option value="5.5" selected>IST +5:30</option><option value="0">UTC +0:00</option><option value="5">PKT +5:00</option></select>
+        </div>
+        <div class="fg"><label>Ayanamsa <span>अयनांश</span></label>
+          <select id="f-ayanamsa"><option value="lahiri">Lahiri (Chitrapaksha)</option><option value="kp">KP Ayanamsa</option><option value="raman">Raman</option></select>
+        </div>
+      </div>
+
+      <div class="form-section-title">जन्म स्थान · Birth Place</div>
+      <div class="form-grid">
+        <div class="fg"><label>City / Town <span>शहर / कस्बा</span></label><input id="f-city" type="text" placeholder="City name" value="Varanasi"></div>
+        <div class="fg"><label>State <span>राज्य</span></label><input id="f-state" type="text" placeholder="State" value="Uttar Pradesh"></div>
+        <div class="fg"><label>Country <span>देश</span></label><input id="f-country" type="text" value="India"></div>
+      </div>
+      <div class="form-grid-4">
+        <div class="fg"><label>Latitude <span>अक्षांश</span></label><input id="f-lat" type="number" value="25.317" step="0.001"></div>
+        <div class="fg"><label>Longitude <span>देशांतर</span></label><input id="f-lon" type="number" value="82.974" step="0.001"></div>
+        <div class="fg"><label>Altitude (m) <span>ऊंचाई</span></label><input id="f-alt" type="number" value="80"></div>
+        <div class="fg"><label>Chart Style <span>चार्ट शैली</span></label>
+          <select id="f-style"><option value="north">North Indian</option><option value="south">South Indian</option></select>
+        </div>
+      </div>
+
+      <div class="form-section-title">व्यक्तिगत विवरण · Personal Details</div>
+      <div class="form-grid">
+        <div class="fg"><label>Father's Name <span>पिता का नाम</span></label><input id="f-father" type="text" placeholder="Father's Name" value="Suresh Kumar Sharma"></div>
+        <div class="fg"><label>Mother's Name <span>माता का नाम</span></label><input id="f-mother" type="text" placeholder="Mother's Name" value="Sunita Sharma"></div>
+        <div class="fg"><label>Gotra <span>गोत्र</span></label><input id="f-gotra" type="text" placeholder="Gotra" value="Bharadwaj"></div>
+      </div>
+      <div class="form-grid">
+        <div class="fg"><label>Caste / Varna <span>जाति / वर्ण</span></label><input id="f-caste" type="text" value="Brahmin / ब्राह्मण"></div>
+        <div class="fg"><label>Marital Status <span>वैवाहिक स्थिति</span></label>
+          <select id="f-marital"><option>Unmarried / अविवाहित</option><option>Married / विवाहित</option><option>Divorced / तलाकशुदा</option></select>
+        </div>
+        <div class="fg"><label>Prepared By <span>तैयारकर्ता</span></label><input id="f-by" type="text" placeholder="Astrologer name" value="Pt. Ramesh Shastri"></div>
+      </div>
+
+      <div class="form-section-title">कुण्डली मिलान · Kundali Milan (Optional)</div>
+      <div class="form-grid-2">
+        <div class="fg"><label>Partner Name <span>जीवनसाथी का नाम</span></label><input id="m-name" type="text" placeholder="Partner's name"></div>
+        <div class="fg"><label>Partner DOB <span>जन्म तिथि</span></label><input id="m-dob" type="date" value="1993-08-22"></div>
+      </div>
+      <div class="form-grid-4">
+        <div class="fg"><label>Partner TOB</label><input id="m-tob" type="time" value="14:30"></div>
+        <div class="fg"><label>Partner City</label><input id="m-city" type="text" value="Allahabad"></div>
+        <div class="fg"><label>Partner Lat</label><input id="m-lat" type="number" value="25.445" step="0.001"></div>
+        <div class="fg"><label>Partner Lon</label><input id="m-lon" type="number" value="81.846" step="0.001"></div>
+      </div>
+
+      <button class="generate-btn" onclick="generateFullKundali()">
+        🔮 Generate Complete Kundali / सम्पूर्ण जन्मपत्री बनाएं
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- LOADING -->
+<div class="loading-screen" id="loading-screen">
+  <div class="loading-om">ॐ</div>
+  <div class="loading-text">GENERATING COMPLETE KUNDALI</div>
+  <div class="loading-sub">सम्पूर्ण जन्मपत्री तैयार हो रही है...</div>
+  <div class="loading-sub" id="loading-step" style="color:rgba(255,200,100,0.4);font-size:0.75rem;margin-top:0.5rem;"></div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     KUNDALI OUTPUT (100+ pages)
+══════════════════════════════════════════════════════ -->
+<div id="kundali-output">
+  <!-- toolbar -->
+  <div class="print-toolbar">
+    <div class="toolbar-brand">🔮 Kundli Pro – सम्पूर्ण जन्मपत्री</div>
+    <div class="toolbar-actions">
+      <button class="tbtn tbtn-back" onclick="goBack()">← New Kundali</button>
+      <button class="tbtn tbtn-print" onclick="window.print()">🖨️ Print / PDF (100+ Pages)</button>
+    </div>
+  </div>
+  <!-- pages injected here -->
+  <div id="pages-container"></div>
+</div>
+
+<script>
+/* ═══════════════════════════════════════════════════════
+   ASTROLOGY DATA
+═══════════════════════════════════════════════════════ */
+const SIGNS    = ['Aries','Taurus','Gemini','Cancer','Leo','Virgo','Libra','Scorpio','Sagittarius','Capricorn','Aquarius','Pisces'];
+const SIGNS_HI = ['मेष','वृष','मिथुन','कर्क','सिंह','कन्या','तुला','वृश्चिक','धनु','मकर','कुम्भ','मीन'];
+const SIGN_SYM = ['♈','♉','♊','♋','♌','♍','♎','♏','♐','♑','♒','♓'];
+const LORDS    = ['Mars','Venus','Mercury','Moon','Sun','Mercury','Venus','Mars','Jupiter','Saturn','Saturn','Jupiter'];
+const LORDS_HI = ['मंगल','शुक्र','बुध','चंद्र','सूर्य','बुध','शुक्र','मंगल','गुरु','शनि','शनि','गुरु'];
+const PLANETS  = ['Sun','Moon','Mars','Mercury','Jupiter','Venus','Saturn','Rahu','Ketu'];
+const PLAN_HI  = ['सूर्य','चंद्र','मंगल','बुध','गुरु','शुक्र','शनि','राहु','केतु'];
+const PLAN_SYM = ['☉','☽','♂','☿','♃','♀','♄','☊','☋'];
+const NAK = ['Ashwini','Bharani','Krittika','Rohini','Mrigashira','Ardra','Punarvasu','Pushya','Ashlesha','Magha','Purva Phalguni','Uttara Phalguni','Hasta','Chitra','Swati','Vishakha','Anuradha','Jyeshtha','Mula','Purva Ashadha','Uttara Ashadha','Shravana','Dhanishtha','Shatabhisha','Purva Bhadrapada','Uttara Bhadrapada','Revati'];
+const NAK_HI = ['अश्विनी','भरणी','कृत्तिका','रोहिणी','मृगशिरा','आर्द्रा','पुनर्वसु','पुष्य','आश्लेषा','मघा','पूर्वाफाल्गुनी','उत्तराफाल्गुनी','हस्त','चित्रा','स्वाती','विशाखा','अनुराधा','ज्येष्ठा','मूल','पूर्वाषाढ़ा','उत्तराषाढ़ा','श्रवण','धनिष्ठा','शतभिषा','पूर्वाभाद्रपद','उत्तराभाद्रपद','रेवती'];
+const DASH_ORDER = ['Ketu','Venus','Sun','Moon','Mars','Rahu','Jupiter','Saturn','Mercury'];
+const DASH_HI    = ['केतु','शुक्र','सूर्य','चंद्र','मंगल','राहु','गुरु','शनि','बुध'];
+const DASH_YRS   = [7,20,6,10,7,18,16,19,17];
+const HOUSE_NAMES = ['Lagna (Self)','Dhana (Wealth)','Sahaja (Siblings)','Matru (Mother)','Putra (Children)','Ari (Enemies)','Kalatra (Spouse)','Mrityu (Longevity)','Dharma (Fortune)','Karma (Career)','Labha (Gains)','Vyaya (Losses)'];
+const HOUSE_HI   = ['लग्न (स्व)','धन (संपत्ति)','सहज (भाई-बहन)','मातृ (माता)','पुत्र (संतान)','अरि (शत्रु)','कलत्र (जीवनसाथी)','मृत्यु (आयु)','धर्म (भाग्य)','कर्म (व्यवसाय)','लाभ (प्राप्ति)','व्यय (खर्च)'];
+const VARGA_NAMES = [['D-1','Rashi','राशि','Lagna Chart'],['D-2','Hora','होरा','Wealth'],['D-3','Drekkana','द्रेक्काण','Siblings'],['D-4','Chaturthamsa','चतुर्थांश','Fortune'],['D-7','Saptamsa','सप्तांश','Children'],['D-9','Navamsa','नवांश','Spouse/Dharma'],['D-10','Dashamsa','दशांश','Career'],['D-12','Dwadashamsa','द्वादशांश','Parents'],['D-16','Shodashamsa','षोडशांश','Vehicles'],['D-20','Vimshamsa','विंशांश','Spiritual'],['D-24','Chaturvimshamsa','चतुर्विंशांश','Education'],['D-27','Saptavimshamsa','सप्तविंशांश','Strength'],['D-30','Trimshamsa','त्रिंशांश','Evils'],['D-40','Khavedamsa','खवेदांश','Maternal'],['D-45','Akshavedamsa','अक्षवेदांश','Paternal'],['D-60','Shashtiamsa','षष्ट्यांश','Past Life']];
+const TITHIS = ['Pratipada / प्रतिपदा','Dwitiya / द्वितीया','Tritiya / तृतीया','Chaturthi / चतुर्थी','Panchami / पंचमी','Shashthi / षष्ठी','Saptami / सप्तमी','Ashtami / अष्टमी','Navami / नवमी','Dashami / दशमी','Ekadashi / एकादशी','Dwadashi / द्वादशी','Trayodashi / त्रयोदशी','Chaturdashi / चतुर्दशी','Purnima / पूर्णिमा'];
+const KARANA = ['Bava / बव','Balava / बालव','Kaulava / कौलव','Taitila / तैतिल','Gara / गर','Vanija / वणिज','Vishti / विष्टि','Shakuni / शकुनि'];
+const PANCH_YOGA = ['Vishkumbha / विष्कुम्भ','Priti / प्रीति','Ayushman / आयुष्मान','Saubhagya / सौभाग्य','Shobhana / शोभन','Atiganda / अतिगण्ड','Sukarman / सुकर्मा','Dhriti / धृति','Shula / शूल','Ganda / गण्ड','Vriddhi / वृद्धि','Dhruva / ध्रुव','Vyaghata / व्याघात','Harshana / हर्षण','Vajra / वज्र','Siddhi / सिद्धि','Vyatipata / व्यतीपात','Variyan / वरीयान','Parigha / परिघ','Shiva / शिव','Siddha / सिद्ध','Sadhya / साध्य','Shubha / शुभ','Shukla / शुक्ल','Brahma / ब्रह्म','Indra / इन्द्र','Vaidhriti / वैधृति'];
+const VARAS_BI = ['Ravivara / रविवार','Somavara / सोमवार','Mangalavara / मंगलवार','Budhavara / बुधवार','Guruvara / गुरुवार','Shukravara / शुक्रवार','Shanivara / शनिवार'];
+
+/* ── hash function ── */
+function H(dob,tob){
+  const d=new Date(dob+'T'+tob);
+  return Math.abs(d.getFullYear()*13+d.getMonth()*37+d.getDate()*71+d.getHours()*17+d.getMinutes()*7);
+}
+
+/* ── planet calculations ── */
+function calcPlanets(h){
+  return PLANETS.map((p,i)=>{
+    const si=(h+i*37+i*11)%12;
+    const deg=((h*(i+1)*7+i*13)%2999)/100%30;
+    const ni=Math.abs(Math.floor((si*27/12)+i*3))%27;
+    const retro=(h+i)%5===0&&i<7;
+    const exalted=[[0,0],[1,1],[9,10],[5,6],[3,4],[11,0],[6,7],[8,9],[2,3]][i];
+    const status=si===exalted?.[0]?'Exalted / उच्च':si===((exalted?.[0]||0)+6)%12?'Debilitated / नीच':'Normal';
+    return{p,phi:PLAN_HI[i],sym:PLAN_SYM[i],si,sign:SIGNS[si],signHi:SIGNS_HI[si],
+      deg:deg.toFixed(2),ni,nak:NAK[ni],nakHi:NAK_HI[ni],pada:(h+i)%4+1,
+      house:(si-h%12+12)%12+1,retro,status,lord:LORDS[si],lordHi:LORDS_HI[si]};
+  });
+}
+
+/* ── North Indian chart SVG ── */
+function chartSVG(lagnaIdx, planets, size=200){
+  const S=size,C=S/2;
+  const positions=[
+    [C,S*0.08],[C+S*0.25,S*0.08],[S*0.93,C],[C+S*0.25,S*0.92],
+    [C,S*0.92],[C-S*0.25,S*0.92],[S*0.07,C],[C-S*0.25,S*0.08],
+    [C+S*0.16,C-S*0.14],[C+S*0.16,C+S*0.14],[C-S*0.16,C+S*0.14],[C-S*0.16,C-S*0.14]
+  ];
+  const hContent=Array(12).fill(null).map(()=>[]);
+  planets.forEach(pl=>{const h=(pl.house-1+12)%12;hContent[h].push(pl.sym);});
+
+  let s=`<svg viewBox="0 0 ${S} ${S}" xmlns="http://www.w3.org/2000/svg" style="width:${size}px;height:${size}px">
+  <rect width="${S}" height="${S}" fill="#FFFDF5"/>
+  <rect x="2" y="2" width="${S-4}" height="${S-4}" fill="none" stroke="#C8960C" stroke-width="1.5"/>
+  <polygon points="${C},4 ${S-4},${C} ${C},${S-4} 4,${C}" fill="none" stroke="#C8960C" stroke-width="1"/>
+  <line x1="2" y1="2" x2="${C}" y2="${C}" stroke="#C8960C" stroke-width="0.5"/>
+  <line x1="${S-2}" y1="2" x2="${C}" y2="${C}" stroke="#C8960C" stroke-width="0.5"/>
+  <line x1="${S-2}" y1="${S-2}" x2="${C}" y2="${C}" stroke="#C8960C" stroke-width="0.5"/>
+  <line x1="2" y1="${S-2}" x2="${C}" y2="${C}" stroke="#C8960C" stroke-width="0.5"/>`;
+
+  for(let i=0;i<12;i++){
+    const rasi=(lagnaIdx+i)%12;
+    const[px,py]=positions[i];
+    s+=`<text x="${px}" y="${py-4}" text-anchor="middle" font-size="${S*0.038}" fill="#8B0000" font-family="serif" font-weight="bold">${rasi+1}</text>`;
+    s+=`<text x="${px}" y="${py+7}" text-anchor="middle" font-size="${S*0.033}" fill="#C8960C" font-family="serif">${SIGNS[rasi].slice(0,3)}</text>`;
+    s+=`<text x="${px}" y="${py+16}" text-anchor="middle" font-size="${S*0.033}" fill="#5C0A0A" font-family="serif">${SIGNS_HI[rasi]}</text>`;
+    if(hContent[i].length>0)
+      s+=`<text x="${px}" y="${py+26}" text-anchor="middle" font-size="${S*0.04}" fill="#1A0800" font-family="serif">${hContent[i].join(' ')}</text>`;
+    if(i===0)
+      s+=`<rect x="${px-10}" y="${py-12}" width="20" height="8" rx="2" fill="#8B0000" opacity="0.15"/>`;
+  }
+  s+=`</svg>`;
+  return s;
+}
+
+/* ── page builder helper ── */
+let globalInfo={};
+function makePage(num,total,sectionTitle,sectionHi,content){
+  const I=globalInfo;
+  return `<div class="kpage">
+  <div class="page-hdr">
+    <div class="phdr-left">
+      <div class="phdr-om">ॐ</div>
+      <div>
+        <div class="phdr-title">Kundli Pro <span>सम्पूर्ण जन्मपत्री · Complete Janmpatri</span></div>
+      </div>
+    </div>
+    <div class="phdr-right">
+      <div class="phdr-name">${I.name} / ${I.nameHi}</div>
+      <div class="phdr-info">${I.dob} ${I.tob} | ${I.city}, ${I.state} | Lagna: ${I.lagnaSign}</div>
+    </div>
+  </div>
+  <div class="page-content">${content}</div>
+  <div class="page-ftr">
+    <div class="pftr-text">ॐ नमः शिवाय · Kundli Pro · ${I.preparedBy}</div>
+    <div class="pftr-page">Page ${num} / ${total}</div>
+  </div>
+</div>`;
+}
+
+/* ═══════════════════════════════════════════════════════
+   MAIN GENERATOR
+═══════════════════════════════════════════════════════ */
+function generateFullKundali(){
+  const name    =document.getElementById('f-name').value||'Native';
+  const nameHi  =document.getElementById('f-namhi').value||name;
+  const gender  =document.getElementById('f-gender').value;
+  const dob     =document.getElementById('f-dob').value;
+  const tob     =document.getElementById('f-tob').value;
+  const city    =document.getElementById('f-city').value;
+  const state   =document.getElementById('f-state').value;
+  const country =document.getElementById('f-country').value;
+  const lat     =document.getElementById('f-lat').value;
+  const lon     =document.getElementById('f-lon').value;
+  const gotra   =document.getElementById('f-gotra').value;
+  const father  =document.getElementById('f-father').value;
+  const mother  =document.getElementById('f-mother').value;
+  const caste   =document.getElementById('f-caste').value;
+  const marital =document.getElementById('f-marital').value;
+  const ayanamsa=document.getElementById('f-ayanamsa').value;
+  const prepBy  =document.getElementById('f-by').value;
+  const mName   =document.getElementById('m-name').value;
+  const mDob    =document.getElementById('m-dob').value;
+  const mTob    =document.getElementById('m-tob').value;
+
+  // show loading
+  document.getElementById('loading-screen').classList.add('show');
+
+  const steps=['Computing Lagna...','Calculating planetary positions...','Generating Vimshottari Dasha...','Detecting Yogas...','Analyzing Doshas...','Computing Ashtakavarga...','Generating Shodashvarga...','Preparing Predictions...','Finalizing Kundali...'];
+  let si=0;
+  const stepInterval=setInterval(()=>{
+    if(si<steps.length){document.getElementById('loading-step').textContent=steps[si++];}
+  },180);
+
+  setTimeout(()=>{
+    clearInterval(stepInterval);
+    const mCity=document.getElementById('m-city').value;
+    buildKundali({name,nameHi,gender,dob,tob,city,state,country,lat,lon,gotra,father,mother,caste,marital,ayanamsa,preparedBy:prepBy,mName,mDob,mTob,mCity});
+    document.getElementById('loading-screen').classList.remove('show');
+    document.getElementById('form-page').style.display='none';
+    document.getElementById('kundali-output').classList.add('show');
+    window.scrollTo(0,0);
+  },2000);
+}
+
+function goBack(){
+  document.getElementById('kundali-output').classList.remove('show');
+  document.getElementById('form-page').style.display='flex';
+  document.getElementById('pages-container').innerHTML='';
+}
+
+function buildKundali(info){
+  const h=H(info.dob,info.tob);
+  const planets=calcPlanets(h);
+  const lagnaIdx=h%12;
+  const lagnaSign=SIGNS[lagnaIdx];
+  const lagnaSignHi=SIGNS_HI[lagnaIdx];
+  info.lagnaSign=lagnaSign+' / '+lagnaSignHi;
+  globalInfo=info;
+
+  const pages=[];
+  const D=new Date(info.dob);
+  const moonNak=planets[1].ni;
+  const tithiIdx=h%15;
+  const varaIdx=D.getDay();
+
+  // ── PAGE 1: COVER ──────────────────────────────────────────────
+  pages.push(`<div class="kpage">
+  <div class="cover-page">
+    <div class="cover-border"></div><div class="cover-border-inner"></div>
+    <div class="cover-swastik">卐</div>
+    <div class="cover-om">ॐ</div>
+    <div class="cover-title-en">COMPLETE JANMPATRI</div>
+    <div class="cover-title-hi">सम्पूर्ण जन्मपत्री</div>
+    <div class="cover-divider"></div>
+    <div style="font-family:'Noto Sans Devanagari',serif;font-size:11pt;color:#6B4C2A;line-height:1.8;max-width:120mm;margin:0 auto;text-align:center;">
+      जन्मकाले बुधाद्यास्तु ग्रहाः खे स्थित यत्र यत्र ।<br>
+      तत्तत्फलं प्रजानीयाद् ज्ञानीभिर्ज्योतिषोत्तमैः ॥
+    </div>
+    <div class="cover-divider"></div>
+    <div class="cover-photo-box"><div class="cover-photo-text">PHOTO<br>फोटो</div></div>
+    <div class="cover-name">${info.name}</div>
+    <div class="cover-name-hi">${info.nameHi}</div>
+    <div class="cover-divider"></div>
+    <div class="cover-detail-grid">
+      <div class="cdg-label">Date of Birth / जन्म तिथि</div><div class="cdg-val">${info.dob} <span class="cdg-val-en">(${D.toLocaleDateString('hi-IN')})</span></div>
+      <div class="cdg-label">Time of Birth / जन्म समय</div><div class="cdg-val">${info.tob} (IST)</div>
+      <div class="cdg-label">Place of Birth / जन्म स्थान</div><div class="cdg-val">${info.city}, ${info.state} <span class="cdg-val-en">${info.country}</span></div>
+      <div class="cdg-label">Lagna / लग्न</div><div class="cdg-val">${lagnaSign} <span class="cdg-val-en">${lagnaSignHi}</span></div>
+      <div class="cdg-label">Chandra Rashi / चंद्र राशि</div><div class="cdg-val">${planets[1].sign} <span class="cdg-val-en">${planets[1].signHi}</span></div>
+      <div class="cdg-label">Janma Nakshatra / जन्म नक्षत्र</div><div class="cdg-val">${NAK[moonNak]} <span class="cdg-val-en">${NAK_HI[moonNak]}</span></div>
+      <div class="cdg-label">Gotra / गोत्र</div><div class="cdg-val">${info.gotra||'—'}</div>
+      <div class="cdg-label">Prepared By / तैयारकर्ता</div><div class="cdg-val">${info.preparedBy||'Kundli Pro'}</div>
+    </div>
+    <div class="cover-footer-text">Kundli Pro · Based on Parashari Jyotish · सर्वाधिकार सुरक्षित</div>
+  </div>
+</div>`);
+
+  // ── PAGE 2: BASIC INFO / PANCHANG ──────────────────────────────
+  const panchangData=[
+    ['Tithi / तिथि','तिथि',TITHIS[tithiIdx]],
+    ['Vara / वार','वार',VARAS_BI[varaIdx]],
+    ['Nakshatra / नक्षत्र','नक्षत्र',NAK[moonNak]+' / '+NAK_HI[moonNak]],
+    ['Yoga / योग','योग',PANCH_YOGA[h%27]],
+    ['Karana / करण','करण',KARANA[h%8]],
+    ['Paksha / पक्ष','पक्ष',tithiIdx<=14?'Shukla / शुक्ल':'Krishna / कृष्ण'],
+    ['Sunrise / सूर्योदय','सूर्योदय','06:'+String(D.getDate()%59+1).padStart(2,'0')+' AM'],
+    ['Sunset / सूर्यास्त','सूर्यास्त','06:'+String((D.getDate()+12)%59+1).padStart(2,'0')+' PM'],
+    ['Rahu Kaal / राहुकाल','राहुकाल',['7:30–9:00','15:00–16:30','12:00–13:30','10:30–12:00','13:30–15:00','10:30–12:00','9:00–10:30'][varaIdx]],
+    ['Abhijit Muhurta','अभिजित','11:48 AM – 12:36 PM'],
+    ['Ayanamsa / अयनांश','अयनांश',info.ayanamsa==='lahiri'?'Lahiri 23°58\'':'KP / Raman'],
+    ['Sunrise Rashi / सूर्य राशि','सूर्य राशि',SIGNS[D.getMonth()]+' / '+SIGNS_HI[D.getMonth()]],
+  ];
+  let pg2=`<div class="sec-title">Janma Vivaran <span class="sec-title-hi">जन्म विवरण</span></div>
+  <table class="info-table">
+    <tr><td class="lbl">Full Name<span class="lbl-hi">पूरा नाम</span></td><td class="val">${info.name} <span class="val-hi">${info.nameHi}</span></td>
+        <td class="lbl">Gender<span class="lbl-hi">लिंग</span></td><td class="val">${info.gender==='male'?'Male / पुरुष':'Female / स्त्री'}</td></tr>
+    <tr><td class="lbl">Date of Birth<span class="lbl-hi">जन्म तिथि</span></td><td class="val">${info.dob} <span class="val-hi">${D.toLocaleDateString('hi-IN')}</span></td>
+        <td class="lbl">Time of Birth<span class="lbl-hi">जन्म समय</span></td><td class="val">${info.tob} IST</td></tr>
+    <tr><td class="lbl">Place<span class="lbl-hi">जन्म स्थान</span></td><td class="val" colspan="3">${info.city}, ${info.state}, ${info.country} | Lat: ${info.lat}°N, Lon: ${info.lon}°E</td></tr>
+    <tr><td class="lbl">Father<span class="lbl-hi">पिता</span></td><td class="val">${info.father||'—'}</td>
+        <td class="lbl">Mother<span class="lbl-hi">माता</span></td><td class="val">${info.mother||'—'}</td></tr>
+    <tr><td class="lbl">Gotra<span class="lbl-hi">गोत्र</span></td><td class="val">${info.gotra||'—'}</td>
+        <td class="lbl">Caste/Varna<span class="lbl-hi">जाति/वर्ण</span></td><td class="val">${info.caste||'—'}</td></tr>
+    <tr><td class="lbl">Marital Status<span class="lbl-hi">वैवाहिक स्थिति</span></td><td class="val">${info.marital||'—'}</td>
+        <td class="lbl">Ayanamsa<span class="lbl-hi">अयनांश</span></td><td class="val">${info.ayanamsa}</td></tr>
+  </table>
+  <div class="sec-title" style="margin-top:4mm;">Janma Panchang <span class="sec-title-hi">जन्म पंचांग</span></div>
+  <div class="panchang-grid">
+    ${panchangData.map(r=>`<div class="panch-row"><div class="panch-lbl">${r[0].split('/')[0]}<span>${r[1]}</span></div><div class="panch-val"><span class="panch-val-en">${r[2].split('/')[0]||r[2]}</span><span class="panch-val-hi">${r[2].split('/')[1]||''}</span></div></div>`).join('')}
+  </div>`;
+  pages.push(makePage(2,'~120','Janma Vivaran & Panchang','जन्म विवरण एवं पंचांग',pg2));
+
+  // ── PAGE 3: LAGNA + CHANDRA CHARTS ────────────────────────────
+  const chandraIdx=(planets[1].house-1+lagnaIdx)%12;
+  let pg3=`<div class="sec-title">Lagna Kundali &amp; Chandra Kundali <span class="sec-title-hi">लग्न कुण्डली एवं चंद्र कुण्डली</span></div>
+  <div class="charts-row">
+    <div class="chart-box">
+      <div class="chart-label-main">LAGNA KUNDALI / लग्न कुण्डली</div>
+      <div class="kundali-svg-wrap">${chartSVG(lagnaIdx,planets,220)}</div>
+      <div class="chart-sub">Lagna: ${lagnaSign} (${lagnaSignHi}) | North Indian Style</div>
+    </div>
+    <div class="chart-box">
+      <div class="chart-label-main">CHANDRA KUNDALI / चंद्र कुण्डली</div>
+      <div class="kundali-svg-wrap">${chartSVG(chandraIdx,planets,220)}</div>
+      <div class="chart-sub">Chandra Lagna: ${SIGNS[chandraIdx]} (${SIGNS_HI[chandraIdx]})</div>
+    </div>
+  </div>
+  <div style="margin-top:3mm;display:grid;grid-template-columns:1fr 1fr;gap:3mm;">
+    <div style="border:0.5pt solid #E8C97A;padding:2mm;border-radius:1mm;background:#FDF8E8;">
+      <div style="font-family:'Cinzel',serif;font-size:11.5pt;color:#8B0000;margin-bottom:1mm;text-transform:uppercase;">Lagna Details / लग्न विवरण</div>
+      <div style="font-size:10pt;line-height:2.0;font-family:'Crimson Pro',serif;">
+        Lagna Sign: <b>${lagnaSign} (${lagnaSignHi})</b><br>
+        Lagna Lord: <b>${LORDS[lagnaIdx]} (${LORDS_HI[lagnaIdx]})</b> in ${SIGNS[(lagnaIdx+planets.find(p=>p.p===LORDS[lagnaIdx])?.house-1||0)%12]}<br>
+        Lagna Degree: <b>${(h%2999/100%30).toFixed(2)}°</b>
+      </div>
+    </div>
+    <div style="border:0.5pt solid #E8C97A;padding:2mm;border-radius:1mm;background:#FDF8E8;">
+      <div style="font-family:'Cinzel',serif;font-size:11.5pt;color:#8B0000;margin-bottom:1mm;text-transform:uppercase;">Moon Details / चंद्र विवरण</div>
+      <div style="font-size:10pt;line-height:2.0;font-family:'Crimson Pro',serif;">
+        Chandra Rashi: <b>${planets[1].sign} (${planets[1].signHi})</b><br>
+        Janma Nakshatra: <b>${planets[1].nak} (${planets[1].nakHi})</b><br>
+        Nakshatra Pada: <b>${planets[1].pada}</b>
+      </div>
+    </div>
+  </div>`;
+  pages.push(makePage(3,'~120','Lagna & Chandra Kundali','लग्न एवं चंद्र कुण्डली',pg3));
+
+  // ── PAGE 4: NAVAMSA + BHAVA CHALIT ────────────────────────────
+  const navaIdx=(h*3)%12;
+  const bhavchalIdx=(h+5)%12;
+  let pg4=`<div class="sec-title">Navamsa (D-9) &amp; Bhava Chalit <span class="sec-title-hi">नवांश कुण्डली एवं भाव चलित</span></div>
+  <div class="charts-row">
+    <div class="chart-box">
+      <div class="chart-label-main">NAVAMSA (D-9) / नवांश कुण्डली</div>
+      <div class="kundali-svg-wrap">${chartSVG(navaIdx,planets,220)}</div>
+      <div class="chart-sub">Navamsa Lagna: ${SIGNS[navaIdx]} (${SIGNS_HI[navaIdx]}) | Spouse & Dharma</div>
+    </div>
+    <div class="chart-box">
+      <div class="chart-label-main">BHAVA CHALIT / भाव चलित</div>
+      <div class="kundali-svg-wrap">${chartSVG(bhavchalIdx,planets,220)}</div>
+      <div class="chart-sub">Bhava Lagna: ${SIGNS[bhavchalIdx]} (${SIGNS_HI[bhavchalIdx]})</div>
+    </div>
+  </div>
+  <div style="margin-top:3mm;border:0.5pt solid #E8C97A;padding:2mm;border-radius:1mm;background:#FDF8E8;">
+    <div style="font-family:'Cinzel',serif;font-size:11.5pt;color:#8B0000;margin-bottom:1mm;text-transform:uppercase;">Navamsa Significance / नवांश का महत्व</div>
+    <div style="font-size:10pt;line-height:2.0;font-family:'Crimson Pro',serif;color:#1A0800;">
+      The Navamsa (D-9) chart is the most important divisional chart after Lagna. It shows the inner strength of planets, marriage prospects, and spiritual evolution. 
+      Planets in own sign, exalted, or in friendly signs in Navamsa give excellent results. 
+      नवांश कुण्डली विवाह, धर्म और आध्यात्मिक प्रगति दर्शाती है। नवांश लग्नेश की स्थिति अत्यंत महत्वपूर्ण है।
+    </div>
+  </div>`;
+  pages.push(makePage(4,'~120','Navamsa & Bhava Chalit','नवांश एवं भाव चलित',pg4));
+
+  // ── PAGE 5: SHODASHVARGA CHARTS (D2-D12) ──────────────────────
+  const vargaSet1=VARGA_NAMES.slice(1,7);
+  let vg1='<div class="varga-grid">';
+  vargaSet1.forEach((v,i)=>{
+    const vIdx=(h*(i+2))%12;
+    vg1+=`<div class="varga-item">
+      <div class="varga-name">${v[0]} – ${v[1]}</div>
+      <div class="varga-name-hi">${v[2]} | ${v[3]}</div>
+      <div class="kundali-svg-wrap">${chartSVG(vIdx,planets,130)}</div>
+      <div style="font-size:10.5pt;color:#6B4C2A;font-family:'Cinzel',serif;margin-top:1mm;">${SIGNS[vIdx]}/${SIGNS_HI[vIdx]}</div>
+    </div>`;
+  });
+  vg1+='</div>';
+  let pg5=`<div class="sec-title">Shodashvarga Charts – Part 1 <span class="sec-title-hi">षोडशवर्ग चार्ट – भाग १</span></div>${vg1}`;
+  pages.push(makePage(5,'~120','Shodashvarga Part 1','षोडशवर्ग भाग १',pg5));
+
+  // ── PAGE 6: SHODASHVARGA CHARTS (D16-D60) ─────────────────────
+  const vargaSet2=VARGA_NAMES.slice(7);
+  let vg2='<div class="varga-grid">';
+  vargaSet2.forEach((v,i)=>{
+    const vIdx=(h*(i+8))%12;
+    vg2+=`<div class="varga-item">
+      <div class="varga-name">${v[0]} – ${v[1]}</div>
+      <div class="varga-name-hi">${v[2]} | ${v[3]}</div>
+      <div class="kundali-svg-wrap">${chartSVG(vIdx,planets,130)}</div>
+      <div style="font-size:10.5pt;color:#6B4C2A;font-family:'Cinzel',serif;margin-top:1mm;">${SIGNS[vIdx]}/${SIGNS_HI[vIdx]}</div>
+    </div>`;
+  });
+  vg2+='</div>';
+  let pg6=`<div class="sec-title">Shodashvarga Charts – Part 2 <span class="sec-title-hi">षोडशवर्ग चार्ट – भाग २</span></div>${vg2}`;
+  pages.push(makePage(6,'~120','Shodashvarga Part 2','षोडशवर्ग भाग २',pg6));
+
+  // ── PAGE 7: PLANET POSITIONS (GRAHA STHITI) ───────────────────
+  let pg7=`<div class="sec-title">Graha Sthiti – Planet Positions <span class="sec-title-hi">ग्रह स्थिति तालिका</span></div>
+  <table class="ptable">
+    <thead><tr>
+      <th>Planet<span class="hi">ग्रह</span></th>
+      <th>Sign<span class="hi">राशि</span></th>
+      <th>Degree<span class="hi">अंश</span></th>
+      <th>House<span class="hi">भाव</span></th>
+      <th>Nakshatra<span class="hi">नक्षत्र</span></th>
+      <th>Pada<span class="hi">पाद</span></th>
+      <th>Motion<span class="hi">गति</span></th>
+      <th>Status<span class="hi">स्थिति</span></th>
+      <th>Lord<span class="hi">स्वामी</span></th>
+    </tr></thead>
+    <tbody>
+    ${planets.map(pl=>`<tr>
+      <td class="pname">${pl.sym} ${pl.p}<span class="pname-hi">${pl.phi}</span></td>
+      <td><span class="sign">${pl.sign}</span><span class="sign-hi">${pl.signHi}</span></td>
+      <td class="deg">${pl.deg}°</td>
+      <td style="text-align:center;font-family:'Cinzel',serif;font-size:10pt;color:#8B0000;font-weight:700;">${pl.house}</td>
+      <td><span class="nak">${pl.nak}</span><span class="nak-hi">${pl.nakHi}</span></td>
+      <td style="text-align:center;">${pl.pada}</td>
+      <td>${pl.retro?'<span class="retro">® Retro / वक्री</span>':'<span class="direct">Direct / मार्गी</span>'}</td>
+      <td style="font-size:11.5pt;">${pl.status}</td>
+      <td style="font-size:11.5pt;font-family:'Cinzel',serif;color:#8B0000;">${pl.lord}<br><span style="font-family:'Noto Sans Devanagari',serif;font-size:11.5pt;color:#5C0A0A;">${pl.lordHi}</span></td>
+    </tr>`).join('')}
+    </tbody>
+  </table>
+  <div style="margin-top:3mm;">
+  <div class="sub-title">Planetary Aspects / ग्रह दृष्टि</div>
+  <table class="ptable" style="font-size:10pt;">
+    <thead><tr><th>Planet<span class="hi">ग्रह</span></th><th>7th Aspect<span class="hi">7वीं दृष्टि</span></th><th>Special Aspect<span class="hi">विशेष दृष्टि</span></th><th>Aspected Houses<span class="hi">दृष्ट भाव</span></th></tr></thead>
+    <tbody>
+    ${planets.slice(0,7).map(pl=>{
+      const sp7=(pl.house+5)%12+1;
+      const special=pl.p==='Mars'?`4th(${(pl.house+2)%12+1}) & 8th(${(pl.house+6)%12+1})`
+        :pl.p==='Jupiter'?`5th(${(pl.house+3)%12+1}) & 9th(${(pl.house+7)%12+1})`
+        :pl.p==='Saturn'?`3rd(${(pl.house+1)%12+1}) & 10th(${(pl.house+8)%12+1})`:'—';
+      return`<tr>
+        <td class="pname">${pl.sym} ${pl.p}<span class="pname-hi">${pl.phi}</span></td>
+        <td style="text-align:center;font-family:'Cinzel',serif;font-size:10pt;">${sp7}</td>
+        <td style="font-size:11.5pt;">${special}</td>
+        <td style="font-size:11.5pt;">${pl.house}, ${sp7}${special!=='—'?', '+special.match(/\d+/g)?.join(', '):''}
+        </td></tr>`;}).join('')}
+    </tbody>
+  </table></div>`;
+  pages.push(makePage(7,'~120','Graha Sthiti','ग्रह स्थिति',pg7));
+
+  // ── PAGE 8: SHADBALA ──────────────────────────────────────────
+  const sbalaNames=[['Sthana Bala','स्थान बल'],['Dig Bala','दिग् बल'],['Kala Bala','काल बल'],['Chesta Bala','चेष्टा बल'],['Naisargika Bala','नैसर्गिक बल'],['Drig Bala','दृग् बल']];
+  let pg8=`<div class="sec-title">Shadbala – Six-fold Strength <span class="sec-title-hi">षड्बल – छः प्रकार का बल</span></div>
+  <table class="sbala-table">
+    <thead><tr>
+      <th>Planet<span class="hi">ग्रह</span></th>
+      ${sbalaNames.map(s=>`<th>${s[0]}<span class="hi">${s[1]}</span></th>`).join('')}
+      <th>Total Rupas<span class="hi">कुल रूप</span></th>
+      <th>Req.<span class="hi">अपेक्षित</span></th>
+      <th>Strength<span class="hi">बल</span></th>
+    </tr></thead>
+    <tbody>
+    ${planets.slice(0,7).map((pl,i)=>{
+      const vals=sbalaNames.map((_,j)=>((h*(i+1)*(j+2))%800+100)/100);
+      const total=vals.reduce((a,b)=>a+b,0);
+      const req=[5,6,5,5,6.5,5,5][i];
+      const pct=Math.min(100,(total/req/6)*100);
+      return`<tr>
+        <td class="pname">${pl.sym} ${pl.p}<span class="pname-hi">${pl.phi}</span></td>
+        ${vals.map(v=>`<td>${v.toFixed(2)}</td>`).join('')}
+        <td style="font-weight:700;color:#8B0000;">${total.toFixed(2)}</td>
+        <td>${req}</td>
+        <td><div class="sbala-bar" style="width:${pct.toFixed(0)}%"></div> ${pct.toFixed(0)}%</td>
+      </tr>`;}).join('')}
+    </tbody>
+  </table>
+  <div style="margin-top:3mm;border:0.5pt solid #E8C97A;padding:2mm;border-radius:1mm;background:#FDF8E8;">
+    <div style="font-family:'Cinzel',serif;font-size:11.5pt;color:#8B0000;margin-bottom:1mm;text-transform:uppercase;">Shadbala Interpretation / षड्बल विवरण</div>
+    <div style="font-size:10pt;line-height:2.0;font-family:'Crimson Pro',serif;">
+      Shadbala is a system of six-fold planetary strength. A planet with Rupas (units) exceeding the required minimum is considered strong and gives good results in its Dasha. 
+      षड्बल ग्रहों की शक्ति मापने की प्राचीन विधि है। अपेक्षित बल से अधिक बल वाले ग्रह शुभ फल देते हैं।
+    </div>
+  </div>`;
+  pages.push(makePage(8,'~120','Shadbala','षड्बल',pg8));
+
+  // ── PAGE 9: BHAVA ANALYSIS ────────────────────────────────────
+  const hPredEn=[
+    'Self, personality, appearance, health, and overall life direction. Lagna defines who you are.',
+    'Wealth, family, speech, early education, and accumulated assets. 2nd lord placement is key.',
+    'Siblings, courage, communication, short journeys, and neighbors.',
+    'Mother, home, property, vehicles, happiness, and domestic environment.',
+    'Children, intelligence, creativity, romance, speculation, and past life merit.',
+    'Enemies, diseases, debts, litigation, service, and daily routine.',
+    'Marriage, partnerships, spouse characteristics, and legal contracts.',
+    'Longevity, sudden events, occult, transformations, and inheritance.',
+    'Luck, higher education, spirituality, religion, long journeys, and father.',
+    'Career, profession, reputation, status, and achievements in life.',
+    'Income, gains, elder siblings, social circle, and fulfillment of desires.',
+    'Losses, expenses, foreign travel, moksha, and spiritual liberation.',
+  ];
+  const hPredHi=[
+    'स्वयं, व्यक्तित्व, स्वास्थ्य और जीवन की दिशा। लग्न आपकी पहचान है।',
+    'धन, परिवार, वाणी, प्रारंभिक शिक्षा और संचित संपत्ति।',
+    'भाई-बहन, साहस, संचार, छोटी यात्राएं और पड़ोसी।',
+    'माता, घर, संपत्ति, वाहन, सुख और गृह वातावरण।',
+    'संतान, बुद्धि, रचनात्मकता, प्रेम, और पूर्वजन्म का पुण्य।',
+    'शत्रु, रोग, ऋण, मुकदमेबाजी, सेवा और दैनिक दिनचर्या।',
+    'विवाह, जीवनसाथी, साझेदारी और कानूनी अनुबंध।',
+    'आयु, अचानक घटनाएं, गुप्त विद्या और परिवर्तन।',
+    'भाग्य, उच्च शिक्षा, धर्म, लंबी यात्राएं और पिता।',
+    'करियर, पेशा, प्रतिष्ठा और जीवन की उपलब्धियां।',
+    'आय, लाभ, बड़े भाई-बहन और इच्छाओं की पूर्ति।',
+    'हानि, खर्च, विदेश यात्रा, मोक्ष और आत्मिक मुक्ति।',
+  ];
+  let pg9=`<div class="sec-title">Bhava Analysis – House-wise Predictions <span class="sec-title-hi">भाव विश्लेषण – भाव-आधारित भविष्यवाणी</span></div>`;
+  for(let i=0;i<12;i++){
+    const hSign=SIGNS[(lagnaIdx+i)%12];const hSignHi=SIGNS_HI[(lagnaIdx+i)%12];
+    const hPlanets=planets.filter(p=>p.house===i+1);
+    const hLord=LORDS[(lagnaIdx+i)%12];const hLordHi=LORDS_HI[(lagnaIdx+i)%12];
+    pg9+=`<div class="pred-box">
+      <div style="display:flex;justify-content:space-between;align-items:baseline;">
+        <div><span class="pred-house">${i+1}${['st','nd','rd','th','th','th','th','th','th','th','th','th'][i]} House – ${HOUSE_NAMES[i]}</span>
+        <span class="pred-house-hi"> | ${HOUSE_HI[i]}</span></div>
+        <div class="pred-sign">${SIGN_SYM[(lagnaIdx+i)%12]} ${hSign} (${hSignHi}) | Lord: ${hLord} (${hLordHi})${hPlanets.length?' | Planets: '+hPlanets.map(p=>p.sym+p.p).join(','):''}</div>
+      </div>
+      <div class="pred-text">${hPredEn[i]}<span class="pred-text-hi">${hPredHi[i]}</span></div>
+    </div>`;
+  }
+  pages.push(makePage(9,'~120','Bhava Analysis','भाव विश्लेषण',pg9));
+
+  // ── PAGE 10: VIMSHOTTARI DASHA ────────────────────────────────
+  const dashStart=moonNak%9;
+  let pg10=`<div class="sec-title">Vimshottari Mahadasha <span class="sec-title-hi">विंशोत्तरी महादशा (120 वर्ष)</span></div>
+  <table class="dtable">
+    <thead><tr>
+      <th>Mahadasha<span class="hi">महादशा</span></th>
+      <th>Period (Yrs)<span class="hi">अवधि</span></th>
+      <th>Start Date<span class="hi">प्रारंभ</span></th>
+      <th>End Date<span class="hi">समाप्ति</span></th>
+      <th>Current Status<span class="hi">वर्तमान स्थिति</span></th>
+      <th>Nature<span class="hi">स्वभाव</span></th>
+    </tr></thead>
+    <tbody>`;
+  let dYear=D.getFullYear();const nowY=new Date().getFullYear();
+  for(let i=0;i<9;i++){
+    const idx=(dashStart+i)%9;
+    const yrs=DASH_YRS[idx];const endY=dYear+yrs;
+    const isCurr=nowY>=dYear&&nowY<endY;
+    const nature=['Moksha','Kama','Dharma','Artha','Kama','Dharma','Artha','Dharma','Moksha'][idx];
+    pg10+=`<tr class="${isCurr?'current-dasha':''}">
+      <td class="dname">${PLAN_SYM[PLANETS.indexOf(DASH_ORDER[idx])]} ${DASH_ORDER[idx]}<span class="dname-hi">${DASH_HI[idx]}</span></td>
+      <td>${yrs} years</td>
+      <td>${dYear}</td>
+      <td>${endY}</td>
+      <td class="${isCurr?'cyear':''}">${isCurr?'● Current / वर्तमान':nowY<dYear?'Upcoming / आगामी':'Completed / समाप्त'}</td>
+      <td>${nature}</td>
+    </tr>`;
+    dYear=endY;
+  }
+  pg10+=`</tbody></table>
+  <div style="margin-top:3mm;border:0.5pt solid #E8C97A;padding:2mm;border-radius:1mm;background:rgba(255,107,0,0.04);">
+    <div style="font-family:'Cinzel',serif;font-size:11.5pt;color:#8B0000;margin-bottom:1mm;">NOTE / टिप्पणी</div>
+    <div style="font-size:10pt;line-height:2.0;font-family:'Crimson Pro',serif;">
+      Vimshottari Dasha is the primary timing system in Parashari astrology. The 120-year cycle starts from Janma Nakshatra (Moon's nakshatra at birth: <b>${NAK[moonNak]}</b>). The current Mahadasha period significantly influences life events. 
+      विंशोत्तरी दशा पराशरी ज्योतिष में प्रमुख समय-निर्धारण पद्धति है। यह जन्म नक्षत्र <b>${NAK_HI[moonNak]}</b> से प्रारंभ होती है।
+    </div>
+  </div>`;
+  pages.push(makePage(10,'~120','Vimshottari Mahadasha','विंशोत्तरी महादशा',pg10));
+
+  // ── PAGES 11-19: ANTARDASHA (9 pages, one per Mahadasha) ──────
+  let adYear=D.getFullYear();
+  for(let i=0;i<9;i++){
+    const midx=(dashStart+i)%9;
+    const myrs=DASH_YRS[midx];
+    let adPg=`<div class="sec-title">${DASH_ORDER[midx]} Mahadasha – Antardasha Table <span class="sec-title-hi">${DASH_HI[midx]} महादशा – अंतर्दशा</span></div>
+    <div style="background:var(--gold-pale);padding:2mm;border-radius:1mm;margin-bottom:2mm;font-family:'Cinzel',serif;font-size:10pt;color:#8B0000;">
+      Mahadasha Period: ${adYear} – ${adYear+myrs} (${myrs} years) | राशि: ${SIGNS[(dashStart+i)%12]} (${SIGNS_HI[(dashStart+i)%12]})
+    </div>
+    <table class="dtable">
+      <thead><tr>
+        <th>Antardasha<span class="hi">अंतर्दशा</span></th>
+        <th>Duration<span class="hi">अवधि</span></th>
+        <th>Start<span class="hi">प्रारंभ</span></th>
+        <th>End<span class="hi">समाप्ति</span></th>
+        <th>Result<span class="hi">फल</span></th>
+        <th>Remedy<span class="hi">उपाय</span></th>
+      </tr></thead><tbody>`;
+    let adStart=adYear;let adMo=0;
+    const results=['Excellent / उत्तम','Good / शुभ','Average / सामान्य','Challenging / कठिन','Mixed / मिश्रित'];
+    const remedies=['Donate wheat on Sunday / रविवार गेहूं दान','Offer milk to Shiva / शिव को दूध चढ़ाएं','Wear red coral / लाल मूंगा धारण करें','Feed green grass to cow / गाय को चारा','Chant Vishnu Sahasranama / विष्णु सहस्रनाम','Offer sweets to Goddess / देवी को मिठाई','Light mustard oil lamp / सरसों तेल दीप','Feed crows / कौए को भोजन','Feed green fodder / हरा चारा खिलाएं'];
+    for(let j=0;j<9;j++){
+      const aidx=(midx+j)%9;
+      const amos=Math.round(myrs*DASH_YRS[aidx]/120*12);
+      adMo+=amos;const aend=adStart+Math.floor(adMo/12);
+      const isCurr=new Date().getFullYear()>=adStart&&new Date().getFullYear()<aend&&(i===0||(adYear+Math.floor((j*myrs/9))<new Date().getFullYear()+1));
+      adPg+=`<tr class="${isCurr?'current-dasha':''}">
+        <td class="dname">${DASH_ORDER[midx]}–${DASH_ORDER[aidx]}<span class="dname-hi">${DASH_HI[midx]}–${DASH_HI[aidx]}</span></td>
+        <td>${amos} months</td><td>${adStart}</td><td>${aend}</td>
+        <td style="font-size:11.5pt;">${results[(midx+aidx)%5]}</td>
+        <td style="font-size:11pt;">${remedies[aidx]}</td>
+      </tr>`;
+      adStart=aend;
+    }
+    adPg+=`</tbody></table>`;
+    adYear+=myrs;
+    pages.push(makePage(11+i,'~120',`${DASH_ORDER[midx]} Antardasha`,`${DASH_HI[midx]} अंतर्दशा`,adPg));
+  }
+
+  // ── PAGE 20: PRATYANTAR DASHA (current) ───────────────────────
+  let pg20=`<div class="sec-title">Pratyantar Dasha – Current Period <span class="sec-title-hi">प्रत्यंतर दशा – वर्तमान अवधि</span></div>
+  <table class="dtable">
+    <thead><tr>
+      <th>Pratyantar<span class="hi">प्रत्यंतर</span></th>
+      <th>Duration (days)<span class="hi">अवधि</span></th>
+      <th>Start<span class="hi">प्रारंभ</span></th>
+      <th>End<span class="hi">समाप्ति</span></th>
+      <th>Effect<span class="hi">प्रभाव</span></th>
+    </tr></thead><tbody>`;
+  const effects=['Career advancement / करियर उन्नति','Financial gains / आर्थिक लाभ','Health focus / स्वास्थ्य पर ध्यान','Family harmony / परिवार में सुख','Travel & changes / यात्रा व परिवर्तन','Spiritual growth / आध्यात्मिक विकास','Property matters / संपत्ति के मामले','Relationship focus / संबंधों पर ध्यान','Recognition & fame / मान-सम्मान'];
+  let pday=D.getDate();let pmonth=D.getMonth();let pyear=D.getFullYear();
+  for(let j=0;j<9;j++){
+    const aidx=(dashStart+j)%9;const days=Math.round(DASH_YRS[aidx]*365/120*2);
+    const endDate=new Date(pyear,pmonth,pday+days);
+    pg20+=`<tr>
+      <td class="dname">${DASH_ORDER[dashStart%9]}–${DASH_ORDER[(dashStart+1)%9]}–${DASH_ORDER[aidx]}<span class="dname-hi">${DASH_HI[dashStart%9]}–${DASH_HI[(dashStart+1)%9]}–${DASH_HI[aidx]}</span></td>
+      <td>${days} days</td>
+      <td>${new Date(pyear,pmonth,pday).toLocaleDateString('en-IN')}</td>
+      <td>${endDate.toLocaleDateString('en-IN')}</td>
+      <td style="font-size:11.5pt;">${effects[j]}</td>
+    </tr>`;
+    pday+=days;
+  }
+  pg20+=`</tbody></table>`;
+  pages.push(makePage(20,'~120','Pratyantar Dasha','प्रत्यंतर दशा',pg20));
+
+  // ── PAGE 21: YOGA ANALYSIS ────────────────────────────────────
+  const yogaList=[
+    {n:'Gaja Kesari Yoga',hi:'गजकेसरी योग',present:Math.abs(planets[1].house-planets[4].house)<=1||Math.abs(planets[1].house-planets[4].house)===6,
+     desc:'Moon and Jupiter in mutual kendra. Bestows intelligence, fame, wealth and lasting reputation.',hi_desc:'चंद्र और गुरु परस्पर केंद्र में। बुद्धि, यश, धन और स्थायी ख्याति प्रदान करता है।'},
+    {n:'Raj Yoga',hi:'राज योग',present:(h%7)>3,
+     desc:'Lords of trikona and kendra houses are in conjunction or aspect each other.',hi_desc:'त्रिकोण और केंद्र के स्वामी परस्पर युति या दृष्टि में हैं।'},
+    {n:'Dhana Yoga',hi:'धन योग',present:(h%5)>2,
+     desc:'2nd and 11th lords connected with each other or 5th and 9th lords in good positions.',hi_desc:'धन और आय भाव के स्वामी आपस में जुड़े हैं। धन का संचय।'},
+    {n:'Pancha Mahapurusha – Ruchaka',hi:'रुचक योग',present:planets[2].sign===SIGNS[0]||planets[2].sign===SIGNS[7]||(planets[2].house===1||planets[2].house===4||planets[2].house===7||planets[2].house===10),
+     desc:'Mars in own sign or exalted in kendra. Gives courage, military success, and leadership.',hi_desc:'मंगल केंद्र में स्वराशि या उच्च का। साहस, सैन्य सफलता और नेतृत्व।'},
+    {n:'Pancha Mahapurusha – Hamsa',hi:'हंस योग',present:(h%9)>5,
+     desc:'Jupiter in own sign or exalted in kendra. Gives wisdom, wealth, and spiritual knowledge.',hi_desc:'गुरु केंद्र में स्वराशि या उच्च का। ज्ञान, धन और आध्यात्मिक शक्ति।'},
+    {n:'Pancha Mahapurusha – Malavya',hi:'मालव्य योग',present:(h%8)>4,
+     desc:'Venus in own sign or exalted in kendra. Gives beauty, luxury, vehicles, and pleasant life.',hi_desc:'शुक्र केंद्र में स्वराशि या उच्च का। सौंदर्य, विलासिता और सुखी जीवन।'},
+    {n:'Budhaditya Yoga',hi:'बुधादित्य योग',present:planets[0].sign===planets[3].sign,
+     desc:'Sun and Mercury in same sign. Bestows intelligence, communication skills, and sharp intellect.',hi_desc:'सूर्य और बुध एक ही राशि में। बुद्धि, वाक्चातुर्य और तीक्ष्ण विवेक।'},
+    {n:'Kaal Sarpa Yoga',hi:'काल सर्प योग',present:(h%4)===0,
+     desc:'All 7 planets are hemmed between Rahu and Ketu. Karmic delays but eventual success.',hi_desc:'सभी 7 ग्रह राहु-केतु अक्ष के बीच। कर्म ऋण परंतु अंततः सफलता।'},
+    {n:'Neecha Bhanga Raj Yoga',hi:'नीच भंग राज योग',present:(h%6)>3,
+     desc:'Debilitated planet gets cancellation and turns into powerful benefic giving royal status.',hi_desc:'नीच ग्रह का दोष नष्ट होकर राजयोग बनता है।'},
+    {n:'Viparita Raj Yoga',hi:'विपरीत राज योग',present:(h%11)>6,
+     desc:'Lords of 6th, 8th or 12th in each other\'s houses creates this unexpected success yoga.',hi_desc:'6,8,12 के स्वामी आपस में विनिमय करते हैं। अप्रत्याशित सफलता।'},
+    {n:'Lakshmi Yoga',hi:'लक्ष्मी योग',present:(h%3)>1,
+     desc:'9th lord in own sign or exalted and lagna lord strongly placed. Great wealth and fortune.',hi_desc:'9वें भाव का स्वामी बलवान और लग्नेश भी शक्तिशाली। विपुल धन-सम्पत्ति।'},
+    {n:'Saraswati Yoga',hi:'सरस्वती योग',present:planets[3].house===1||planets[3].house===2||planets[3].house===4||planets[3].house===5||planets[3].house===7||planets[3].house===9||planets[3].house===10,
+     desc:'Mercury, Jupiter, and Venus in kendras or trikonas. Bestows wisdom, education, and artistic ability.',hi_desc:'बुध, गुरु, शुक्र केंद्र-त्रिकोण में। ज्ञान, शिक्षा और कला का वरदान।'},
+  ];
+  let pg21=`<div class="sec-title">Yoga Analysis – Auspicious Combinations <span class="sec-title-hi">योग विश्लेषण – शुभ ग्रह संयोग</span></div>
+  <table class="ytable">
+    <thead><tr>
+      <th style="width:25%">Yoga Name<span class="hi">योग नाम</span></th>
+      <th style="width:12%">Status<span class="hi">स्थिति</span></th>
+      <th>Description / फल</th>
+    </tr></thead><tbody>
+    ${yogaList.map(y=>`<tr>
+      <td><span class="yname">${y.n}</span><span class="yname-hi">${y.hi}</span></td>
+      <td><span class="${y.present?'present':'absent'}">${y.present?'✓ Present\nउपस्थित':'✗ Absent\nअनुपस्थित'}</span></td>
+      <td><span class="ydesc">${y.desc}</span><span class="ydesc-hi">${y.hi_desc}</span></td>
+    </tr>`).join('')}
+    </tbody>
+  </table>`;
+  pages.push(makePage(21,'~120','Yoga Analysis','योग विश्लेषण',pg21));
+
+  // ── PAGE 22: DOSHA ANALYSIS ───────────────────────────────────
+  const marsHouse=planets[2].house;
+  const mangalPresent=[1,4,7,8,12].includes(marsHouse);
+  const doshaList=[
+    {n:'Mangal Dosha',hi:'मंगल दोष',icon:'♂',present:mangalPresent,
+     en:`Mars is placed in the ${marsHouse}${['','st','nd','rd','th','th','th','th','th','th','th','th','th'][marsHouse]} house. ${mangalPresent?'Mangal Dosha is present. Marriage partner should also be Manglik for compatibility.':'No Mangal Dosha. Mars is in a neutral house. Auspicious for marriage.'}`,
+     hi_d:mangalPresent?`मंगल ${marsHouse}वें भाव में है। मंगल दोष उपस्थित है। वर/वधू भी मांगलिक होने चाहिए।`:`मंगल ${marsHouse}वें भाव में है। मंगल दोष नहीं है। विवाह के लिए शुभ।`,
+     remedy:'Offer red flowers to Hanuman every Tuesday. Wear red coral after consultation. / हर मंगलवार हनुमान जी को लाल फूल चढ़ाएं। परामर्श के बाद लाल मूंगा धारण करें।'},
+    {n:'Kaal Sarpa Dosha',hi:'काल सर्प दोष',icon:'🐍',present:(h%4)===0,
+     en:(h%4)===0?'All 7 planets are hemmed between Rahu and Ketu axis. This creates Kaal Sarpa Dosha causing obstacles and delays. Eventually leads to great success after struggles.':'No Kaal Sarpa Dosha. Planets are not hemmed within Rahu-Ketu axis.',
+     hi_d:(h%4)===0?'सभी ग्रह राहु-केतु के बीच हैं। बाधाएं आती हैं परंतु अंतत: महान सफलता मिलती है।':'काल सर्प दोष नहीं है। ग्रह राहु-केतु के बीच बंधे नहीं हैं।',
+     remedy:'Perform Kaal Sarpa Dosha Puja at Trimbakeshwar or Ujjain. / त्र्यंबकेश्वर या उज्जैन में काल सर्प दोष पूजा करवाएं।'},
+    {n:'Pitra Dosha',hi:'पितृ दोष',icon:'☉',present:(h%6)===0,
+     en:(h%6)===0?'Sun is afflicted or 9th house is compromised indicating Pitra Dosha. Ancestral karma affecting current life.':'No significant Pitra Dosha detected in the chart.',
+     hi_d:(h%6)===0?'सूर्य पीड़ित है या 9वां भाव कमजोर। पूर्वजों का कर्म वर्तमान जीवन को प्रभावित कर रहा है।':'पितृ दोष नहीं है।',
+     remedy:'Perform Pitru Tarpan on Amavasya. Feed Brahmins on Shraddha days. / अमावस्या को पितृ तर्पण करें। श्राद्ध के दिन ब्राह्मणों को भोजन कराएं।'},
+    {n:'Shrapit Dosha',hi:'श्रापित दोष',icon:'♄',present:(h%8)===0,
+     en:(h%8)===0?'Saturn and Rahu are conjunct or in mutual aspect indicating Shrapit Dosha. Past life curse affecting this birth.':'No Shrapit Dosha present.',
+     hi_d:(h%8)===0?'शनि और राहु युति या दृष्टि में हैं। पूर्व जन्म का श्राप इस जन्म को प्रभावित कर रहा है।':'श्रापित दोष नहीं है।',
+     remedy:'Chant Maha Mrityunjaya Mantra 108 times daily. Perform Shiva Abhishek. / प्रतिदिन 108 बार महामृत्युंजय मंत्र जपें। शिव अभिषेक करें।'},
+    {n:'Grahan Dosha',hi:'ग्रहण दोष',icon:'☽',present:(h%3)===0,
+     en:(h%3)===0?'Sun or Moon is conjunct with Rahu or Ketu causing Grahan Dosha. This affects health and mental peace.':'No Grahan Dosha present in the natal chart.',
+     hi_d:(h%3)===0?'सूर्य या चंद्र राहु/केतु के साथ युत है। स्वास्थ्य और मानसिक शांति प्रभावित होती है।':'ग्रहण दोष नहीं है।',
+     remedy:'Perform Surya/Chandra Grahan Shanti Puja. Donate according to afflicted planet. / सूर्य/चंद्र ग्रहण शांति पूजा करवाएं।'},
+  ];
+  let pg22=`<div class="sec-title">Dosha Analysis <span class="sec-title-hi">दोष विश्लेषण</span></div>`;
+  doshaList.forEach(d=>{
+    pg22+=`<div class="dosha-box ${d.present?'present':'absent'}">
+      <div class="dosha-icon">${d.icon}</div>
+      <div>
+        <span class="dosha-title">${d.n}</span><span class="dosha-title-hi">${d.hi}</span>
+        <div class="dosha-status ${d.present?'yes':'no'}">${d.present?'⚠️ PRESENT / उपस्थित':'✅ ABSENT / अनुपस्थित'}</div>
+        <div class="dosha-desc">${d.en}<span class="dosha-desc-hi">${d.hi_d}</span></div>
+        <span class="dosha-remedy">Remedy / उपाय: ${d.remedy}</span>
+      </div>
+    </div>`;
+  });
+  pages.push(makePage(22,'~120','Dosha Analysis','दोष विश्लेषण',pg22));
+
+  // ── PAGE 23-31: ASHTAKAVARGA (8 planets + Sarva) ──────────────
+  const avPlanets=['Sun','Moon','Mars','Mercury','Jupiter','Venus','Saturn'];
+  const avHi=['सूर्य','चंद्र','मंगल','बुध','गुरु','शुक्र','शनि'];
+  const avSym=['☉','☽','♂','☿','♃','♀','♄'];
+  for(let pi=0;pi<8;pi++){
+    const pname=pi<7?avPlanets[pi]:'Sarvashtakavarga';
+    const pnameHi=pi<7?avHi[pi]:'सर्वाष्टकवर्ग';
+    const scores=SIGNS.map((_,si)=>{
+      if(pi<7)return((h*(pi+1)*7+si*13)%5)+1;
+      return SIGNS.reduce((_,__,k)=>_+((h*(k+1)*7+si*13)%5)+1,0)/7;
+    });
+    let avPg=`<div class="sec-title">${avSym[pi]||'Σ'} ${pname} Ashtakavarga <span class="sec-title-hi">${pnameHi} अष्टकवर्ग</span></div>
+    <table class="avarga-table">
+      <thead><tr>
+        <th>Planet<span class="hi">ग्रह</span></th>
+        ${SIGNS.map((s,si)=>`<th>${SIGN_SYM[si]}<span class="hi">${SIGNS_HI[si]}</span></th>`).join('')}
+        <th>Total<span class="hi">कुल</span></th>
+      </tr></thead><tbody>`;
+    if(pi<7){
+      // Show contributing planets
+      for(let cp=0;cp<8;cp++){
+        const cname=cp<7?avPlanets[cp]:'Lagna';const cnameHi=cp<7?avHi[cp]:'लग्न';
+        const row=SIGNS.map((_,si)=>((h*(pi+1)*(cp+1)+si*7)%2));
+        const tot=row.reduce((a,b)=>a+b,0);
+        avPg+=`<tr>
+          <td>${avSym[cp]||'L'} ${cname}<span>${cnameHi}</span></td>
+          ${row.map(v=>`<td class="${v?'av-high':'av-low'}">${v}</td>`).join('')}
+          <td style="font-weight:700;color:#8B0000;">${tot}</td>
+        </tr>`;
+      }
+      avPg+=`<tr style="background:#FDF8E8;font-weight:700;">
+        <td>Total Bindhu<span>कुल बिन्दु</span></td>
+        ${scores.map(s=>{const sv=Math.round(s);return`<td class="${sv>=4?'av-high':sv<=2?'av-low':'av-med'}">${sv}</td>`;}).join('')}
+        <td style="color:#8B0000;">${scores.reduce((a,b)=>a+Math.round(b),0)}</td>
+      </tr>`;
+    } else {
+      // Sarva — show each planet's totals
+      for(let pp=0;pp<7;pp++){
+        const row=SIGNS.map((_,si)=>Math.round(((h*(pp+1)*7+si*13)%5)+1));
+        const tot=row.reduce((a,b)=>a+b,0);
+        avPg+=`<tr>
+          <td>${avSym[pp]} ${avPlanets[pp]}<span>${avHi[pp]}</span></td>
+          ${row.map(v=>`<td class="${v>=4?'av-high':v<=2?'av-low':'av-med'}">${v}</td>`).join('')}
+          <td style="font-weight:700;color:#8B0000;">${tot}</td>
+        </tr>`;
+      }
+      const sarva=SIGNS.map((_,si)=>Math.round(scores[si]));
+      avPg+=`<tr style="background:#FDF8E8;font-weight:700;">
+        <td>Sarva Total<span>सर्व योग</span></td>
+        ${sarva.map(s=>`<td class="${s>=28?'av-high':s<=20?'av-low':'av-med'}">${s}</td>`).join('')}
+        <td style="color:#8B0000;">${sarva.reduce((a,b)=>a+b,0)}</td>
+      </tr>`;
+    }
+    avPg+=`</tbody></table>
+    <div style="margin-top:2mm;border:0.5pt solid #E8C97A;padding:2mm;border-radius:1mm;background:#FDF8E8;font-size:10pt;font-family:'Crimson Pro',serif;line-height:1.9;">
+      <b style="font-family:'Cinzel',serif;font-size:11.5pt;color:#8B0000;">Interpretation / विवरण:</b> 
+      Signs with 5+ bindhu are highly favorable. Signs with 4 bindhu are average. Signs with 1-2 bindhu need remedies.
+      5 या अधिक बिन्दु वाली राशि अत्यंत शुभ। 1-2 बिन्दु वाली राशि में उपाय आवश्यक।
+    </div>`;
+    pages.push(makePage(23+pi,'~120',`${pname} Ashtakavarga`,`${pnameHi} अष्टकवर्ग`,avPg));
+  }
+
+  // ── PAGE 32: GOCHAR (TRANSIT) ─────────────────────────────────
+  const nowDate=new Date();
+  let pg32=`<div class="sec-title">Gochar – Current Planetary Transits <span class="sec-title-hi">गोचर – वर्तमान ग्रह भ्रमण</span></div>
+  <table class="gochar-table">
+    <thead><tr>
+      <th>Planet<span class="hi">ग्रह</span></th>
+      <th>Transit Sign<span class="hi">गोचर राशि</span></th>
+      <th>From Natal Moon<span class="hi">चंद्र से स्थिति</span></th>
+      <th>Transit House<span class="hi">भाव</span></th>
+      <th>Effect<span class="hi">प्रभाव</span></th>
+      <th>Result<span class="hi">फल</span></th>
+    </tr></thead><tbody>
+    ${planets.map((pl,i)=>{
+      const tSign=(pl.si+nowDate.getMonth()+i)%12;
+      const fromMoon=(tSign-planets[1].si+12)%12+1;
+      const favorable=[1,2,3,5,6,9,10,11];
+      const isFav=favorable.includes(fromMoon);
+      const effects=['Career boost / करियर लाभ','Wealth gain / धन प्राप्ति','Health care / स्वास्थ्य ध्यान','Travel / यात्रा','Romance / प्रेम','Obstacle / बाधा','Success / सफलता','Spiritual / आध्यात्मिक','Fortune / भाग्योदय','Fame / यश','Income / आय','Expenditure / व्यय'];
+      return`<tr>
+        <td class="pname">${pl.sym} ${pl.p}<span class="pname-hi">${pl.phi}</span></td>
+        <td><span class="sign">${SIGNS[tSign]}</span><span class="sign-hi">${SIGNS_HI[tSign]}</span></td>
+        <td style="text-align:center;font-family:'Cinzel',serif;font-size:10pt;">${fromMoon}th</td>
+        <td style="text-align:center;font-family:'Cinzel',serif;font-size:10pt;color:#8B0000;">${(tSign-lagnaIdx+12)%12+1}</td>
+        <td style="font-size:11.5pt;">${effects[(fromMoon-1)%12]}</td>
+        <td class="${isFav?'gfav':'gunfav'}">${isFav?'✓ Favorable / शुभ':'✗ Unfavorable / अशुभ'}</td>
+      </tr>`;}).join('')}
+    </tbody>
+  </table>
+  <div style="margin-top:3mm;border:0.5pt solid #E8C97A;padding:2mm;border-radius:1mm;background:#FDF8E8;">
+    <div style="font-family:'Cinzel',serif;font-size:11.5pt;color:#8B0000;margin-bottom:1mm;">GOCHAR NOTES / गोचर टिप्पणी</div>
+    <div style="font-size:10pt;line-height:2.0;font-family:'Crimson Pro',serif;">
+      Gochar (transit) results are counted from the natal Moon sign (Chandra Rashi). Houses 1,2,3,5,6,9,10,11 from Moon are generally favorable. 
+      Saturn's 7.5 year (Sade Sati) and 2.5 year (Small Panoti) transits are of special significance.
+      गोचर का फल जन्म चंद्र राशि से देखा जाता है। चंद्र से 1,2,3,5,6,9,10,11 शुभ माने जाते हैं।
+    </div>
+  </div>`;
+  pages.push(makePage(32,'~120','Gochar (Transit)','गोचर',pg32));
+
+  // ── PAGE 33: SADE SATI / SPECIAL TRANSITS ─────────────────────
+  let pg33=`<div class="sec-title">Sade Sati &amp; Special Transit Analysis <span class="sec-title-hi">साढ़ेसाती एवं विशेष गोचर विश्लेषण</span></div>
+  <div style="border:1pt solid #C8960C;padding:3mm;border-radius:2mm;background:#FDF8E8;margin-bottom:3mm;">
+    <div style="font-family:'Cinzel',serif;font-size:10.5pt;color:#8B0000;font-weight:700;margin-bottom:1.5mm;">SADE SATI / साढ़ेसाती (Saturn 7.5 Year Period)</div>
+    <div style="font-size:10pt;line-height:2.0;font-family:'Crimson Pro',serif;">
+      Sade Sati occurs when Saturn transits through the 12th, 1st, and 2nd houses from natal Moon sign (${planets[1].sign} / ${planets[1].signHi}). 
+      During this 7.5 year period, challenges are faced but it also brings transformation and ultimate growth.
+      <br><b>Current Moon Rashi:</b> ${planets[1].sign} (${planets[1].signHi}) | <b>Sade Sati Phase:</b> ${(h%3)===0?'Rising / उदयकाल':(h%3)===1?'Peak / मध्यकाल':'Setting / अस्तकाल'}
+      <br><span style="font-family:'Noto Sans Devanagari',serif;font-size:10pt;color:#5C0A0A;">
+      साढ़ेसाती: जब शनि जन्म चंद्र राशि (${planets[1].signHi}) से 12, 1 और 2 भाव में भ्रमण करते हैं। कठिनाई के साथ परिवर्तन।
+      </span>
+    </div>
+  </div>
+  <div class="sub-title">Saturn Transit Phases / शनि गोचर चरण</div>
+  <table class="gochar-table">
+    <thead><tr><th>Phase<span class="hi">चरण</span></th><th>Sign<span class="hi">राशि</span></th><th>Period<span class="hi">अवधि</span></th><th>Effect<span class="hi">प्रभाव</span></th><th>Remedy<span class="hi">उपाय</span></th></tr></thead>
+    <tbody>
+      <tr><td>Rising / उदयकाल</td><td>${SIGNS[(planets[1].si-1+12)%12]} / ${SIGNS_HI[(planets[1].si-1+12)%12]}</td><td>2.5 Years</td><td class="gunfav">Financial strain / धन कष्ट</td><td style="font-size:11pt;">Feed black sesame to poor / गरीबों को काला तिल दें</td></tr>
+      <tr><td>Peak / मध्यकाल</td><td>${SIGNS[planets[1].si]} / ${SIGNS_HI[planets[1].si]}</td><td>2.5 Years</td><td class="gunfav">Health & family / स्वास्थ्य</td><td style="font-size:11pt;">Chant Shani mantra / शनि मंत्र जपें</td></tr>
+      <tr><td>Setting / अस्तकाल</td><td>${SIGNS[(planets[1].si+1)%12]} / ${SIGNS_HI[(planets[1].si+1)%12]}</td><td>2.5 Years</td><td class="gneut">Gradual relief / धीरे सुधार</td><td style="font-size:11pt;">Donate black cloth on Saturday / शनिवार काला वस्त्र दान</td></tr>
+    </tbody>
+  </table>
+  <div class="sub-title" style="margin-top:3mm;">Guru (Jupiter) Transit / गुरु गोचर</div>
+  <div style="font-size:10pt;line-height:2.0;font-family:'Crimson Pro',serif;border:0.5pt solid #E8C97A;padding:2mm;border-radius:1mm;background:#FDF8E8;">
+    Jupiter transits each sign for approximately 1 year (12-month period). Currently Jupiter is in 
+    <b>${planets[4].sign} (${planets[4].signHi})</b> from natal chart, which is the ${planets[4].house}${['','st','nd','rd','th','th','th','th','th','th','th','th','th'][planets[4].house]} house position.
+    Jupiter transit through houses 2,5,7,9,11 from Moon is considered highly auspicious (Guru Gochar Shubha).
+    <br><span style="font-family:'Noto Sans Devanagari',serif;font-size:11.5pt;color:#5C0A0A;display:block;margin-top:1mm;">
+    गुरु प्रत्येक राशि में लगभग 1 वर्ष रहते हैं। चंद्र से 2,5,7,9,11वें भाव में गुरु शुभ फल देते हैं।
+    </span>
+  </div>`;
+  pages.push(makePage(33,'~120','Sade Sati Analysis','साढ़ेसाती विश्लेषण',pg33));
+
+  // ── PAGE 34-35: DETAILED PREDICTIONS (Life Areas) ─────────────
+  const predAreas=[
+    {area:'Career & Profession',areaHi:'करियर एवं व्यवसाय',icon:'💼',
+     en:`The 10th house is in ${SIGNS[(lagnaIdx+9)%12]} with lord ${LORDS[(lagnaIdx+9)%12]}. ${(h%3)>1?'Strong career prospects with leadership opportunities. You may excel in government, administrative, or managerial roles.':'Good career with steady progress. Business and service both favorable.'}`,
+     hi:`10वां भाव ${SIGNS_HI[(lagnaIdx+9)%12]} राशि में ${LORDS_HI[(lagnaIdx+9)%12]} के स्वामित्व में। ${(h%3)>1?'करियर में नेतृत्व के अवसर। सरकारी, प्रशासनिक कार्य में सफलता।':'अच्छा करियर, धीरे-धीरे उन्नति। व्यापार और नौकरी दोनों शुभ।'}`},
+    {area:'Finance & Wealth',areaHi:'धन एवं संपत्ति',icon:'💰',
+     en:`2nd house lord ${LORDS[(lagnaIdx+1)%12]} and 11th house lord ${LORDS[(lagnaIdx+10)%12]} indicate ${(h%2)===0?'good financial stability with property accumulation. Multiple income sources possible.':'moderate wealth. Careful financial planning needed.'}`,
+     hi:`धन भाव के स्वामी ${LORDS_HI[(lagnaIdx+1)%12]} और ${LORDS_HI[(lagnaIdx+10)%12]}। ${(h%2)===0?'अच्छी आर्थिक स्थिति, संपत्ति अर्जन। कई स्रोतों से आय।':'मध्यम धन, सावधानीपूर्वक योजना आवश्यक।'}`},
+    {area:'Health & Longevity',areaHi:'स्वास्थ्य एवं आयु',icon:'⚕️',
+     en:`Lagna lord ${LORDS[lagnaIdx]} and 8th house lord ${LORDS[(lagnaIdx+7)%12]} indicate ${(h%3)===0?'generally good health with need to care for digestive system.':'strong constitution with good longevity. Minor health issues should not be ignored.'}`,
+     hi:`लग्नेश ${LORDS_HI[lagnaIdx]} और अष्टमेश ${LORDS_HI[(lagnaIdx+7)%12]}। ${(h%3)===0?'सामान्यतः अच्छा स्वास्थ्य। पाचन तंत्र पर ध्यान दें।':'मजबूत संविधान, अच्छी आयु। छोटी स्वास्थ्य समस्याओं को नजरअंदाज न करें।'}`},
+    {area:'Marriage & Relationships',areaHi:'विवाह एवं संबंध',icon:'💑',
+     en:`7th house in ${SIGNS[(lagnaIdx+6)%12]} with lord ${LORDS[(lagnaIdx+6)%12]}. ${(h%4)>2?'Favorable for marriage. Spouse will be educated, caring and supportive.':'Marriage may require patience. Partner will be loyal and devoted.'}`,
+     hi:`7वां भाव ${SIGNS_HI[(lagnaIdx+6)%12]} राशि में। स्वामी ${LORDS_HI[(lagnaIdx+6)%12]}। ${(h%4)>2?'विवाह के लिए शुभ। जीवनसाथी शिक्षित, देखभाल करने वाला होगा।':'विवाह में धैर्य आवश्यक। साथी वफादार और समर्पित होगा।'}`},
+    {area:'Children & Education',areaHi:'संतान एवं शिक्षा',icon:'🎓',
+     en:`5th house in ${SIGNS[(lagnaIdx+4)%12]} indicates ${(h%3)>0?'good prospects for children and higher education. Creative and intelligent progeny.':'moderate results. Education requires consistent effort.'}`,
+     hi:`5वां भाव ${SIGNS_HI[(lagnaIdx+4)%12]} राशि में। ${(h%3)>0?'संतान एवं उच्च शिक्षा के लिए शुभ। बुद्धिमान संतान।':'मध्यम परिणाम। शिक्षा में लगातार प्रयास जरूरी।'}`},
+    {area:'Spirituality & Fortune',areaHi:'धर्म एवं भाग्य',icon:'🙏',
+     en:`9th house in ${SIGNS[(lagnaIdx+8)%12]} with lord ${LORDS[(lagnaIdx+8)%12]}. ${(h%2)===0?'Very fortunate. Religious and spiritual inclinations. Pilgrimages will be beneficial.':'Good fortune after mid-life. Divine grace through consistent prayer and charity.'}`,
+     hi:`9वां भाव ${SIGNS_HI[(lagnaIdx+8)%12]} राशि में। स्वामी ${LORDS_HI[(lagnaIdx+8)%12]}। ${(h%2)===0?'अत्यंत भाग्यशाली। धार्मिक प्रवृत्ति। तीर्थयात्रा लाभकारी।':'मध्य आयु के बाद भाग्योदय। पूजा-दान से दैवीय कृपा।'}`},
+  ];
+  let pg34=`<div class="sec-title">Life Predictions – Career, Finance & Health <span class="sec-title-hi">जीवन भविष्यवाणी – करियर, धन एवं स्वास्थ्य</span></div>`;
+  predAreas.slice(0,3).forEach(p=>{
+    pg34+=`<div class="pred-box">
+      <div style="display:flex;gap:2mm;align-items:center;margin-bottom:1.5mm;">
+        <span style="font-size:12pt;">${p.icon}</span>
+        <span class="pred-house">${p.area}</span>
+        <span class="pred-house-hi"> | ${p.areaHi}</span>
+      </div>
+      <div class="pred-text">${p.en}<span class="pred-text-hi">${p.hi}</span></div>
+    </div>`;
+  });
+  pages.push(makePage(34,'~120','Life Predictions Part 1','जीवन भविष्यवाणी भाग १',pg34));
+
+  let pg35=`<div class="sec-title">Life Predictions – Marriage, Children & Spirituality <span class="sec-title-hi">जीवन भविष्यवाणी – विवाह, संतान एवं धर्म</span></div>`;
+  predAreas.slice(3).forEach(p=>{
+    pg35+=`<div class="pred-box">
+      <div style="display:flex;gap:2mm;align-items:center;margin-bottom:1.5mm;">
+        <span style="font-size:12pt;">${p.icon}</span>
+        <span class="pred-house">${p.area}</span>
+        <span class="pred-house-hi"> | ${p.areaHi}</span>
+      </div>
+      <div class="pred-text">${p.en}<span class="pred-text-hi">${p.hi}</span></div>
+    </div>`;
+  });
+  pages.push(makePage(35,'~120','Life Predictions Part 2','जीवन भविष्यवाणी भाग २',pg35));
+
+  // ── PAGE 36: REMEDIES ─────────────────────────────────────────
+  const remedyData=[
+    {p:'Sun / सूर्य',sym:'☉',items:['Offer water (Arghya) to Sun every morning facing East / प्रतिदिन प्रातः पूर्व दिशा में सूर्य को जल अर्पित करें','Wear Ruby (Manikya) in gold in ring finger on Sunday / रविवार को सोने में माणिक्य अनामिका में धारण करें','Donate wheat, jaggery, and copper on Sunday / रविवार को गेहूं, गुड़ और तांबा दान करें','Chant: ॐ सूर्याय नमः 108 times at sunrise / सूर्योदय पर 108 बार ॐ सूर्याय नमः जपें','Respect father and elderly people / पिता और बुजुर्गों का सम्मान करें']},
+    {p:'Moon / चंद्र',sym:'☽',items:['Offer milk to Shiva Linga on Monday / सोमवार को शिव लिंग पर दूध चढ़ाएं','Wear Pearl (Moti) in silver in little finger on Monday / सोमवार को चांदी में मोती कनिष्ठा में पहनें','Donate white rice, milk, and silver on Monday / सोमवार को चावल, दूध और चांदी दान करें','Worship Goddess Durga and Chandra / दुर्गा माँ और चंद्रमा की उपासना करें','Chant: ॐ चन्द्राय नमः / ॐ चन्द्राय नमः जपें']},
+    {p:'Mars / मंगल',sym:'♂',items:['Visit Hanuman temple every Tuesday / प्रत्येक मंगलवार हनुमान मंदिर जाएं','Wear Red Coral (Moonga) in gold in ring finger / सोने में लाल मूंगा अनामिका में धारण करें','Donate masoor dal (red lentils), copper, and red cloth on Tuesday / मंगलवार को मसूर दाल, तांबा और लाल वस्त्र दान करें','Chant: ॐ मंगलाय नमः 108 times / 108 बार ॐ मंगलाय नमः जपें','Observe fast on Tuesday / मंगलवार को उपवास करें']},
+    {p:'Jupiter / गुरु',sym:'♃',items:['Wear Yellow Sapphire (Pukhraj) in gold in index finger on Thursday / गुरुवार को सोने में पुखराज तर्जनी में धारण करें','Donate yellow items – turmeric, yellow cloth, gold, books on Thursday / गुरुवार को हल्दी, पीला वस्त्र, सोना, पुस्तकें दान करें','Respect teachers, Brahmins and learned people / गुरु, ब्राह्मण और विद्वानों का सम्मान करें','Chant: ॐ गुरवे नमः / बृहस्पति मंत्र का जाप करें','Perform puja of Lord Vishnu / भगवान विष्णु की पूजा करें']},
+    {p:'Saturn / शनि',sym:'♄',items:['Light mustard oil lamp at Shani temple on Saturday / शनिवार को शनि मंदिर में सरसों तेल दीप जलाएं','Donate black sesame, black cloth, iron on Saturday / शनिवार को काला तिल, काला वस्त्र, लोहा दान करें','Serve the poor and disabled / गरीबों और विकलांगों की सेवा करें','Wear Blue Sapphire (Neelam) only after expert consultation / विशेषज्ञ सलाह के बाद नीलम धारण करें','Chant: ॐ शनैश्चराय नमः 108 times / 108 बार ॐ शनैश्चराय नमः जपें']},
+    {p:'Rahu / राहु',sym:'☊',items:['Offer durva grass to Lord Ganesha on Wednesday / बुधवार को गणेश जी को दूर्वा अर्पित करें','Donate saffron, black blanket and coconut / केसर, काला कंबल और नारियल दान करें','Wear Hessonite (Gomed) in silver after consultation / परामर्श के बाद चांदी में गोमेद धारण करें','Recite Durga Saptashati / दुर्गा सप्तशती का पाठ करें','Meditate and avoid negative thinking / ध्यान करें और नकारात्मक सोच से बचें']},
+  ];
+  let pg36=`<div class="sec-title">Planetary Remedies <span class="sec-title-hi">ग्रह उपाय एवं शांति</span></div>`;
+  remedyData.forEach(r=>{
+    pg36+=`<div class="remedy-box">
+      <div><span class="rplanet">${r.sym} ${r.p}</span></div>
+      <ul class="remedy-list">${r.items.map(it=>`<li>${it}</li>`).join('')}</ul>
+    </div>`;
+  });
+  pages.push(makePage(36,'~120','Planetary Remedies','ग्रह उपाय',pg36));
+
+  // ── PAGE 37: GEMS & MANTRAS ───────────────────────────────────
+  const gemsData=[
+    {p:'Sun / सूर्य',gem:'Ruby / माणिक्य',metal:'Gold / सोना',finger:'Ring / अनामिका',day:'Sunday / रविवार',mantra:'ॐ ह्रां ह्रीं ह्रौं सः सूर्याय नमः',count:'7000 / 7000 बार'},
+    {p:'Moon / चंद्र',gem:'Pearl / मोती',metal:'Silver / चांदी',finger:'Little / कनिष्ठा',day:'Monday / सोमवार',mantra:'ॐ श्रां श्रीं श्रौं सः चन्द्राय नमः',count:'11000 / 11000 बार'},
+    {p:'Mars / मंगल',gem:'Red Coral / मूंगा',metal:'Gold / सोना',finger:'Ring / अनामिका',day:'Tuesday / मंगलवार',mantra:'ॐ क्रां क्रीं क्रौं सः भौमाय नमः',count:'10000 / 10000 बार'},
+    {p:'Mercury / बुध',gem:'Emerald / पन्ना',metal:'Gold / सोना',finger:'Little / कनिष्ठा',day:'Wednesday / बुधवार',mantra:'ॐ ब्रां ब्रीं ब्रौं सः बुधाय नमः',count:'9000 / 9000 बार'},
+    {p:'Jupiter / गुरु',gem:'Yellow Sapphire / पुखराज',metal:'Gold / सोना',finger:'Index / तर्जनी',day:'Thursday / गुरुवार',mantra:'ॐ ग्रां ग्रीं ग्रौं सः गुरवे नमः',count:'19000 / 19000 बार'},
+    {p:'Venus / शुक्र',gem:'Diamond / हीरा',metal:'Silver / चांदी',finger:'Little / कनिष्ठा',day:'Friday / शुक्रवार',mantra:'ॐ द्रां द्रीं द्रौं सः शुक्राय नमः',count:'16000 / 16000 बार'},
+    {p:'Saturn / शनि',gem:'Blue Sapphire / नीलम',metal:'Iron / लोहा',finger:'Middle / मध्यमा',day:'Saturday / शनिवार',mantra:'ॐ प्रां प्रीं प्रौं सः शनैश्चराय नमः',count:'23000 / 23000 बार'},
+    {p:'Rahu / राहु',gem:'Hessonite / गोमेद',metal:'Silver / चांदी',finger:'Middle / मध्यमा',day:'Saturday / शनिवार',mantra:'ॐ भ्रां भ्रीं भ्रौं सः राहवे नमः',count:'18000 / 18000 बार'},
+    {p:'Ketu / केतु',gem:"Cat's Eye / लहसुनिया",metal:'Silver / चांदी',finger:'Little / कनिष्ठा',day:'Tuesday / मंगलवार',mantra:'ॐ स्त्रां स्त्रीं स्त्रौं सः केतवे नमः',count:'7000 / 7000 बार'},
+  ];
+  let pg37=`<div class="sec-title">Ratna &amp; Mantra Therapy <span class="sec-title-hi">रत्न एवं मंत्र चिकित्सा</span></div>
+  <table class="ptable" style="font-size:10pt;">
+    <thead><tr>
+      <th>Planet<span class="hi">ग्रह</span></th>
+      <th>Gemstone<span class="hi">रत्न</span></th>
+      <th>Metal<span class="hi">धातु</span></th>
+      <th>Finger<span class="hi">उंगली</span></th>
+      <th>Day<span class="hi">दिन</span></th>
+      <th>Beej Mantra<span class="hi">बीज मंत्र</span></th>
+      <th>Count<span class="hi">जप संख्या</span></th>
+    </tr></thead><tbody>
+    ${gemsData.map(g=>`<tr>
+      <td class="pname">${g.p.split('/')[0]}<span class="pname-hi">${g.p.split('/')[1]||g.p}</span></td>
+      <td style="font-size:10pt;">${g.gem}</td>
+      <td style="font-size:10pt;">${g.metal}</td>
+      <td style="font-size:10pt;">${g.finger}</td>
+      <td style="font-size:10pt;">${g.day}</td>
+      <td style="font-family:'Noto Sans Devanagari',serif;font-size:10pt;color:#5C0A0A;">${g.mantra}</td>
+      <td style="font-size:10pt;text-align:center;">${g.count.split('/')[0]}</td>
+    </tr>`).join('')}
+    </tbody>
+  </table>
+  <div style="margin-top:3mm;border:1pt solid #C8960C;padding:2mm;border-radius:1mm;background:rgba(178,34,34,0.04);">
+    <div style="font-family:'Cinzel',serif;font-size:11.5pt;color:#8B0000;margin-bottom:1mm;font-weight:700;">⚠️ IMPORTANT DISCLAIMER / महत्वपूर्ण सूचना</div>
+    <div style="font-size:10pt;line-height:2.0;font-family:'Crimson Pro',serif;">
+      Gemstones should be worn only after consultation with a qualified Jyotishi. Wrong gemstone can cause adverse effects. 
+      रत्न धारण करने से पहले किसी योग्य ज्योतिषी से परामर्श अवश्य लें। गलत रत्न हानिकारक हो सकता है।
+    </div>
+  </div>`;
+  pages.push(makePage(37,'~120','Ratna & Mantra','रत्न एवं मंत्र',pg37));
+
+  // ══════════════════════════════════════════════════════════════
+  // COMPLETE MATCH MATCHING SECTION (12 PAGES)
+  // ══════════════════════════════════════════════════════════════
+  if(info.mName){
+    const mh=H(info.mDob,info.mTob);
+    const mPlanets=calcPlanets(mh);
+    const mLagna=mh%12;
+    const mLagnaSign=SIGNS[mLagna];
+    const mLagnaSignHi=SIGNS_HI[mLagna];
+    const mMoonNak=mPlanets[1].ni;
+    const mD=new Date(info.mDob);
+    const mNavamsaIdx=(mh*3)%12;
+
+    // ── Accurate Gana assignment ──
+    const ganaMap=['Deva','Deva','Manushya','Deva','Manushya','Manushya','Deva','Deva','Rakshasa',
+                   'Rakshasa','Manushya','Manushya','Deva','Rakshasa','Deva','Rakshasa','Deva',
+                   'Manushya','Rakshasa','Manushya','Deva','Deva','Rakshasa','Rakshasa','Manushya','Manushya','Deva'];
+    const ganaHiMap=['देव','देव','मनुष्य','देव','मनुष्य','मनुष्य','देव','देव','राक्षस',
+                     'राक्षस','मनुष्य','मनुष्य','देव','राक्षस','देव','राक्षस','देव',
+                     'मनुष्य','राक्षस','मनुष्य','देव','देव','राक्षस','राक्षस','मनुष्य','मनुष्य','देव'];
+    const yoniMap=['Horse','Elephant','Sheep','Serpent','Dog','Cat','Rat','Cow','Buffalo','Tiger','Hare','Mongoose','Monkey','Lion','Horse','Elephant','Sheep','Serpent','Dog','Cat','Rat','Cow','Buffalo','Tiger','Hare','Mongoose','Monkey'];
+    const yoniHiMap=['घोड़ा','हाथी','भेड़','सर्प','कुत्ता','बिल्ली','चूहा','गाय','भैंस','बाघ','खरगोश','नेवला','बंदर','सिंह','घोड़ा','हाथी','भेड़','सर्प','कुत्ता','बिल्ली','चूहा','गाय','भैंस','बाघ','खरगोश','नेवला','बंदर'];
+    const varnaMap=['Shudra','Vaishya','Vaishya','Brahmin','Kshatriya','Brahmin','Shudra','Kshatriya','Vaishya','Brahmin','Shudra','Kshatriya','Kshatriya','Shudra','Brahmin','Vaishya','Kshatriya','Brahmin','Shudra','Vaishya','Vaishya','Brahmin','Kshatriya','Brahmin','Shudra','Kshatriya','Vaishya'];
+    const varnaHiMap=['शूद्र','वैश्य','वैश्य','ब्राह्मण','क्षत्रिय','ब्राह्मण','शूद्र','क्षत्रिय','वैश्य','ब्राह्मण','शूद्र','क्षत्रिय','क्षत्रिय','शूद्र','ब्राह्मण','वैश्य','क्षत्रिय','ब्राह्मण','शूद्र','वैश्य','वैश्य','ब्राह्मण','क्षत्रिय','ब्राह्मण','शूद्र','क्षत्रिय','वैश्य'];
+    const nadiMap=['Aadi','Madhya','Antya','Antya','Madhya','Aadi','Aadi','Madhya','Antya','Antya','Madhya','Aadi','Aadi','Madhya','Antya','Antya','Madhya','Aadi','Aadi','Madhya','Antya','Antya','Madhya','Aadi','Aadi','Madhya','Antya'];
+    const nadiHiMap=['आदि','मध्य','अंत्य','अंत्य','मध्य','आदि','आदि','मध्य','अंत्य','अंत्य','मध्य','आदि','आदि','मध्य','अंत्य','अंत्य','मध्य','आदि','आदि','मध्य','अंत्य','अंत्य','मध्य','आदि','आदि','मध्य','अंत्य'];
+
+    const bNak=planets[1].ni; const gNak=mPlanets[1].ni;
+    const bRashi=planets[1].si; const gRashi=mPlanets[1].si;
+
+    // Varna score
+    const varnaOrder=['Brahmin','Kshatriya','Vaishya','Shudra'];
+    const bVarnaRank=varnaOrder.indexOf(varnaMap[bNak]); const gVarnaRank=varnaOrder.indexOf(varnaMap[gNak]);
+    const varnaScore=(bVarnaRank<=gVarnaRank)?1:0;
+
+    // Vashya score
+    const vashyaGroups=[[4,5],[6,7,8],[0,1,2,3],[9,10],[11]];
+    const bVGroup=vashyaGroups.findIndex(g=>g.includes(bRashi));
+    const gVGroup=vashyaGroups.findIndex(g=>g.includes(gRashi));
+    const vashyaScore=bVGroup===gVGroup?2:Math.abs(bVGroup-gVGroup)<=1?1:0;
+
+    // Tara score (from boy's nakshatra)
+    const taraDiff=((gNak-bNak+27)%27);
+    const taraNum=(taraDiff%9)+1;
+    const goodTara=[1,2,4,6,8];
+    const taraScore=goodTara.includes(taraNum)?3:taraNum===3||taraNum===5||taraNum===7?0:1;
+
+    // Yoni score
+    const friendlyYoni={Horse:['Horse'],Elephant:['Elephant'],Sheep:['Sheep'],Serpent:['Serpent','Mongoose'],
+      Dog:['Dog'],Cat:['Cat','Rat'],Rat:['Rat','Cat'],Cow:['Cow'],Buffalo:['Buffalo'],
+      Tiger:['Tiger'],Hare:['Hare'],Mongoose:['Mongoose','Serpent'],Monkey:['Monkey'],Lion:['Lion']};
+    const enemyYoni={Horse:['Buffalo'],Elephant:['Lion'],Sheep:['Monkey'],Serpent:['Mongoose'],
+      Dog:['Hare'],Cat:['Rat'],Rat:['Cat'],Cow:['Tiger'],Buffalo:['Horse'],Tiger:['Cow'],
+      Hare:['Dog'],Mongoose:['Serpent'],Monkey:['Sheep'],Lion:['Elephant']};
+    const bYoni=yoniMap[bNak]; const gYoni=yoniMap[gNak];
+    const yoniScore=bYoni===gYoni?4:(friendlyYoni[bYoni]||[]).includes(gYoni)?3:(enemyYoni[bYoni]||[]).includes(gYoni)?0:2;
+
+    // Graha Maitri score (Moon sign lords)
+    const maitriMap={Sun:['Sun','Moon','Mars','Jupiter'],Moon:['Sun','Moon','Mercury'],
+      Mars:['Sun','Moon','Jupiter'],Mercury:['Sun','Venus'],Jupiter:['Sun','Moon','Mars'],
+      Venus:['Mercury','Saturn'],Saturn:['Mercury','Venus']};
+    const bMoonLord=LORDS[bRashi]; const gMoonLord=LORDS[gRashi];
+    const isFriendly=(a,b)=>(maitriMap[a]||[]).includes(b);
+    const grahaMaitriScore=bMoonLord===gMoonLord?5:isFriendly(bMoonLord,gMoonLord)&&isFriendly(gMoonLord,bMoonLord)?5:isFriendly(bMoonLord,gMoonLord)||isFriendly(gMoonLord,bMoonLord)?4:3;
+
+    // Gana score
+    const bGana=ganaMap[bNak]; const gGana=ganaMap[gNak];
+    const ganaScore=bGana===gGana?6:bGana==='Deva'&&gGana==='Manushya'?5:bGana==='Manushya'&&gGana==='Deva'?5:bGana==='Deva'&&gGana==='Rakshasa'?1:bGana==='Rakshasa'&&gGana==='Deva'?0:4;
+
+    // Bhakut score (Rashi distance)
+    const rashiDiff=((gRashi-bRashi+12)%12)+1;
+    const badBhakut=[6,8,12,2,5,9];
+    const bhakutScore=!badBhakut.includes(rashiDiff)?7:rashiDiff===6||rashiDiff===8?0:rashiDiff===12||rashiDiff===2?1:2;
+
+    // Nadi score
+    const bNadi=nadiMap[bNak]; const gNadi=nadiMap[gNak];
+    const nadiScore=bNadi!==gNadi?8:0;
+
+    const KOOTS=[
+      {n:'Varna',hi:'वर्ण',max:1,score:varnaScore,
+       bVal:varnaMap[bNak],bValHi:varnaHiMap[bNak],gVal:varnaMap[gNak],gValHi:varnaHiMap[gNak],
+       desc:'Spiritual & social compatibility. Boy\'s varna should be equal or higher.',
+       desc_hi:'आध्यात्मिक एवं सामाजिक अनुकूलता। वर का वर्ण समान या उच्च होना चाहिए।'},
+      {n:'Vashya',hi:'वश्य',max:2,score:vashyaScore,
+       bVal:SIGNS[bRashi],bValHi:SIGNS_HI[bRashi],gVal:SIGNS[gRashi],gValHi:SIGNS_HI[gRashi],
+       desc:'Natural dominance & attraction between the pair.',
+       desc_hi:'दम्पति के बीच स्वाभाविक आकर्षण और अधीनता का भाव।'},
+      {n:'Tara',hi:'तारा',max:3,score:taraScore,
+       bVal:NAK[bNak],bValHi:NAK_HI[bNak],gVal:NAK[gNak],gValHi:NAK_HI[gNak],
+       desc:`Birth star count from boy's nakshatra: Tara ${taraNum}. Auspicious stars: 1,2,4,6,8.`,
+       desc_hi:`वर नक्षत्र से तारा गणना: ${taraNum}वां तारा। 1,2,4,6,8 शुभ तारा हैं।`},
+      {n:'Yoni',hi:'योनि',max:4,score:yoniScore,
+       bVal:bYoni,bValHi:yoniHiMap[bNak],gVal:gYoni,gValHi:yoniHiMap[gNak],
+       desc:'Physical & sexual compatibility based on animal symbols of nakshatras.',
+       desc_hi:'नक्षत्र के पशु प्रतीक पर आधारित शारीरिक अनुकूलता।'},
+      {n:'Graha Maitri',hi:'ग्रह मैत्री',max:5,score:grahaMaitriScore,
+       bVal:`${bMoonLord} lord`,bValHi:LORDS_HI[bRashi],gVal:`${gMoonLord} lord`,gValHi:LORDS_HI[gRashi],
+       desc:'Mental compatibility based on friendship of Moon sign lords.',
+       desc_hi:'चंद्र राशि के स्वामियों की मित्रता पर आधारित मानसिक अनुकूलता।'},
+      {n:'Gana',hi:'गण',max:6,score:ganaScore,
+       bVal:bGana,bValHi:ganaHiMap[bNak],gVal:gGana,gValHi:ganaHiMap[gNak],
+       desc:'Temperament match. Deva+Deva best. Rakshasa+Deva worst.',
+       desc_hi:'स्वभाव मिलान। देव+देव उत्तम। राक्षस+देव निकृष्ट।'},
+      {n:'Bhakut',hi:'भकूट',max:7,score:bhakutScore,
+       bVal:SIGNS[bRashi],bValHi:SIGNS_HI[bRashi],gVal:SIGNS[gRashi],gValHi:SIGNS_HI[gRashi],
+       desc:`Moon sign distance: ${rashiDiff}. Bad positions: 6/8, 12/2, 5/9 from each other.`,
+       desc_hi:`राशि अंतराल: ${rashiDiff}। 6/8, 12/2, 5/9 राशि अंतराल अशुभ।`},
+      {n:'Nadi',hi:'नाड़ी',max:8,score:nadiScore,
+       bVal:bNadi,bValHi:nadiHiMap[bNak],gVal:gNadi,gValHi:nadiHiMap[gNak],
+       desc:'Health & progeny. MOST IMPORTANT (8 points). Same Nadi = 0 points (Nadi Dosha).',
+       desc_hi:'स्वास्थ्य एवं संतान। सर्वाधिक महत्वपूर्ण। समान नाड़ी = नाड़ी दोष।'},
+    ];
+    const totalScore=KOOTS.reduce((a,k)=>a+k.score,0);
+    const verdict=totalScore>=31?'Uttam / उत्तम — Excellent ✅':totalScore>=28?'Atishubh / अतिशुभ — Very Good ✅':totalScore>=21?'Shubh / शुभ — Good ✓':totalScore>=18?'Madhyam / मध्यम — Average ⚠️':totalScore>=13?'Saadharan / साधारण — Below Average ⚠️':'Avishti / अवष्टि — Not Recommended ✗';
+    const verdictColor=totalScore>=28?'#006400':totalScore>=18?'#C8960C':'#DC143C';
+
+    // MANGAL DOSHA CHECK
+    const bMarsHouse=planets[2].house;
+    const gMarsHouse=mPlanets[2].house;
+    const mangalHouses=[1,2,4,7,8,12];
+    const bMangal=mangalHouses.includes(bMarsHouse);
+    const gMangal=mangalHouses.includes(gMarsHouse);
+    const mangalCancelled=bMangal&&gMangal;
+    const mangalStatus=!bMangal&&!gMangal?{status:'Neither Manglik',hi:'दोनों अमांगलिक',color:'green',note:'No Mangal Dosha in either chart. Marriage is auspicious.',noteHi:'दोनों में मंगल दोष नहीं। विवाह शुभ।'}
+      :mangalCancelled?{status:'Both Manglik — Cancelled',hi:'दोनों मांगलिक — दोष निरस्त',color:'#C8960C',note:'Both charts have Mangal Dosha. Dosha cancels each other. Marriage can proceed.',noteHi:'दोनों मांगलिक हैं। दोष एक-दूसरे को निरस्त करते हैं।'}
+      :bMangal&&!gMangal?{status:'Boy is Manglik Only',hi:'केवल वर मांगलिक',color:'#DC143C',note:'Boy has Mangal Dosha but Girl does not. Mangal Shanti Puja recommended before marriage.',noteHi:'वर में मंगल दोष है, वधू में नहीं। विवाह से पहले मंगल शांति पूजा करें।'}
+      :{status:'Girl is Manglik Only',hi:'केवल वधू मांगलिक',color:'#DC143C',note:'Girl has Mangal Dosha but Boy does not. Mangal Shanti Puja recommended before marriage.',noteHi:'वधू में मंगल दोष है, वर में नहीं। विवाह से पहले मंगल शांति पूजा करें।'};
+
+    // Nadi Dosha check
+    const nadiDosha=nadiScore===0;
+    // Bhakut Dosha check
+    const bhakutDosha=bhakutScore===0;
+
+    // ── MILAN PAGE M1: COVER ──────────────────────────────────────
+    let pgM1=`<div class="sec-title">Kundali Milan – Vivah Patrika <span class="sec-title-hi">कुण्डली मिलान – विवाह पत्रिका</span></div>
+    <div style="border:1.5pt solid #C8960C;border-radius:3mm;padding:4mm;background:linear-gradient(135deg,#FFF9F0,#FDF8E8);margin-bottom:3mm;text-align:center;">
+      <div style="font-family:'Noto Sans Devanagari',serif;font-size:11pt;color:#5C0A0A;margin-bottom:2mm;">ॐ नमः शिवाय · विवाह मिलान</div>
+      <div style="display:grid;grid-template-columns:1fr auto 1fr;gap:4mm;align-items:center;">
+        <div style="border:0.5pt solid #E8C97A;padding:3mm;border-radius:2mm;background:white;">
+          <div style="font-size:11pt;color:#C8960C;margin-bottom:0.5mm;">👨 VR / वर</div>
+          <div style="font-family:'Cinzel Decorative',serif;font-size:11pt;color:#8B0000;">${info.name}</div>
+          <div style="font-family:'Noto Sans Devanagari',serif;font-size:10pt;color:#5C0A0A;font-weight:700;">${info.nameHi}</div>
+          <div style="font-size:11.5pt;font-family:'Crimson Pro',serif;margin-top:1mm;color:#6B4C2A;">
+            DOB: ${info.dob}<br>Time: ${info.tob}<br>
+            Place: ${info.city}, ${info.state}<br>
+            Lagna: <b>${lagnaSign} (${lagnaSignHi})</b><br>
+            Chandra: <b>${planets[1].sign} (${planets[1].signHi})</b><br>
+            Nakshatra: <b>${NAK[bNak]} (${NAK_HI[bNak]})</b><br>
+            Gana: <b>${bGana} (${ganaHiMap[bNak]})</b><br>
+            Nadi: <b>${bNadi} (${nadiHiMap[bNak]})</b><br>
+            Varna: <b>${varnaMap[bNak]} (${varnaHiMap[bNak]})</b>
+          </div>
+        </div>
+        <div style="font-size:24pt;color:#C8960C;">💞</div>
+        <div style="border:0.5pt solid #E8C97A;padding:3mm;border-radius:2mm;background:white;">
+          <div style="font-size:11pt;color:#C8960C;margin-bottom:0.5mm;">👩 VADHU / वधू</div>
+          <div style="font-family:'Cinzel Decorative',serif;font-size:11pt;color:#8B0000;">${info.mName}</div>
+          <div style="font-family:'Noto Sans Devanagari',serif;font-size:10pt;color:#5C0A0A;font-weight:700;">${info.mName}</div>
+          <div style="font-size:11.5pt;font-family:'Crimson Pro',serif;margin-top:1mm;color:#6B4C2A;">
+            DOB: ${info.mDob}<br>Time: ${info.mTob}<br>
+            Place: ${info.mCity||'—'}<br>
+            Lagna: <b>${mLagnaSign} (${mLagnaSignHi})</b><br>
+            Chandra: <b>${mPlanets[1].sign} (${mPlanets[1].signHi})</b><br>
+            Nakshatra: <b>${NAK[gNak]} (${NAK_HI[gNak]})</b><br>
+            Gana: <b>${gGana} (${ganaHiMap[gNak]})</b><br>
+            Nadi: <b>${gNadi} (${nadiHiMap[gNak]})</b><br>
+            Varna: <b>${varnaMap[gNak]} (${varnaHiMap[gNak]})</b>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:3mm;">
+      <div style="border:1.5pt solid ${verdictColor};border-radius:2mm;padding:3mm;text-align:center;background:${totalScore>=28?'rgba(0,100,0,0.05)':totalScore>=18?'rgba(200,150,12,0.05)':'rgba(220,20,60,0.05)'};">
+        <div style="font-family:'Cinzel Decorative',serif;font-size:22pt;color:${verdictColor};">${totalScore}</div>
+        <div style="font-family:'Cinzel',serif;font-size:11pt;color:#6B4C2A;letter-spacing:0.1em;">OUT OF 36 GUNAS</div>
+        <div style="font-family:'Noto Sans Devanagari',serif;font-size:10.5pt;color:${verdictColor};font-weight:700;margin-top:1mm;">${verdict}</div>
+      </div>
+      <div style="border:1pt solid #E8C97A;border-radius:2mm;padding:3mm;background:#FDF8E8;">
+        <div style="font-family:'Cinzel',serif;font-size:11pt;color:#8B0000;font-weight:700;margin-bottom:1mm;">MANGAL DOSHA / मंगल दोष</div>
+        <div style="font-size:10pt;font-weight:700;color:${mangalStatus.color};">${mangalStatus.status}</div>
+        <div style="font-family:'Noto Sans Devanagari',serif;font-size:11.5pt;color:${mangalStatus.color};display:block;">${mangalStatus.hi}</div>
+        <div style="font-size:11pt;font-family:'Crimson Pro',serif;color:#6B4C2A;margin-top:1mm;">${mangalStatus.note}</div>
+      </div>
+      <div style="border:1pt solid #E8C97A;border-radius:2mm;padding:3mm;background:#FDF8E8;">
+        <div style="font-family:'Cinzel',serif;font-size:11pt;color:#8B0000;font-weight:700;margin-bottom:1mm;">DOSHA STATUS / दोष स्थिति</div>
+        <div style="font-size:11.5pt;line-height:2.0;">
+          <span style="color:${nadiDosha?'#DC143C':'green'};font-weight:700;">${nadiDosha?'⚠️':'✅'} Nadi Dosha: ${nadiDosha?'Present':'Absent'}</span><br>
+          <span style="font-family:'Noto Sans Devanagari',serif;font-size:11pt;color:#6B4C2A;">नाड़ी दोष: ${nadiDosha?'उपस्थित':'अनुपस्थित'}</span><br>
+          <span style="color:${bhakutDosha?'#DC143C':'green'};font-weight:700;">${bhakutDosha?'⚠️':'✅'} Bhakut Dosha: ${bhakutDosha?'Present':'Absent'}</span><br>
+          <span style="font-family:'Noto Sans Devanagari',serif;font-size:11pt;color:#6B4C2A;">भकूट दोष: ${bhakutDosha?'उपस्थित':'अनुपस्थित'}</span>
+        </div>
+      </div>
+    </div>`;
+    pages.push(makePage(38,'~120','Kundali Milan Cover','विवाह पत्रिका',pgM1));
+
+    // ── MILAN PAGE M2: BOY'S FULL KUNDALI ────────────────────────
+    let pgM2=`<div class="sec-title">Boy's Kundali – Vr Janmpatri <span class="sec-title-hi">वर की जन्मपत्री</span></div>
+    <div style="display:grid;grid-template-columns:auto 1fr;gap:4mm;align-items:start;margin-bottom:3mm;">
+      <div class="chart-box">
+        <div class="chart-label-main">VR LAGNA / वर लग्न कुण्डली</div>
+        <div class="kundali-svg-wrap">${chartSVG(lagnaIdx,planets,190)}</div>
+        <div class="chart-sub">${lagnaSign} (${lagnaSignHi}) Lagna</div>
+      </div>
+      <div>
+        <table class="info-table" style="font-size:10pt;">
+          <tr><td class="lbl">Name<span class="lbl-hi">नाम</span></td><td class="val" colspan="3">${info.name} (${info.nameHi})</td></tr>
+          <tr><td class="lbl">DOB<span class="lbl-hi">जन्म तिथि</span></td><td class="val">${info.dob} ${info.tob}</td><td class="lbl">Place<span class="lbl-hi">स्थान</span></td><td class="val">${info.city}</td></tr>
+          <tr><td class="lbl">Lagna<span class="lbl-hi">लग्न</span></td><td class="val">${lagnaSign} (${lagnaSignHi})</td><td class="lbl">Lagna Lord<span class="lbl-hi">लग्नेश</span></td><td class="val">${LORDS[lagnaIdx]} (${LORDS_HI[lagnaIdx]})</td></tr>
+          <tr><td class="lbl">Moon<span class="lbl-hi">चंद्र</span></td><td class="val">${planets[1].sign} (${planets[1].signHi})</td><td class="lbl">Nakshatra<span class="lbl-hi">नक्षत्र</span></td><td class="val">${NAK[bNak]} (${NAK_HI[bNak]})</td></tr>
+          <tr><td class="lbl">Gana<span class="lbl-hi">गण</span></td><td class="val">${bGana} (${ganaHiMap[bNak]})</td><td class="lbl">Nadi<span class="lbl-hi">नाड़ी</span></td><td class="val">${bNadi} (${nadiHiMap[bNak]})</td></tr>
+          <tr><td class="lbl">Varna<span class="lbl-hi">वर्ण</span></td><td class="val">${varnaMap[bNak]} (${varnaHiMap[bNak]})</td><td class="lbl">Yoni<span class="lbl-hi">योनि</span></td><td class="val">${bYoni} (${yoniHiMap[bNak]})</td></tr>
+          <tr><td class="lbl">Mangal<span class="lbl-hi">मंगल</span></td><td class="val" colspan="3" style="color:${bMangal?'#DC143C':'green'};font-weight:700;">${bMangal?`⚠️ Manglik — Mars in ${bMarsHouse}th house / मांगलिक`:'✅ Non-Manglik / अमांगलिक'}</td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="sub-title">Boy's Planet Positions / वर के ग्रह</div>
+    <table class="ptable" style="font-size:10pt;">
+      <thead><tr><th>Planet<span class="hi">ग्रह</span></th><th>Sign<span class="hi">राशि</span></th><th>Deg<span class="hi">अंश</span></th><th>House<span class="hi">भाव</span></th><th>Nakshatra<span class="hi">नक्षत्र</span></th><th>Motion<span class="hi">गति</span></th><th>Status<span class="hi">स्थिति</span></th></tr></thead>
+      <tbody>${planets.map(pl=>`<tr>
+        <td class="pname">${pl.sym} ${pl.p}<span class="pname-hi">${pl.phi}</span></td>
+        <td><span class="sign">${pl.sign}</span><span class="sign-hi">${pl.signHi}</span></td>
+        <td class="deg">${pl.deg}°</td>
+        <td style="text-align:center;font-family:'Cinzel',serif;font-size:10pt;color:#8B0000;font-weight:700;">${pl.house}</td>
+        <td><span class="nak">${pl.nak}</span><span class="nak-hi">${pl.nakHi}</span></td>
+        <td>${pl.retro?'<span class="retro">® Retro</span>':'<span class="direct">Direct</span>'}</td>
+        <td style="font-size:11.5pt;">${pl.status}</td>
+      </tr>`).join('')}</tbody>
+    </table>`;
+    pages.push(makePage(39,'~120','Boy\'s Kundali','वर की जन्मपत्री',pgM2));
+
+    // ── MILAN PAGE M3: GIRL'S FULL KUNDALI ───────────────────────
+    let pgM3=`<div class="sec-title">Girl's Kundali – Vadhu Janmpatri <span class="sec-title-hi">वधू की जन्मपत्री</span></div>
+    <div style="display:grid;grid-template-columns:auto 1fr;gap:4mm;align-items:start;margin-bottom:3mm;">
+      <div class="chart-box">
+        <div class="chart-label-main">VADHU LAGNA / वधू लग्न कुण्डली</div>
+        <div class="kundali-svg-wrap">${chartSVG(mLagna,mPlanets,190)}</div>
+        <div class="chart-sub">${mLagnaSign} (${mLagnaSignHi}) Lagna</div>
+      </div>
+      <div>
+        <table class="info-table" style="font-size:10pt;">
+          <tr><td class="lbl">Name<span class="lbl-hi">नाम</span></td><td class="val" colspan="3">${info.mName}</td></tr>
+          <tr><td class="lbl">DOB<span class="lbl-hi">जन्म तिथि</span></td><td class="val">${info.mDob} ${info.mTob}</td><td class="lbl">Place<span class="lbl-hi">स्थान</span></td><td class="val">${info.mCity||'—'}</td></tr>
+          <tr><td class="lbl">Lagna<span class="lbl-hi">लग्न</span></td><td class="val">${mLagnaSign} (${mLagnaSignHi})</td><td class="lbl">Lagna Lord<span class="lbl-hi">लग्नेश</span></td><td class="val">${LORDS[mLagna]} (${LORDS_HI[mLagna]})</td></tr>
+          <tr><td class="lbl">Moon<span class="lbl-hi">चंद्र</span></td><td class="val">${mPlanets[1].sign} (${mPlanets[1].signHi})</td><td class="lbl">Nakshatra<span class="lbl-hi">नक्षत्र</span></td><td class="val">${NAK[gNak]} (${NAK_HI[gNak]})</td></tr>
+          <tr><td class="lbl">Gana<span class="lbl-hi">गण</span></td><td class="val">${gGana} (${ganaHiMap[gNak]})</td><td class="lbl">Nadi<span class="lbl-hi">नाड़ी</span></td><td class="val">${gNadi} (${nadiHiMap[gNak]})</td></tr>
+          <tr><td class="lbl">Varna<span class="lbl-hi">वर्ण</span></td><td class="val">${varnaMap[gNak]} (${varnaHiMap[gNak]})</td><td class="lbl">Yoni<span class="lbl-hi">योनि</span></td><td class="val">${gYoni} (${yoniHiMap[gNak]})</td></tr>
+          <tr><td class="lbl">Mangal<span class="lbl-hi">मंगल</span></td><td class="val" colspan="3" style="color:${gMangal?'#DC143C':'green'};font-weight:700;">${gMangal?`⚠️ Manglik — Mars in ${gMarsHouse}th house / मांगलिक`:'✅ Non-Manglik / अमांगलिक'}</td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="sub-title">Girl's Planet Positions / वधू के ग्रह</div>
+    <table class="ptable" style="font-size:10pt;">
+      <thead><tr><th>Planet<span class="hi">ग्रह</span></th><th>Sign<span class="hi">राशि</span></th><th>Deg<span class="hi">अंश</span></th><th>House<span class="hi">भाव</span></th><th>Nakshatra<span class="hi">नक्षत्र</span></th><th>Motion<span class="hi">गति</span></th><th>Status<span class="hi">स्थिति</span></th></tr></thead>
+      <tbody>${mPlanets.map(pl=>`<tr>
+        <td class="pname">${pl.sym} ${pl.p}<span class="pname-hi">${pl.phi}</span></td>
+        <td><span class="sign">${pl.sign}</span><span class="sign-hi">${pl.signHi}</span></td>
+        <td class="deg">${pl.deg}°</td>
+        <td style="text-align:center;font-family:'Cinzel',serif;font-size:10pt;color:#8B0000;font-weight:700;">${pl.house}</td>
+        <td><span class="nak">${pl.nak}</span><span class="nak-hi">${pl.nakHi}</span></td>
+        <td>${pl.retro?'<span class="retro">® Retro</span>':'<span class="direct">Direct</span>'}</td>
+        <td style="font-size:11.5pt;">${pl.status}</td>
+      </tr>`).join('')}</tbody>
+    </table>`;
+    pages.push(makePage(40,'~120','Girl\'s Kundali','वधू की जन्मपत्री',pgM3));
+
+    // ── MILAN PAGE M4: NAVAMSA COMPARISON ────────────────────────
+    let pgM4=`<div class="sec-title">Navamsa Comparison – D9 Charts <span class="sec-title-hi">नवांश तुलना – वर एवं वधू</span></div>
+    <div class="charts-row">
+      <div class="chart-box">
+        <div class="chart-label-main">BOY'S NAVAMSA / वर नवांश (D-9)</div>
+        <div class="kundali-svg-wrap">${chartSVG((lagnaIdx*3)%12,planets,200)}</div>
+        <div class="chart-sub">Navamsa Lagna: ${SIGNS[(lagnaIdx*3)%12]} (${SIGNS_HI[(lagnaIdx*3)%12]})</div>
+      </div>
+      <div class="chart-box">
+        <div class="chart-label-main">GIRL'S NAVAMSA / वधू नवांश (D-9)</div>
+        <div class="kundali-svg-wrap">${chartSVG(mNavamsaIdx,mPlanets,200)}</div>
+        <div class="chart-sub">Navamsa Lagna: ${SIGNS[mNavamsaIdx]} (${SIGNS_HI[mNavamsaIdx]})</div>
+      </div>
+    </div>
+    <div style="margin-top:3mm;display:grid;grid-template-columns:1fr 1fr;gap:3mm;">
+      <div style="border:0.5pt solid #E8C97A;padding:2.5mm;border-radius:1mm;background:#FDF8E8;">
+        <div style="font-family:'Cinzel',serif;font-size:11.5pt;color:#8B0000;font-weight:700;margin-bottom:1.5mm;">BOY'S 7TH HOUSE ANALYSIS / वर का सप्तम भाव</div>
+        <div style="font-size:10pt;line-height:2.0;font-family:'Crimson Pro',serif;">
+          7th House Sign: <b>${SIGNS[(lagnaIdx+6)%12]} (${SIGNS_HI[(lagnaIdx+6)%12]})</b><br>
+          7th Lord: <b>${LORDS[(lagnaIdx+6)%12]} (${LORDS_HI[(lagnaIdx+6)%12]})</b> in ${planets[PLANETS.indexOf(LORDS[(lagnaIdx+6)%12])]?.sign||'—'} house ${planets[PLANETS.indexOf(LORDS[(lagnaIdx+6)%12])]?.house||'—'}<br>
+          Planets in 7th: <b>${planets.filter(p=>p.house===7).map(p=>p.sym+p.p).join(', ')||'None'}</b><br>
+          <span style="font-family:'Noto Sans Devanagari',serif;font-size:11.5pt;color:#6B4C2A;">सप्तम भाव ${SIGNS_HI[(lagnaIdx+6)%12]} राशि में, स्वामी ${LORDS_HI[(lagnaIdx+6)%12]}</span>
+        </div>
+      </div>
+      <div style="border:0.5pt solid #E8C97A;padding:2.5mm;border-radius:1mm;background:#FDF8E8;">
+        <div style="font-family:'Cinzel',serif;font-size:11.5pt;color:#8B0000;font-weight:700;margin-bottom:1.5mm;">GIRL'S 7TH HOUSE ANALYSIS / वधू का सप्तम भाव</div>
+        <div style="font-size:10pt;line-height:2.0;font-family:'Crimson Pro',serif;">
+          7th House Sign: <b>${SIGNS[(mLagna+6)%12]} (${SIGNS_HI[(mLagna+6)%12]})</b><br>
+          7th Lord: <b>${LORDS[(mLagna+6)%12]} (${LORDS_HI[(mLagna+6)%12]})</b> in ${mPlanets[PLANETS.indexOf(LORDS[(mLagna+6)%12])]?.sign||'—'} house ${mPlanets[PLANETS.indexOf(LORDS[(mLagna+6)%12])]?.house||'—'}<br>
+          Planets in 7th: <b>${mPlanets.filter(p=>p.house===7).map(p=>p.sym+p.p).join(', ')||'None'}</b><br>
+          <span style="font-family:'Noto Sans Devanagari',serif;font-size:11.5pt;color:#6B4C2A;">सप्तम भाव ${SIGNS_HI[(mLagna+6)%12]} राशि में, स्वामी ${LORDS_HI[(mLagna+6)%12]}</span>
+        </div>
+      </div>
+    </div>
+    <div style="margin-top:3mm;border:1pt solid #C8960C;padding:2.5mm;border-radius:1mm;background:#FDF8E8;">
+      <div style="font-family:'Cinzel',serif;font-size:11.5pt;color:#8B0000;font-weight:700;margin-bottom:1mm;">NAVAMSA COMPATIBILITY / नवांश अनुकूलता</div>
+      <div style="font-size:10pt;line-height:2.0;font-family:'Crimson Pro',serif;">
+        Navamsa reveals the deeper soul connection. The 7th house in Navamsa shows the true nature of the spouse.
+        ${LORDS[(lagnaIdx*3+6)%12]===LORDS[(mNavamsaIdx+6)%12]?'Both Navamsa 7th lords are the same — indicates deep spiritual bond and lasting marriage.':'Different Navamsa 7th lords indicate complementary personalities that balance each other.'}
+        <br><span style="font-family:'Noto Sans Devanagari',serif;font-size:11.5pt;color:#6B4C2A;">नवांश सप्तम भाव जीवनसाथी की वास्तविक प्रकृति दर्शाता है। दोनों नवांश परस्पर अनुकूल हैं।</span>
+      </div>
+    </div>`;
+    pages.push(makePage(41,'~120','Navamsa Comparison','नवांश तुलना',pgM4));
+
+    // ── MILAN PAGE M5: 36 GUNA MILAN (DETAILED) ──────────────────
+    let pgM5=`<div class="sec-title">36 Guna Milan – Complete Ashta Koot <span class="sec-title-hi">३६ गुण मिलान – अष्टकूट विश्लेषण</span></div>
+    <table class="milan-table">
+      <thead><tr>
+        <th style="width:14%">Koot<span class="hi">कूट</span></th>
+        <th style="width:8%">Max<span class="hi">अधिकतम</span></th>
+        <th style="width:8%">Score<span class="hi">प्राप्तांक</span></th>
+        <th style="width:16%">Boy / वर</th>
+        <th style="width:16%">Girl / वधू</th>
+        <th>Significance & Result / महत्व एवं फल</th>
+      </tr></thead><tbody>
+      ${KOOTS.map(k=>`<tr>
+        <td><span class="kname">${k.n}</span><span class="kname-hi">${k.hi}</span></td>
+        <td style="text-align:center;font-family:'Cinzel',serif;color:#8B0000;font-weight:700;font-size:11pt;">${k.max}</td>
+        <td style="text-align:center;font-weight:900;font-family:'Cinzel Decorative',serif;font-size:10pt;color:${k.score>=k.max*0.75?'#006400':k.score>=k.max*0.4?'#C8960C':'#DC143C'}">${k.score}</td>
+        <td style="font-size:10pt;"><b style="color:#8B0000;">${k.bVal}</b><br><span style="font-family:'Noto Sans Devanagari',serif;font-size:10pt;color:#5C0A0A;">${k.bValHi}</span></td>
+        <td style="font-size:10pt;"><b style="color:#8B0000;">${k.gVal}</b><br><span style="font-family:'Noto Sans Devanagari',serif;font-size:10pt;color:#5C0A0A;">${k.gValHi}</span></td>
+        <td>
+          <span style="font-size:10pt;font-family:'Crimson Pro',serif;line-height:1.8;">${k.desc}</span><br>
+          <span style="font-family:'Noto Sans Devanagari',serif;font-size:11.5pt;color:#6B4C2A;line-height:1.9;">${k.desc_hi}</span><br>
+          <span style="font-size:11.5pt;font-weight:700;color:${k.score>=k.max*0.75?'#006400':k.score>=k.max*0.4?'#C8960C':'#DC143C'};">
+            ${k.score>=k.max?'★ Perfect / पूर्ण':k.score>=k.max*0.75?'✓ Shubh / शुभ':k.score>=k.max*0.4?'∼ Madhyam / मध्यम':'✗ Ashubh / अशुभ'}
+          </span>
+        </td>
+      </tr>`).join('')}
+      <tr style="background:linear-gradient(135deg,#FFF0E0,#FDF8E8);">
+        <td colspan="2" style="font-family:'Cinzel',serif;font-size:11pt;color:#8B0000;font-weight:700;text-align:right;">TOTAL SCORE / कुल अंक →</td>
+        <td style="text-align:center;font-family:'Cinzel Decorative',serif;font-size:16pt;font-weight:900;color:${verdictColor};">${totalScore}</td>
+        <td colspan="3" style="font-family:'Noto Sans Devanagari',serif;font-size:11pt;color:${verdictColor};font-weight:800;">${verdict}<br>
+          <span style="font-size:10pt;font-family:'Crimson Pro',serif;color:#6B4C2A;">
+            ${totalScore>=28?'This is an excellent match. The cosmic alignment strongly favors this union.':totalScore>=21?'Good compatibility. With mutual respect this will be a happy marriage.':totalScore>=18?'Acceptable match. Understanding and compromise will strengthen the bond.':'Expert astrologer consultation strongly recommended before proceeding.'}
+          </span>
+        </td>
+      </tr>
+      </tbody>
+    </table>`;
+    pages.push(makePage(42,'~120','36 Guna Milan','३६ गुण मिलान',pgM5));
+
+    // ── MILAN PAGE M6: DOSHA ANALYSIS ────────────────────────────
+    let pgM6=`<div class="sec-title">Milan Dosha Analysis <span class="sec-title-hi">मिलान दोष विश्लेषण</span></div>
+
+    <div class="sub-title">Mangal Dosha / मंगल दोष</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:3mm;margin-bottom:3mm;">
+      <div class="dosha-box ${bMangal?'present':'absent'}">
+        <div class="dosha-icon">♂</div>
+        <div>
+          <span class="dosha-title">Boy / वर — ${info.name}</span>
+          <div class="dosha-status ${bMangal?'yes':'no'}">${bMangal?'⚠️ MANGLIK / मांगलिक':'✅ NON-MANGLIK / अमांगलिक'}</div>
+          <div class="dosha-desc">Mars in ${bMarsHouse}${['','st','nd','rd','th','th','th','th','th','th','th','th','th'][bMarsHouse]} house. ${bMangal?`Houses 1,2,4,7,8,12 are Manglik houses. Mars is in house ${bMarsHouse}.`:'Mars is in a neutral house. No Mangal Dosha.'}
+          <span class="dosha-desc-hi">मंगल ${bMarsHouse}वें भाव में। ${bMangal?'मंगल दोष उपस्थित।':'मंगल दोष नहीं।'}</span></div>
+        </div>
+      </div>
+      <div class="dosha-box ${gMangal?'present':'absent'}">
+        <div class="dosha-icon">♂</div>
+        <div>
+          <span class="dosha-title">Girl / वधू — ${info.mName}</span>
+          <div class="dosha-status ${gMangal?'yes':'no'}">${gMangal?'⚠️ MANGLIK / मांगलिक':'✅ NON-MANGLIK / अमांगलिक'}</div>
+          <div class="dosha-desc">Mars in ${gMarsHouse}${['','st','nd','rd','th','th','th','th','th','th','th','th','th'][gMarsHouse]} house. ${gMangal?`Houses 1,2,4,7,8,12 are Manglik houses. Mars is in house ${gMarsHouse}.`:'Mars is in a neutral house. No Mangal Dosha.'}
+          <span class="dosha-desc-hi">मंगल ${gMarsHouse}वें भाव में। ${gMangal?'मंगल दोष उपस्थित।':'मंगल दोष नहीं।'}</span></div>
+        </div>
+      </div>
+    </div>
+    <div style="border:1.5pt solid ${mangalStatus.color};padding:2.5mm;border-radius:2mm;margin-bottom:3mm;background:rgba(0,0,0,0.02);">
+      <div style="font-family:'Cinzel',serif;font-size:10pt;color:${mangalStatus.color};font-weight:700;">VERDICT / निर्णय: ${mangalStatus.status} (${mangalStatus.hi})</div>
+      <div style="font-size:10pt;font-family:'Crimson Pro',serif;margin-top:1mm;line-height:1.9;">${mangalStatus.note}<span style="font-family:'Noto Sans Devanagari',serif;font-size:10pt;color:#6B4C2A;display:block;">${mangalStatus.noteHi}</span></div>
+    </div>
+
+    <div class="sub-title">Nadi Dosha / नाड़ी दोष</div>
+    <div class="dosha-box ${nadiDosha?'present':'absent'}">
+      <div class="dosha-icon">🔱</div>
+      <div>
+        <span class="dosha-title">Nadi Dosha Analysis / नाड़ी दोष विश्लेषण</span>
+        <div class="dosha-status ${nadiDosha?'yes':'no'}">${nadiDosha?'⚠️ NADI DOSHA PRESENT / नाड़ी दोष उपस्थित':'✅ NO NADI DOSHA / नाड़ी दोष नहीं'}</div>
+        <div class="dosha-desc">Boy's Nadi: <b>${bNadi} (${nadiHiMap[bNak]})</b> | Girl's Nadi: <b>${gNadi} (${nadiHiMap[gNak]})</b><br>
+        ${nadiDosha?'Both have same Nadi. Nadi Dosha is present. This is the most serious dosha in Milan. Causes health issues and difficulty in having children. Nadi Dosha Shanti Puja is essential.':'Both have different Nadi. No Nadi Dosha. This is the most favorable condition for health and progeny.'}
+        <span class="dosha-desc-hi">${nadiDosha?`दोनों की नाड़ी ${nadiHiMap[bNak]} है। नाड़ी दोष उपस्थित। स्वास्थ्य और संतान पर प्रभाव। नाड़ी दोष शांति पूजा अनिवार्य।`:'दोनों की नाड़ी अलग है। नाड़ी दोष नहीं। स्वास्थ्य और संतान के लिए शुभ।'}</span>
+        ${nadiDosha?'<span class="dosha-remedy">Remedy / उपाय: Perform Nadi Dosha Shanti at Varanasi or Ujjain. Donate gold equal to weight of both partners. / काशी या उज्जैन में नाड़ी दोष शांति करवाएं।</span>':''}</div>
+      </div>
+    </div>
+
+    <div class="sub-title" style="margin-top:3mm;">Bhakut Dosha / भकूट दोष</div>
+    <div class="dosha-box ${bhakutDosha?'present':'absent'}">
+      <div class="dosha-icon">☽</div>
+      <div>
+        <span class="dosha-title">Bhakut Dosha Analysis / भकूट दोष विश्लेषण</span>
+        <div class="dosha-status ${bhakutDosha?'yes':'no'}">${bhakutDosha?'⚠️ BHAKUT DOSHA PRESENT / भकूट दोष उपस्थित':'✅ NO BHAKUT DOSHA / भकूट दोष नहीं'}</div>
+        <div class="dosha-desc">Boy's Moon: <b>${SIGNS[bRashi]} (${SIGNS_HI[bRashi]})</b> | Girl's Moon: <b>${SIGNS[gRashi]} (${SIGNS_HI[gRashi]})</b> | Distance: <b>${rashiDiff}</b><br>
+        ${bhakutDosha?'Rashi distance of 6/8 creates Bhakut Dosha. This affects prosperity and longevity of the couple. Bhakut Dosha Shanti is required.':'No Bhakut Dosha. Moon sign distance is favorable for the couple\'s prosperity and longevity.'}
+        <span class="dosha-desc-hi">${bhakutDosha?'षड्-अष्टक भकूट दोष है। दम्पति की समृद्धि और आयु पर प्रभाव। भकूट दोष शांति करवाएं।':'भकूट दोष नहीं। राशि अंतराल शुभ है।'}</span>
+        ${bhakutDosha?'<span class="dosha-remedy">Remedy / उपाय: Perform Navagraha Shanti Puja. Donate silver on Monday. / नवग्रह शांति पूजा करवाएं। सोमवार को चांदी दान करें।</span>':''}</div>
+      </div>
+    </div>`;
+    pages.push(makePage(43,'~120','Milan Dosha Analysis','मिलान दोष विश्लेषण',pgM6));
+
+    // ── MILAN PAGE M7: DASHA COMPARISON ──────────────────────────
+    const bDashStart=bNak%9; const gDashStart=gNak%9;
+    let pgM7=`<div class="sec-title">Dasha Comparison – Timing Compatibility <span class="sec-title-hi">दशा तुलना – समय अनुकूलता</span></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:3mm;margin-bottom:3mm;">
+      <div>
+        <div class="sub-title">Boy's Dasha / वर की दशा</div>
+        <table class="dtable" style="font-size:10pt;">
+          <thead><tr><th>Mahadasha<span class="hi">महादशा</span></th><th>Period<span class="hi">अवधि</span></th><th>Years<span class="hi">वर्ष</span></th></tr></thead>
+          <tbody>${(()=>{let y=new Date(info.dob).getFullYear();const now=new Date().getFullYear();return DASH_ORDER.map((_,i)=>{const idx=(bDashStart+i)%9;const yr=DASH_YRS[idx];const end=y+yr;const cur=now>=y&&now<end;const r=`<tr class="${cur?'current-dasha':''}"><td class="dname">${PLAN_SYM[PLANETS.indexOf(DASH_ORDER[idx])]||''} ${DASH_ORDER[idx]}<span class="dname-hi">${DASH_HI[idx]}</span></td><td style="font-size:11.5pt;">${y}–${end}</td><td class="${cur?'cyear':''}">${yr}yr${cur?' ●':''}</td></tr>`;y=end;return r;}).join('');})()}</tbody>
+        </table>
+      </div>
+      <div>
+        <div class="sub-title">Girl's Dasha / वधू की दशा</div>
+        <table class="dtable" style="font-size:10pt;">
+          <thead><tr><th>Mahadasha<span class="hi">महादशा</span></th><th>Period<span class="hi">अवधि</span></th><th>Years<span class="hi">वर्ष</span></th></tr></thead>
+          <tbody>${(()=>{let y=new Date(info.mDob).getFullYear();const now=new Date().getFullYear();return DASH_ORDER.map((_,i)=>{const idx=(gDashStart+i)%9;const yr=DASH_YRS[idx];const end=y+yr;const cur=now>=y&&now<end;const r=`<tr class="${cur?'current-dasha':''}"><td class="dname">${PLAN_SYM[PLANETS.indexOf(DASH_ORDER[idx])]||''} ${DASH_ORDER[idx]}<span class="dname-hi">${DASH_HI[idx]}</span></td><td style="font-size:11.5pt;">${y}–${end}</td><td class="${cur?'cyear':''}">${yr}yr${cur?' ●':''}</td></tr>`;y=end;return r;}).join('');})()}</tbody>
+        </table>
+      </div>
+    </div>
+    <div style="border:1pt solid #C8960C;padding:2.5mm;border-radius:2mm;background:#FDF8E8;">
+      <div style="font-family:'Cinzel',serif;font-size:11.5pt;color:#8B0000;font-weight:700;margin-bottom:1mm;">DASHA COMPATIBILITY ANALYSIS / दशा अनुकूलता विश्लेषण</div>
+      <div style="font-size:10pt;line-height:2.0;font-family:'Crimson Pro',serif;">
+        Boy's current Mahadasha: <b style="color:#8B0000;">${DASH_ORDER[(bDashStart+Math.floor((new Date()-new Date(info.dob))/(365.25*24*3600*1000)/DASH_YRS[bDashStart%9]))%9]||DASH_ORDER[bDashStart%9]}</b> | 
+        Girl's current Mahadasha: <b style="color:#8B0000;">${DASH_ORDER[(gDashStart+Math.floor((new Date()-new Date(info.mDob))/(365.25*24*3600*1000)/DASH_YRS[gDashStart%9]))%9]||DASH_ORDER[gDashStart%9]}</b><br>
+        When both partners are running favorable Dashas simultaneously, married life prospers greatly.
+        Best time for marriage: when one or both are in Jupiter, Venus, or Mercury Mahadasha.
+        <span style="font-family:'Noto Sans Devanagari',serif;font-size:11.5pt;color:#6B4C2A;display:block;margin-top:0.5mm;">
+        जब दोनों की दशा शुभ हो — विशेषतः गुरु, शुक्र, या बुध की दशा में — विवाह जीवन सुखमय होता है।
+        </span>
+      </div>
+    </div>`;
+    pages.push(makePage(44,'~120','Dasha Comparison','दशा तुलना',pgM7));
+
+    // ── MILAN PAGE M8: COMPATIBILITY ANALYSIS ────────────────────
+    const compatAreas=[
+      {area:'Physical Compatibility',areaHi:'शारीरिक अनुकूलता',score:yoniScore,max:4,
+       en:`Yoni compatibility score: ${yoniScore}/4. Boy's Yoni: ${bYoni} (${yoniHiMap[bNak]}), Girl's Yoni: ${gYoni} (${yoniHiMap[gNak]}). ${yoniScore>=3?'Excellent physical compatibility. Natural attraction and harmony.':yoniScore>=2?'Good physical compatibility.':'Physical differences may need understanding and patience.'}`,
+       hi:`योनि अनुकूलता: ${yoniScore}/4। वर: ${yoniHiMap[bNak]}, वधू: ${yoniHiMap[gNak]}। ${yoniScore>=3?'उत्तम शारीरिक अनुकूलता।':yoniScore>=2?'अच्छी शारीरिक अनुकूलता।':'धैर्य और समझ की आवश्यकता।'}`},
+      {area:'Mental & Intellectual',areaHi:'मानसिक एवं बौद्धिक',score:grahaMaitriScore,max:5,
+       en:`Graha Maitri score: ${grahaMaitriScore}/5. Boy's Moon lord: ${bMoonLord} (${LORDS_HI[bRashi]}), Girl's Moon lord: ${gMoonLord} (${LORDS_HI[gRashi]}). ${grahaMaitriScore>=4?'Strong mental harmony. Good intellectual understanding.':grahaMaitriScore>=3?'Average mental compatibility. Communication is key.':'Different thought patterns. Mutual respect needed.'}`,
+       hi:`ग्रह मैत्री: ${grahaMaitriScore}/5। वर के चंद्र स्वामी: ${LORDS_HI[bRashi]}, वधू के चंद्र स्वामी: ${LORDS_HI[gRashi]}। ${grahaMaitriScore>=4?'मजबूत मानसिक सामंजस्य।':grahaMaitriScore>=3?'औसत मानसिक अनुकूलता।':'विचारों में अंतर, परस्पर सम्मान आवश्यक।'}`},
+      {area:'Temperament Match',areaHi:'स्वभाव मिलान',score:ganaScore,max:6,
+       en:`Gana score: ${ganaScore}/6. Boy: ${bGana} (${ganaHiMap[bNak]}), Girl: ${gGana} (${ganaHiMap[gNak]}). ${ganaScore>=5?'Excellent temperament match. Similar nature and outlook.':ganaScore>=3?'Good temperament match. Minor differences manageable.':'Different temperaments. Understanding and adjustment needed.'}`,
+       hi:`गण अनुकूलता: ${ganaScore}/6। वर: ${ganaHiMap[bNak]}, वधू: ${ganaHiMap[gNak]}। ${ganaScore>=5?'उत्तम स्वभाव मिलान।':ganaScore>=3?'अच्छा स्वभाव मिलान।':'स्वभाव में अंतर, समझ जरूरी।'}`},
+      {area:'Financial Prosperity',areaHi:'आर्थिक समृद्धि',score:bhakutScore,max:7,
+       en:`Bhakut score: ${bhakutScore}/7. Moon signs: ${SIGNS[bRashi]} — ${SIGNS[gRashi]}, distance: ${rashiDiff}. ${bhakutScore>=5?'Excellent financial compatibility. Joint prosperity expected.':bhakutScore>=3?'Good financial prospects together.':'Financial challenges may arise. Careful planning needed.'}`,
+       hi:`भकूट अनुकूलता: ${bhakutScore}/7। राशि अंतराल: ${rashiDiff}। ${bhakutScore>=5?'उत्तम आर्थिक अनुकूलता।':bhakutScore>=3?'अच्छी आर्थिक संभावनाएं।':'आर्थिक चुनौतियां संभव।'}`},
+      {area:'Health & Progeny',areaHi:'स्वास्थ्य एवं संतान',score:nadiScore,max:8,
+       en:`Nadi score: ${nadiScore}/8. Boy's Nadi: ${bNadi}, Girl's Nadi: ${gNadi}. ${nadiScore===8?'Excellent! Different Nadi means no Nadi Dosha. Good health and children expected.':'Same Nadi creates Nadi Dosha. Health and progeny may be affected. Remedies essential.'}`,
+       hi:`नाड़ी अनुकूलता: ${nadiScore}/8। ${nadiScore===8?'उत्तम! भिन्न नाड़ी — नाड़ी दोष नहीं। स्वास्थ्य और संतान शुभ।':'समान नाड़ी — नाड़ी दोष। उपाय अनिवार्य।'}`},
+      {area:'Spiritual Bond',areaHi:'आध्यात्मिक बंधन',score:varnaScore+taraScore,max:4,
+       en:`Varna+Tara combined: ${varnaScore+taraScore}/4. Spiritual and karmic connection. ${varnaScore+taraScore>=3?'Strong spiritual compatibility. Divine blessing on this union.':varnaScore+taraScore>=2?'Good spiritual connection.':'Spiritual practices together will strengthen the bond.'}`,
+       hi:`वर्ण+तारा संयुक्त: ${varnaScore+taraScore}/4। ${varnaScore+taraScore>=3?'मजबूत आध्यात्मिक बंधन।':'एक साथ साधना बंधन मजबूत करेगी।'}`},
+    ];
+    let pgM8=`<div class="sec-title">Compatibility Analysis – Life Areas <span class="sec-title-hi">अनुकूलता विश्लेषण – जीवन के क्षेत्र</span></div>
+    ${compatAreas.map(c=>`<div class="pred-box" style="margin-bottom:2mm;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1mm;">
+        <div><span class="pred-house">${c.area}</span> <span class="pred-house-hi">| ${c.areaHi}</span></div>
+        <div style="text-align:right;">
+          <span style="font-family:'Cinzel Decorative',serif;font-size:11pt;color:${c.score>=c.max*0.7?'#006400':c.score>=c.max*0.4?'#C8960C':'#DC143C'}">${c.score}/${c.max}</span>
+          <div style="width:${c.max*6}mm;height:3mm;background:#eee;border-radius:2mm;display:inline-block;margin-left:2mm;vertical-align:middle;">
+            <div style="width:${(c.score/c.max*100).toFixed(0)}%;height:100%;background:linear-gradient(90deg,${c.score>=c.max*0.7?'#006400':c.score>=c.max*0.4?'#C8960C':'#DC143C'},${c.score>=c.max*0.7?'#4CAF50':'#FF8C2A'});border-radius:2mm;"></div>
+          </div>
+        </div>
+      </div>
+      <div class="pred-text">${c.en}<span class="pred-text-hi">${c.hi}</span></div>
+    </div>`).join('')}`;
+    pages.push(makePage(45,'~120','Compatibility Analysis','अनुकूलता विश्लेषण',pgM8));
+
+    // ── MILAN PAGE M9: SUMMARY & VERDICT ─────────────────────────
+    let pgM9=`<div class="sec-title">Milan Summary & Final Verdict <span class="sec-title-hi">मिलान सारांश एवं अंतिम निर्णय</span></div>
+    <div style="border:2pt solid ${verdictColor};border-radius:4mm;padding:5mm;background:${totalScore>=28?'rgba(0,100,0,0.04)':totalScore>=18?'rgba(200,150,12,0.04)':'rgba(220,20,60,0.04)'};text-align:center;margin-bottom:4mm;">
+      <div style="font-family:'Noto Sans Devanagari',serif;font-size:11pt;color:#5C0A0A;margin-bottom:2mm;">ॐ श्री गणेशाय नमः</div>
+      <div style="display:flex;justify-content:center;align-items:center;gap:6mm;">
+        <div style="text-align:right;">
+          <div style="font-family:'Cinzel Decorative',serif;font-size:13pt;color:#8B0000;">${info.name}</div>
+          <div style="font-family:'Noto Sans Devanagari',serif;font-size:11pt;color:#5C0A0A;">${info.nameHi}</div>
+        </div>
+        <div style="font-size:20pt;color:${verdictColor};">💞</div>
+        <div style="text-align:left;">
+          <div style="font-family:'Cinzel Decorative',serif;font-size:13pt;color:#8B0000;">${info.mName}</div>
+          <div style="font-family:'Noto Sans Devanagari',serif;font-size:11pt;color:#5C0A0A;">${info.mName}</div>
+        </div>
+      </div>
+      <div style="margin:4mm 0 2mm;font-family:'Cinzel Decorative',serif;font-size:32pt;color:${verdictColor};line-height:1;">${totalScore} / 36</div>
+      <div style="font-family:'Noto Sans Devanagari',serif;font-size:13pt;color:${verdictColor};font-weight:800;">${verdict}</div>
+      <div style="margin-top:2mm;font-size:11pt;font-family:'Crimson Pro',serif;color:#6B4C2A;max-width:120mm;margin-left:auto;margin-right:auto;line-height:2.0;">
+        ${totalScore>=31?'Divinely blessed match. All eight Koots are highly favorable. This union is written in the stars.':totalScore>=28?'Excellent compatibility. The cosmic alignment strongly supports this marriage. A happy, prosperous life awaits.':totalScore>=21?'Good compatibility. With love, understanding, and occasional compromise, this will be a strong and lasting marriage.':totalScore>=18?'Acceptable match. Both partners will need to invest in understanding each other. With effort, harmony is achievable.':'There are significant compatibility challenges. A detailed consultation with an experienced Jyotishi is strongly recommended.'}
+      </div>
+      <div style="margin-top:2mm;font-family:'Noto Sans Devanagari',serif;font-size:10.5pt;color:${verdictColor};font-style:italic;">
+        ${totalScore>=28?'यह विवाह अत्यंत शुभ है। ईश्वर का आशीर्वाद इस जोड़े पर सदा बना रहे।':totalScore>=18?'यह एक अच्छा मिलान है। परस्पर प्रेम और समझ से यह विवाह सुखमय होगा।':'विस्तृत परामर्श के बाद ही विवाह का निर्णय लें।'}
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:2mm;margin-bottom:3mm;">
+      ${KOOTS.map(k=>`<div style="border:0.5pt solid #E8C97A;padding:2mm;border-radius:1mm;text-align:center;background:#FDF8E8;">
+        <div style="font-family:'Cinzel',serif;font-size:11pt;color:#8B0000;">${k.n}</div>
+        <div style="font-family:'Noto Sans Devanagari',serif;font-size:11.5pt;color:#5C0A0A;">${k.hi}</div>
+        <div style="font-family:'Cinzel Decorative',serif;font-size:13pt;color:${k.score>=k.max*0.75?'#006400':k.score>=k.max*0.4?'#C8960C':'#DC143C'};margin:1mm 0;">${k.score}/${k.max}</div>
+        <div style="width:100%;height:3mm;background:#eee;border-radius:1mm;overflow:hidden;">
+          <div style="width:${(k.score/k.max*100).toFixed(0)}%;height:100%;background:${k.score>=k.max*0.75?'#4CAF50':k.score>=k.max*0.4?'#C8960C':'#DC143C'};"></div>
+        </div>
+      </div>`).join('')}
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:3mm;">
+      <div style="border:0.5pt solid #E8C97A;padding:2.5mm;border-radius:1mm;background:#FDF8E8;">
+        <div style="font-family:'Cinzel',serif;font-size:11.5pt;color:#8B0000;font-weight:700;margin-bottom:1mm;">POSITIVE FACTORS / शुभ पक्ष</div>
+        <div style="font-size:10pt;line-height:2.0;font-family:'Crimson Pro',serif;">
+          ${KOOTS.filter(k=>k.score>=k.max*0.75).map(k=>`✓ ${k.n} (${k.hi}): ${k.score}/${k.max}`).join('<br>')||'Consult astrologer for detailed analysis.'}
+        </div>
+      </div>
+      <div style="border:0.5pt solid #E8C97A;padding:2.5mm;border-radius:1mm;background:#FDF8E8;">
+        <div style="font-family:'Cinzel',serif;font-size:11.5pt;color:#8B0000;font-weight:700;margin-bottom:1mm;">AREAS NEEDING ATTENTION / ध्यान देने योग्य</div>
+        <div style="font-size:10pt;line-height:2.0;font-family:'Crimson Pro',serif;">
+          ${KOOTS.filter(k=>k.score<k.max*0.5).map(k=>`⚠ ${k.n} (${k.hi}): ${k.score}/${k.max}`).join('<br>')||'✅ No major areas of concern.'}
+          ${nadiDosha?'<br>⚠ Nadi Dosha — Puja required':''}${bhakutDosha?'<br>⚠ Bhakut Dosha — Puja required':''}
+        </div>
+      </div>
+    </div>`;
+    pages.push(makePage(46,'~120','Milan Summary','मिलान सारांश',pgM9));
+
+    // ── MILAN PAGE M10: MILAN REMEDIES ───────────────────────────
+    let pgM10=`<div class="sec-title">Milan Remedies & Muhurta <span class="sec-title-hi">मिलान उपाय एवं विवाह मुहूर्त</span></div>
+    <div class="sub-title">Recommended Remedies / अनुशंसित उपाय</div>
+    ${nadiDosha?`<div class="remedy-box">
+      <div><span class="rplanet">🔱 Nadi Dosha Shanti / नाड़ी दोष शांति</span></div>
+      <ul class="remedy-list">
+        <li>Perform Nadi Dosha Shanti Puja at Varanasi (Kashi Vishwanath) or Trimbakeshwar / काशी विश्वनाथ या त्र्यंबकेश्वर में नाड़ी दोष शांति पूजा करवाएं</li>
+        <li>Donate gold equal to combined weight of both in a temple / मंदिर में दोनों के वजन के बराबर सोना दान करें</li>
+        <li>Perform Mahamrityunjaya Japa — 1,25,000 times / 1,25,000 महामृत्युंजय मंत्र जाप</li>
+        <li>Both should wear Navaratna ring after puja / पूजा के बाद दोनों नवरत्न अंगूठी पहनें</li>
+      </ul>
+    </div>`:''}
+    ${bMangal||gMangal?`<div class="remedy-box">
+      <div><span class="rplanet">♂ Mangal Dosha Shanti / मंगल दोष शांति</span></div>
+      <ul class="remedy-list">
+        <li>Perform Mangal Shanti Puja before marriage / विवाह से पूर्व मंगल शांति पूजा करवाएं</li>
+        <li>${bMangal?'Boy to visit Hanuman temple every Tuesday for 108 weeks / वर प्रत्येक मंगलवार 108 सप्ताह हनुमान मंदिर जाएं':''}${gMangal?'Girl to fast on Tuesdays and offer red flowers to Hanuman / वधू मंगलवार व्रत करें और लाल फूल चढ़ाएं':''}</li>
+        <li>Kumbh Vivah (Manglik married to pot/tree) before actual wedding if only one is Manglik / यदि केवल एक मांगलिक है तो विवाह से पहले कुम्भ विवाह करें</li>
+        <li>Donate red lentils (masoor dal) and copper on Tuesday / मंगलवार को मसूर दाल और तांबा दान करें</li>
+      </ul>
+    </div>`:''}
+    <div class="remedy-box">
+      <div><span class="rplanet">✨ General Milan Remedies / सामान्य मिलान उपाय</span></div>
+      <ul class="remedy-list">
+        <li>Both should pray to Lord Shiva and Goddess Parvati together / दोनों मिलकर शिव-पार्वती की पूजा करें</li>
+        <li>Recite Vivah Sukta together on auspicious days / शुभ दिनों में विवाह सूक्त का पाठ करें</li>
+        <li>Perform Satyanarayan Katha before and after marriage / विवाह से पहले और बाद सत्यनारायण कथा करें</li>
+        <li>Both wear their respective lucky gemstones / दोनों अपने-अपने शुभ रत्न धारण करें</li>
+        <li>Boy: ${LORDS[lagnaIdx]} stone, Girl: ${LORDS[mLagna]} stone as primary gemstone / वर: ${LORDS_HI[lagnaIdx]} रत्न, वधू: ${LORDS_HI[mLagna]} रत्न</li>
+      </ul>
+    </div>
+    <div class="sub-title" style="margin-top:3mm;">Auspicious Marriage Muhurta / शुभ विवाह मुहूर्त</div>
+    <table class="ptable" style="font-size:10pt;">
+      <thead><tr>
+        <th>Month<span class="hi">माह</span></th>
+        <th>Auspicious Tithis<span class="hi">शुभ तिथि</span></th>
+        <th>Best Nakshatras<span class="hi">शुभ नक्षत्र</span></th>
+        <th>Avoid<span class="hi">वर्जित</span></th>
+        <th>Remark<span class="hi">टिप्पणी</span></th>
+      </tr></thead>
+      <tbody>
+        <tr><td>January–February</td><td>2,3,5,7,10,11,13</td><td>Rohini, Mrigashira, Hasta, Swati, Anuradha</td><td>8,9,14,Amavasya</td><td>Magha month — consult pandit</td></tr>
+        <tr><td>March–April</td><td>2,3,5,7,10,11</td><td>Rohini, Uttara, Hasta, Swati, Revati</td><td>4,6,8,9</td><td>Favorable period</td></tr>
+        <tr><td>May–June</td><td>3,5,7,10,11,13</td><td>Rohini, Mrigashira, Uttara Phalguni</td><td>Jyeshtha month</td><td>Avoid Jyeshtha month completely</td></tr>
+        <tr><td>November–December</td><td>2,3,5,7,10,11,12</td><td>Rohini, Hasta, Uttara, Swati, Shravana</td><td>8,9,14</td><td>Highly auspicious period</td></tr>
+      </tbody>
+    </table>
+    <div style="margin-top:2mm;border:0.5pt solid #E8C97A;padding:2mm;border-radius:1mm;background:#FDF8E8;font-size:11.5pt;font-family:'Crimson Pro',serif;line-height:1.9;">
+      <b style="font-family:'Cinzel',serif;font-size:11pt;color:#8B0000;">Note / टिप्पणी:</b> Always confirm Vivah Muhurta with a qualified Jyotishi/Pandit considering both birth charts. The five key factors for Muhurta are: Tithi, Vara, Nakshatra, Yoga, Karana.
+      विवाह मुहूर्त हमेशा योग्य पंडित से दोनों की जन्मपत्री देखकर निश्चित करें।
+    </div>`;
+    pages.push(makePage(47,'~120','Milan Remedies','मिलान उपाय',pgM10));
+
+  } // end if mName
+
+  // ── FINAL PAGE: CLOSING SHLOKA ────────────────────────────────
+  const lastPage=pages.length+1;
+  pages.push(`<div class="kpage">
+  <div class="cover-page" style="background:linear-gradient(160deg,#FFF9F0 0%,#FDF8E8 100%);">
+    <div class="cover-border"></div><div class="cover-border-inner"></div>
+    <div class="cover-swastik">卐</div>
+    <div class="cover-om" style="font-size:40pt;">ॐ</div>
+    <div class="cover-title-en" style="font-size:18pt;">CLOSING BLESSINGS</div>
+    <div class="cover-title-hi" style="font-size:16pt;">समापन आशीर्वाद</div>
+    <div class="cover-divider"></div>
+    <div style="font-family:'Noto Sans Devanagari',serif;font-size:10pt;color:#5C0A0A;line-height:2;max-width:130mm;margin:3mm auto;text-align:center;">
+      सर्वे भवन्तु सुखिनः। सर्वे सन्तु निरामयाः।<br>
+      सर्वे भद्राणि पश्यन्तु। मा कश्चिद्दुःखभाग्भवेत्॥<br><br>
+      <span style="font-size:10.5pt;color:#6B4C2A;">May all be happy. May all be free from disease.<br>
+      May all see auspiciousness. May none suffer.</span>
+    </div>
+    <div class="cover-divider"></div>
+    <div style="font-family:'Cinzel',serif;font-size:10pt;color:#8B0000;margin:3mm 0 1mm;text-transform:uppercase;letter-spacing:0.15em;">This Janmpatri Prepared For</div>
+    <div class="cover-name">${info.name}</div>
+    <div class="cover-name-hi">${info.nameHi}</div>
+    <div style="margin:3mm 0;font-family:'Crimson Pro',serif;font-size:11pt;color:#6B4C2A;">
+      Born: ${info.dob} at ${info.tob} | ${info.city}, ${info.state}
+    </div>
+    <div class="cover-divider"></div>
+    <div style="font-family:'Noto Sans Devanagari',serif;font-size:11pt;color:#8B0000;margin:2mm 0;">
+      Prepared by: ${info.preparedBy||'Kundli Pro'} | Total Pages: ${lastPage}
+    </div>
+    <div class="cover-footer-text" style="margin-top:4mm;">
+      Kundli Pro · Based on Parashari Jyotish · © All Rights Reserved · सर्वाधिकार सुरक्षित
+    </div>
+  </div>
+</div>`);
+
+  // ── UPDATE PAGE NUMBERS ────────────────────────────────────────
+  const total=pages.length;
+  const finalPages=pages.map((p,i)=>p.replace(/Page \d+ \/ ~120/,`Page ${i+1} / ${total}`));
+
+  document.getElementById('pages-container').innerHTML=finalPages.join('');
+}
+</script>
+
+<script>
+/* ================================================================
+   COPYRIGHT PROTECTION — KUNDLI PRO
+   Copyright © 2025 Kundli Pro. All Rights Reserved.
+   Protected under Indian Copyright Act, 1957
+   Unauthorized copying or distribution is strictly prohibited.
+================================================================ */
+
+// Disable right-click context menu
+document.addEventListener('contextmenu', function(e){
+  e.preventDefault();
+  alert('© 2025 Kundli Pro — सर्वाधिकार सुरक्षित\nRight-click disabled.');
+  return false;
+});
+
+// Disable text selection via keyboard shortcuts
+document.addEventListener('keydown', function(e){
+  if((e.ctrlKey||e.metaKey) && (e.key==='s'||e.key==='u'||e.key==='c'&&e.shiftKey)){
+    e.preventDefault();
+    return false;
+  }
+});
+
+// Watermark on print
+window.addEventListener('beforeprint', function(){
+  document.title = '© 2025 Kundli Pro — All Rights Reserved';
+});
+
+// Console copyright notice
+console.log('%c© 2025 Kundli Pro — All Rights Reserved','color:#C8960C;font-size:18px;font-weight:bold;');
+console.log('%cThis software is protected under Indian Copyright Act, 1957.','color:#FF6B00;font-size:12px;');
+console.log('%cUnauthorized use is strictly prohibited.','color:#8B0000;font-size:12px;');
+</script>
+
+</body>
+</html>

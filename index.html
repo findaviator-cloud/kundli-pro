@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<!-- 
+================================================================
+  KUNDLI PRO — MAIN PORTAL
+  कुण्डली प्रो — मुख्य पोर्टल
+================================================================
+  Copyright © 2025 Kundli Pro. All Rights Reserved.
+  सर्वाधिकार सुरक्षित © 2025 कुण्डली प्रो
+
+  This software is PRIVATE and CONFIDENTIAL.
+  Protected under Indian Copyright Act, 1957
+  & International Copyright Laws.
+
+  Unauthorized copying, redistribution or commercial use
+  is strictly prohibited.
+================================================================
+-->
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kundli Pro — कुण्डली प्रो | Vedic Astrology Software</title>
+<meta name="description" content="India's complete Vedic Astrology Software. Free Janmpatri 100+ pages & Vivah Milan online.">
+<meta name="robots" content="noindex, nofollow">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;600;700&family=Noto+Sans+Devanagari:wght@400;600;700;800&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --saffron:#FF6B00;--saffron2:#FF8C2A;--saffron-pale:#FFF3E6;
+  --gold:#C8960C;--gold2:#E8B820;--gold3:#F5D060;--gold-pale:#FDF8E8;
+  --red:#8B0000;--maroon:#5C0A0A;--maroon2:#3A0808;
+  --cream:#FFFDF5;--parchment:#F5E6C8;
+  --text:#1A0800;--muted:#6B4C2A;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:'Noto Sans Devanagari','Crimson Pro',serif;
+  background:#0D0500;color:var(--text);overflow-x:hidden;
+}
+::-webkit-scrollbar{width:6px;}
+::-webkit-scrollbar-track{background:var(--maroon);}
+::-webkit-scrollbar-thumb{background:var(--gold);border-radius:3px;}
+
+/* ── NAV ── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:1000;
+  background:linear-gradient(135deg,var(--maroon2),var(--maroon));
+  border-bottom:2px solid var(--gold);
+  padding:0 2rem;height:64px;
+  display:flex;align-items:center;justify-content:space-between;
+  box-shadow:0 4px 20px rgba(0,0,0,0.5);
+}
+.nav-brand{display:flex;align-items:center;gap:0.75rem;text-decoration:none;}
+.nav-om{font-size:2rem;color:var(--gold);animation:om-glow 3s ease-in-out infinite;line-height:1;}
+@keyframes om-glow{0%,100%{text-shadow:0 0 10px rgba(200,150,12,0.5);}50%{text-shadow:0 0 30px rgba(200,150,12,1),0 0 50px rgba(255,107,0,0.3);}}
+.nav-title{font-family:'Cinzel Decorative',serif;font-size:1.15rem;color:white;line-height:1.2;}
+.nav-title span{display:block;font-family:'Cinzel',serif;font-size:0.55rem;letter-spacing:0.25em;color:rgba(255,200,100,0.55);}
+.nav-links{display:flex;gap:0.2rem;list-style:none;align-items:center;}
+.nav-links a{
+  color:rgba(255,255,255,0.65);text-decoration:none;
+  font-family:'Cinzel',serif;font-size:0.68rem;letter-spacing:0.1em;
+  padding:0.4rem 0.85rem;border-radius:4px;
+  border:1px solid transparent;transition:all 0.25s;
+}
+.nav-links a:hover,.nav-links a.active{color:var(--gold2);border-color:var(--gold);background:rgba(200,150,12,0.1);}
+@media(max-width:640px){.nav-links{display:none;}}
+
+/* ── HERO ── */
+.hero{
+  min-height:100vh;
+  background:radial-gradient(ellipse at 25% 30%,#3A0808 0%,#1A0500 45%,#0D0300 100%);
+  display:flex;align-items:center;justify-content:center;
+  padding-top:64px;position:relative;overflow:hidden;
+}
+.hero-bg{
+  position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  pointer-events:none;opacity:0.055;
+}
+.hero-bg svg{width:min(1000px,100vw);animation:slow-spin 120s linear infinite;}
+@keyframes slow-spin{to{transform:rotate(360deg);}}
+
+.hero-content{
+  position:relative;z-index:2;text-align:center;
+  max-width:900px;padding:2rem 1.5rem;
+  animation:fadeUp 1s ease both;
+}
+@keyframes fadeUp{from{opacity:0;transform:translateY(40px);}to{opacity:1;transform:translateY(0);}}
+.hero-badge{
+  display:inline-block;margin-bottom:1.5rem;
+  padding:0.35rem 1.5rem;border:1px solid var(--gold);border-radius:30px;
+  background:rgba(200,150,12,0.07);
+  font-family:'Cinzel',serif;font-size:0.6rem;letter-spacing:0.3em;color:var(--gold2);
+}
+.hero-om{
+  font-size:5rem;color:var(--gold);display:block;
+  margin-bottom:0.5rem;line-height:1;
+  animation:om-glow 3s ease-in-out infinite;
+}
+.hero-title{
+  font-family:'Cinzel Decorative',serif;
+  font-size:clamp(2.4rem,6vw,5rem);
+  color:white;line-height:1.1;margin-bottom:0.4rem;
+  text-shadow:0 4px 30px rgba(0,0,0,0.4);
+}
+.hero-title .gold{color:var(--gold2);}
+.hero-subtitle{
+  font-family:'Noto Sans Devanagari',serif;
+  font-size:clamp(1.1rem,2.5vw,1.7rem);
+  color:var(--saffron2);margin-bottom:1rem;letter-spacing:0.04em;
+}
+.hero-desc{
+  font-family:'Crimson Pro',serif;font-size:1.05rem;
+  color:rgba(255,255,255,0.6);max-width:600px;margin:0 auto 2.5rem;line-height:1.85;
+}
+.hero-ctas{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin-bottom:3.5rem;}
+.btn-main{
+  padding:1rem 2.5rem;
+  background:linear-gradient(135deg,var(--saffron),var(--red));
+  color:white;border:none;border-radius:6px;cursor:pointer;
+  font-family:'Cinzel',serif;font-size:0.85rem;letter-spacing:0.15em;
+  text-decoration:none;display:inline-block;
+  box-shadow:0 6px 24px rgba(255,107,0,0.4);
+  transition:all 0.3s;
+}
+.btn-main:hover{transform:translateY(-3px);box-shadow:0 12px 36px rgba(255,107,0,0.5);}
+.btn-outline{
+  padding:1rem 2.5rem;background:transparent;
+  color:var(--gold2);border:1px solid var(--gold);border-radius:6px;
+  cursor:pointer;font-family:'Cinzel',serif;font-size:0.85rem;letter-spacing:0.15em;
+  text-decoration:none;display:inline-block;transition:all 0.3s;
+}
+.btn-outline:hover{background:rgba(200,150,12,0.1);transform:translateY(-3px);}
+
+.hero-stats{display:flex;gap:3.5rem;justify-content:center;flex-wrap:wrap;}
+.stat-num{font-family:'Cinzel Decorative',serif;font-size:2.4rem;color:var(--gold2);display:block;line-height:1;}
+.stat-lbl{font-size:0.62rem;color:rgba(255,255,255,0.45);letter-spacing:0.15em;font-family:'Cinzel',serif;margin-top:0.3rem;display:block;}
+
+/* ── TOOLS ── */
+.tools{
+  padding:7rem 2rem;
+  background:linear-gradient(180deg,#110800 0%,#0D0600 100%);
+  position:relative;
+}
+.tools::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent);
+}
+.sec-hdr{text-align:center;margin-bottom:4.5rem;}
+.sec-tag{
+  font-family:'Cinzel',serif;font-size:0.62rem;letter-spacing:0.3em;
+  color:var(--saffron);text-transform:uppercase;display:block;margin-bottom:0.75rem;
+}
+.sec-title{
+  font-family:'Cinzel Decorative',serif;
+  font-size:clamp(1.8rem,3.5vw,2.8rem);color:var(--gold2);
+  line-height:1.2;
+}
+.sec-title-hi{
+  font-family:'Noto Sans Devanagari',serif;
+  font-size:1.1rem;color:rgba(255,200,100,0.45);
+  display:block;margin-top:0.4rem;
+}
+.gold-line{width:90px;height:2px;margin:1.25rem auto;background:linear-gradient(90deg,transparent,var(--gold),transparent);}
+
+.tools-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(360px,1fr));
+  gap:2.5rem;max-width:1100px;margin:0 auto;
+}
+.tool-card{
+  background:linear-gradient(160deg,rgba(255,255,255,0.05) 0%,rgba(255,255,255,0.02) 100%);
+  border:1px solid rgba(200,150,12,0.2);
+  border-radius:14px;overflow:hidden;
+  transition:all 0.35s;position:relative;
+}
+.tool-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:4px;
+  transition:opacity 0.3s;
+}
+.tool-card.kundali::before{background:linear-gradient(90deg,var(--saffron),var(--gold),var(--saffron2));}
+.tool-card.milan::before{background:linear-gradient(90deg,var(--crimson,#DC143C),var(--gold),#FF69B4);}
+.tool-card:hover{
+  border-color:var(--gold);
+  transform:translateY(-8px);
+  box-shadow:0 24px 60px rgba(200,150,12,0.18);
+}
+.tool-inner{padding:2.75rem;}
+.tool-icon{font-size:4rem;margin-bottom:1.5rem;display:block;line-height:1;}
+.tool-badge{
+  display:inline-block;padding:0.25rem 0.9rem;
+  background:rgba(200,150,12,0.12);border:1px solid rgba(200,150,12,0.25);
+  border-radius:20px;font-family:'Cinzel',serif;font-size:0.6rem;
+  letter-spacing:0.2em;color:var(--gold2);margin-bottom:1rem;
+}
+.tool-name{
+  font-family:'Cinzel Decorative',serif;font-size:1.5rem;
+  color:var(--gold2);margin-bottom:0.3rem;line-height:1.2;
+}
+.tool-name-hi{
+  font-family:'Noto Sans Devanagari',serif;font-size:1.1rem;
+  color:rgba(255,200,100,0.55);margin-bottom:1rem;display:block;
+}
+.tool-desc{
+  font-family:'Crimson Pro',serif;font-size:1rem;
+  color:rgba(255,255,255,0.55);line-height:1.8;margin-bottom:1.5rem;
+}
+.tool-features{list-style:none;margin-bottom:2rem;}
+.tool-features li{
+  font-size:0.82rem;color:rgba(255,255,255,0.55);
+  font-family:'Crimson Pro',serif;padding:0.35rem 0;
+  border-bottom:1px solid rgba(200,150,12,0.08);
+  display:flex;align-items:center;gap:0.6rem;
+}
+.tool-features li::before{content:'✦';color:var(--gold);font-size:0.6rem;flex-shrink:0;}
+.tool-features li span{font-family:'Noto Sans Devanagari',serif;font-size:0.8rem;color:rgba(255,200,100,0.4);margin-left:auto;}
+.tool-btn{
+  display:block;width:100%;padding:0.95rem;text-align:center;
+  border-radius:6px;text-decoration:none;
+  font-family:'Cinzel',serif;font-size:0.82rem;letter-spacing:0.15em;
+  transition:all 0.3s;border:none;cursor:pointer;
+}
+.tool-btn.kundali-btn{
+  background:linear-gradient(135deg,var(--saffron),var(--red));
+  color:white;box-shadow:0 4px 16px rgba(255,107,0,0.3);
+}
+.tool-btn.milan-btn{
+  background:linear-gradient(135deg,#DC143C,var(--maroon));
+  color:white;box-shadow:0 4px 16px rgba(220,20,60,0.3);
+}
+.tool-btn:hover{transform:translateY(-2px);filter:brightness(1.1);}
+
+/* ── FEATURES ── */
+.features{
+  padding:7rem 2rem;
+  background:linear-gradient(180deg,#0D0600 0%,#130800 100%);
+  position:relative;
+}
+.features::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent);
+}
+.feat-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+  gap:1.5rem;max-width:1100px;margin:0 auto;
+}
+.feat-card{
+  background:rgba(255,255,255,0.03);border:1px solid rgba(200,150,12,0.15);
+  border-radius:10px;padding:2rem;transition:all 0.3s;
+  position:relative;overflow:hidden;
+}
+.feat-card::after{
+  content:'';position:absolute;bottom:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,var(--saffron),var(--gold));
+  transform:scaleX(0);transition:transform 0.3s;transform-origin:left;
+}
+.feat-card:hover{border-color:rgba(200,150,12,0.35);transform:translateY(-3px);}
+.feat-card:hover::after{transform:scaleX(1);}
+.feat-icon{font-size:2.2rem;margin-bottom:0.9rem;display:block;}
+.feat-name{font-family:'Cinzel',serif;font-size:0.85rem;color:var(--gold2);margin-bottom:0.2rem;font-weight:700;}
+.feat-name-hi{font-family:'Noto Sans Devanagari',serif;font-size:0.85rem;color:rgba(255,200,100,0.45);display:block;margin-bottom:0.6rem;}
+.feat-desc{font-family:'Crimson Pro',serif;font-size:0.88rem;color:rgba(255,255,255,0.45);line-height:1.7;}
+
+/* ── HOW TO USE ── */
+.howto{
+  padding:7rem 2rem;
+  background:linear-gradient(160deg,var(--maroon2) 0%,#1A0500 100%);
+  position:relative;
+}
+.howto::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent);
+}
+.steps-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1.5rem;max-width:1000px;margin:0 auto;}
+.step-card{
+  background:rgba(255,255,255,0.04);border:1px solid rgba(200,150,12,0.15);
+  border-radius:10px;padding:1.75rem;text-align:center;
+  position:relative;
+}
+.step-num{
+  width:40px;height:40px;border-radius:50%;
+  background:linear-gradient(135deg,var(--saffron),var(--red));
+  color:white;font-family:'Cinzel Decorative',serif;font-size:1.1rem;
+  display:flex;align-items:center;justify-content:center;
+  margin:0 auto 1rem;
+  box-shadow:0 4px 12px rgba(255,107,0,0.4);
+}
+.step-icon{font-size:1.8rem;margin-bottom:0.75rem;display:block;}
+.step-title{font-family:'Cinzel',serif;font-size:0.8rem;color:var(--gold2);margin-bottom:0.2rem;letter-spacing:0.1em;}
+.step-title-hi{font-family:'Noto Sans Devanagari',serif;font-size:0.82rem;color:rgba(255,200,100,0.45);display:block;margin-bottom:0.6rem;}
+.step-desc{font-family:'Crimson Pro',serif;font-size:0.85rem;color:rgba(255,255,255,0.45);line-height:1.7;}
+
+/* ── FOOTER ── */
+footer{
+  background:#080300;
+  border-top:2px solid var(--gold);
+  padding:3rem 2rem 2rem;
+  text-align:center;
+}
+.footer-om{font-size:3.5rem;color:var(--gold);display:block;margin-bottom:0.75rem;text-shadow:0 0 20px rgba(200,150,12,0.5);}
+.footer-brand{font-family:'Cinzel Decorative',serif;font-size:1.4rem;color:var(--gold2);margin-bottom:0.3rem;}
+.footer-hi{font-family:'Noto Sans Devanagari',serif;color:rgba(255,200,100,0.5);margin-bottom:1.5rem;}
+.footer-links{display:flex;gap:1.5rem;justify-content:center;flex-wrap:wrap;margin-bottom:2rem;}
+.footer-links a{
+  color:rgba(255,255,255,0.45);text-decoration:none;
+  font-family:'Cinzel',serif;font-size:0.7rem;letter-spacing:0.1em;
+  transition:color 0.2s;
+}
+.footer-links a:hover{color:var(--gold2);}
+.footer-divider{
+  width:100px;height:1px;margin:1.5rem auto;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent);
+}
+.footer-copy{
+  font-family:'Cinzel',serif;font-size:0.72rem;
+  color:rgba(255,255,255,0.25);letter-spacing:0.1em;line-height:1.8;
+}
+.footer-copy strong{color:rgba(200,150,12,0.6);}
+.copyright-notice{
+  margin-top:1.25rem;padding:1rem 1.5rem;
+  background:rgba(200,150,12,0.06);border:1px solid rgba(200,150,12,0.15);
+  border-radius:6px;max-width:600px;margin:1.25rem auto 0;
+  font-family:'Cinzel',serif;font-size:0.65rem;
+  color:rgba(255,255,255,0.25);letter-spacing:0.08em;line-height:1.9;
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-brand" href="#">
+    <span class="nav-om">ॐ</span>
+    <div class="nav-title">Kundli Pro <span>VEDIC ASTROLOGY SOFTWARE</span></div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#tools" class="active">Tools</a></li>
+    <li><a href="kundali.html">Janmpatri</a></li>
+    <li><a href="milan.html">Vivah Milan</a></li>
+    <li><a href="#features">Features</a></li>
+    <li><a href="#howto">How to Use</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg">
+    <svg viewBox="0 0 900 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="450" cy="450" r="420" stroke="#C8960C" stroke-width="1"/>
+      <circle cx="450" cy="450" r="360" stroke="#C8960C" stroke-width="0.5"/>
+      <circle cx="450" cy="450" r="300" stroke="#C8960C" stroke-width="1"/>
+      <circle cx="450" cy="450" r="240" stroke="#C8960C" stroke-width="0.5"/>
+      <circle cx="450" cy="450" r="180" stroke="#C8960C" stroke-width="1"/>
+      <circle cx="450" cy="450" r="120" stroke="#C8960C" stroke-width="0.5"/>
+      <line x1="450" y1="30" x2="450" y2="870" stroke="#C8960C" stroke-width="0.5"/>
+      <line x1="30" y1="450" x2="870" y2="450" stroke="#C8960C" stroke-width="0.5"/>
+      <line x1="153" y1="153" x2="747" y2="747" stroke="#C8960C" stroke-width="0.5"/>
+      <line x1="747" y1="153" x2="153" y2="747" stroke="#C8960C" stroke-width="0.5"/>
+      <line x1="450" y1="30" x2="680" y2="862" stroke="#C8960C" stroke-width="0.3"/>
+      <line x1="450" y1="30" x2="220" y2="862" stroke="#C8960C" stroke-width="0.3"/>
+      <line x1="30" y1="450" x2="862" y2="220" stroke="#C8960C" stroke-width="0.3"/>
+      <line x1="30" y1="450" x2="862" y2="680" stroke="#C8960C" stroke-width="0.3"/>
+      <ellipse cx="450" cy="240" rx="25" ry="70" fill="#C8960C" opacity="0.3"/>
+      <ellipse cx="450" cy="660" rx="25" ry="70" fill="#C8960C" opacity="0.3"/>
+      <ellipse cx="240" cy="450" rx="70" ry="25" fill="#C8960C" opacity="0.3"/>
+      <ellipse cx="660" cy="450" rx="70" ry="25" fill="#C8960C" opacity="0.3"/>
+    </svg>
+  </div>
+  <div class="hero-content">
+    <div class="hero-badge">✦ PRIVATE VEDIC ASTROLOGY SOFTWARE ✦</div>
+    <span class="hero-om">ॐ</span>
+    <h1 class="hero-title">Kundli <span class="gold">Pro</span></h1>
+    <p class="hero-subtitle">कुण्डली · ज्योतिष · भविष्य</p>
+    <p class="hero-desc">
+      India's most complete Vedic Astrology Software. Generate 100+ page Janmpatri
+      and detailed Vivah Milan report — based on authentic Parashari Jyotish.
+      <br>भारत का सर्वाधिक सम्पूर्ण वैदिक ज्योतिष सॉफ्टवेयर।
+    </p>
+    <div class="hero-ctas">
+      <a href="kundali.html" class="btn-main">🔮 Generate Kundali / जन्मपत्री बनाएं</a>
+      <a href="milan.html" class="btn-outline">💞 Vivah Milan / विवाह मिलान</a>
+    </div>
+    <div class="hero-stats">
+      <div><span class="stat-num">100+</span><span class="stat-lbl">PAGES JANMPATRI</span></div>
+      <div><span class="stat-num">36</span><span class="stat-lbl">GUNA MILAN</span></div>
+      <div><span class="stat-num">16</span><span class="stat-lbl">VARGA CHARTS</span></div>
+      <div><span class="stat-num">120</span><span class="stat-lbl">YEAR DASHA</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- TOOLS -->
+<section class="tools" id="tools">
+  <div class="sec-hdr">
+    <span class="sec-tag">✦ CHOOSE YOUR TOOL ✦</span>
+    <h2 class="sec-title">Two Powerful Tools<span class="sec-title-hi">दो शक्तिशाली सॉफ्टवेयर</span></h2>
+    <div class="gold-line"></div>
+  </div>
+  <div class="tools-grid">
+
+    <!-- KUNDALI TOOL -->
+    <div class="tool-card kundali">
+      <div class="tool-inner">
+        <span class="tool-icon">🔮</span>
+        <div class="tool-badge">JANMPATRI · जन्मपत्री</div>
+        <h3 class="tool-name">Complete Kundali</h3>
+        <span class="tool-name-hi">सम्पूर्ण जन्मपत्री — 100+ पृष्ठ</span>
+        <p class="tool-desc">
+          Generate your complete 100–120 page birth chart report with all charts, 
+          dasha analysis, yoga detection, dosha analysis, predictions and remedies.
+          जन्म तिथि, समय और स्थान से सम्पूर्ण जन्मपत्री तैयार करें।
+        </p>
+        <ul class="tool-features">
+          <li>Lagna, Chandra, Navamsa Charts <span>लग्न, चंद्र, नवांश</span></li>
+          <li>All 16 Shodashvarga (D1–D60) <span>षोडशवर्ग चार्ट</span></li>
+          <li>120-Year Vimshottari Dasha <span>विंशोत्तरी दशा</span></li>
+          <li>Antardasha + Pratyantar Dasha <span>अंतर्दशा प्रत्यंतर</span></li>
+          <li>Yoga + Dosha Detection <span>योग एवं दोष</span></li>
+          <li>Ashtakavarga Analysis <span>अष्टकवर्ग</span></li>
+          <li>Gochar + Sade Sati <span>गोचर, साढ़ेसाती</span></li>
+          <li>Remedies + Gems + Mantras <span>उपाय, रत्न, मंत्र</span></li>
+          <li>Print/PDF Ready — A4 Format <span>प्रिंट तैयार</span></li>
+        </ul>
+        <a href="kundali.html" class="tool-btn kundali-btn">
+          🔮 Generate Janmpatri / जन्मपत्री बनाएं →
+        </a>
+      </div>
+    </div>
+
+    <!-- MILAN TOOL -->
+    <div class="tool-card milan">
+      <div class="tool-inner">
+        <span class="tool-icon">💞</span>
+        <div class="tool-badge">VIVAH MILAN · विवाह मिलान</div>
+        <h3 class="tool-name">Kundali Milan</h3>
+        <span class="tool-name-hi">कुण्डली मिलान — 10 पृष्ठ रिपोर्ट</span>
+        <p class="tool-desc">
+          Complete 36 Guna Milan with Ashta Koot analysis, Mangal Dosha, Nadi Dosha,
+          both charts comparison and detailed compatibility report.
+          वर-वधू का सम्पूर्ण कुण्डली मिलान — 36 गुण अष्टकूट विश्लेषण।
+        </p>
+        <ul class="tool-features">
+          <li>Boy + Girl Full Kundali Charts <span>वर-वधू कुण्डली</span></li>
+          <li>36 Guna Ashta Koot Analysis <span>36 गुण अष्टकूट</span></li>
+          <li>Accurate Nakshatra-based Koots <span>नक्षत्र आधारित</span></li>
+          <li>Mangal + Nadi + Bhakut Dosha <span>दोष विश्लेषण</span></li>
+          <li>Navamsa D-9 Comparison <span>नवांश तुलना</span></li>
+          <li>6-Area Compatibility Analysis <span>6 क्षेत्र अनुकूलता</span></li>
+          <li>Dasha Compatibility Chart <span>दशा तुलना</span></li>
+          <li>Remedies + Vivah Muhurta <span>उपाय + मुहूर्त</span></li>
+          <li>Final Conclusion Page <span>अंतिम निर्णय</span></li>
+        </ul>
+        <a href="milan.html" class="tool-btn milan-btn">
+          💞 Start Milan / मिलान शुरू करें →
+        </a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="features" id="features">
+  <div class="sec-hdr">
+    <span class="sec-tag">✦ COMPLETE FEATURE LIST ✦</span>
+    <h2 class="sec-title">What's Included<span class="sec-title-hi">क्या-क्या शामिल है</span></h2>
+    <div class="gold-line"></div>
+  </div>
+  <div class="feat-grid">
+    <div class="feat-card"><span class="feat-icon">🏠</span><div class="feat-name">Lagna Kundali</div><span class="feat-name-hi">लग्न कुण्डली</span><p class="feat-desc">North Indian style birth chart with all 12 houses, planet positions and aspects.</p></div>
+    <div class="feat-card"><span class="feat-icon">🌙</span><div class="feat-name">Chandra Kundali</div><span class="feat-name-hi">चंद्र कुण्डली</span><p class="feat-desc">Moon chart showing emotional nature, mind and Chandra Lagna predictions.</p></div>
+    <div class="feat-card"><span class="feat-icon">⚡</span><div class="feat-name">Navamsa D-9</div><span class="feat-name-hi">नवांश कुण्डली</span><p class="feat-desc">9th divisional chart — key to marriage, dharma and spiritual evolution.</p></div>
+    <div class="feat-card"><span class="feat-icon">📊</span><div class="feat-name">Shodashvarga</div><span class="feat-name-hi">षोडशवर्ग</span><p class="feat-desc">All 16 divisional charts D-1 to D-60 — Hora, Drekkana, Dashamsa and more.</p></div>
+    <div class="feat-card"><span class="feat-icon">⏳</span><div class="feat-name">Vimshottari Dasha</div><span class="feat-name-hi">विंशोत्तरी दशा</span><p class="feat-desc">Complete 120-year Mahadasha, Antardasha, Pratyantar and Sookshma Dasha.</p></div>
+    <div class="feat-card"><span class="feat-icon">🪐</span><div class="feat-name">Graha Sthiti</div><span class="feat-name-hi">ग्रह स्थिति</span><p class="feat-desc">Exact degree, sign, nakshatra, pada and motion for all 9 grahas.</p></div>
+    <div class="feat-card"><span class="feat-icon">💪</span><div class="feat-name">Shadbala</div><span class="feat-name-hi">षड्बल</span><p class="feat-desc">Six-fold planetary strength — Sthana, Dig, Kala, Chesta, Naisargika, Drig.</p></div>
+    <div class="feat-card"><span class="feat-icon">🌟</span><div class="feat-name">Yoga Analysis</div><span class="feat-name-hi">योग विश्लेषण</span><p class="feat-desc">Auto-detect Raj, Dhana, Gaja Kesari, Pancha Mahapurusha and 12+ yogas.</p></div>
+    <div class="feat-card"><span class="feat-icon">🔴</span><div class="feat-name">Dosha Analysis</div><span class="feat-name-hi">दोष विश्लेषण</span><p class="feat-desc">Mangal, Kaal Sarpa, Pitra, Shrapit, Grahan Dosha with remedies.</p></div>
+    <div class="feat-card"><span class="feat-icon">📈</span><div class="feat-name">Ashtakavarga</div><span class="feat-name-hi">अष्टकवर्ग</span><p class="feat-desc">Sarvashtakavarga and Bhinnashtak for all 7 planets with bindhu scores.</p></div>
+    <div class="feat-card"><span class="feat-icon">🔄</span><div class="feat-name">Gochar + Sade Sati</div><span class="feat-name-hi">गोचर + साढ़ेसाती</span><p class="feat-desc">Current planetary transits and complete Sade Sati phase analysis.</p></div>
+    <div class="feat-card"><span class="feat-icon">💊</span><div class="feat-name">Remedies + Gems</div><span class="feat-name-hi">उपाय + रत्न</span><p class="feat-desc">Planet-wise remedies, gemstones, beej mantras and donation guidelines.</p></div>
+  </div>
+</section>
+
+<!-- HOW TO USE -->
+<section class="howto" id="howto">
+  <div class="sec-hdr">
+    <span class="sec-tag">✦ SIMPLE TO USE ✦</span>
+    <h2 class="sec-title">How It Works<span class="sec-title-hi">कैसे उपयोग करें</span></h2>
+    <div class="gold-line"></div>
+  </div>
+  <div class="steps-grid">
+    <div class="step-card">
+      <div class="step-num">1</div>
+      <span class="step-icon">📋</span>
+      <div class="step-title">CHOOSE TOOL <span class="step-title-hi">टूल चुनें</span></div>
+      <p class="step-desc">Click Janmpatri for birth chart or Vivah Milan for match matching.</p>
+    </div>
+    <div class="step-card">
+      <div class="step-num">2</div>
+      <span class="step-icon">✍️</span>
+      <div class="step-title">FILL DETAILS <span class="step-title-hi">विवरण भरें</span></div>
+      <p class="step-desc">Enter Name, Date, Time and Place of birth. Hindi + English both supported.</p>
+    </div>
+    <div class="step-card">
+      <div class="step-num">3</div>
+      <span class="step-icon">🔮</span>
+      <div class="step-title">GENERATE <span class="step-title-hi">जनरेट करें</span></div>
+      <p class="step-desc">Click Generate. Software automatically calculates everything in seconds.</p>
+    </div>
+    <div class="step-card">
+      <div class="step-num">4</div>
+      <span class="step-icon">🖨️</span>
+      <div class="step-title">PRINT / PDF <span class="step-title-hi">प्रिंट / PDF</span></div>
+      <p class="step-desc">Click Print button. Save as PDF — 100+ pages A4 format, print-ready.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span class="footer-om">ॐ</span>
+  <div class="footer-brand">Kundli Pro</div>
+  <div class="footer-hi">वैदिक ज्योतिष सॉफ्टवेयर · Based on Parashari Jyotish</div>
+  <div class="footer-links">
+    <a href="kundali.html">Janmpatri / जन्मपत्री</a>
+    <a href="milan.html">Vivah Milan / विवाह मिलान</a>
+    <a href="#features">Features</a>
+    <a href="#howto">How to Use</a>
+  </div>
+  <div class="footer-divider"></div>
+  <div class="footer-copy">
+    <strong>© 2025 Kundli Pro. All Rights Reserved. सर्वाधिकार सुरक्षित।</strong><br>
+    Protected under Indian Copyright Act, 1957 & International Copyright Laws.<br>
+    Unauthorized copying, redistribution or commercial use is strictly prohibited.
+  </div>
+  <div class="copyright-notice">
+    ⚠️ COPYRIGHT NOTICE / कॉपीराइट सूचना<br>
+    This software is PRIVATE and CONFIDENTIAL. All code, design, calculations,
+    and content are original works protected by copyright law.
+    Any unauthorized reproduction or distribution is a legal offence.<br>
+    यह सॉफ्टवेयर निजी एवं गोपनीय है। बिना अनुमति नकल करना कानूनी अपराध है।
+  </div>
+</footer>
+
+<script>
+/* Copyright © 2025 Kundli Pro. All Rights Reserved. */
+// Disable right click
+document.addEventListener('contextmenu',function(e){
+  e.preventDefault();
+  alert('© 2025 Kundli Pro — All Rights Reserved\nसर्वाधिकार सुरक्षित');
+  return false;
+});
+// Disable Ctrl+U (view source)
+document.addEventListener('keydown',function(e){
+  if((e.ctrlKey||e.metaKey)&&e.key==='u'){
+    e.preventDefault();return false;
+  }
+});
+// Console notice
+console.log('%c© 2025 Kundli Pro — All Rights Reserved','color:#C8960C;font-size:20px;font-weight:bold;');
+console.log('%cThis software is protected under Indian Copyright Act, 1957.','color:#FF6B00;font-size:13px;');
+console.log('%cUnauthorized copying or distribution is strictly prohibited.','color:#8B0000;font-size:13px;');
+
+// Smooth scroll nav
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.addEventListener('click',function(e){
+    e.preventDefault();
+    const t=document.querySelector(this.getAttribute('href'));
+    if(t) t.scrollIntoView({behavior:'smooth',block:'start'});
+  });
+});
+
+// Scroll animation for feature cards
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach((e,i)=>{
+    if(e.isIntersecting){
+      e.target.style.animation=`fadeUp 0.5s ease ${i*0.06}s both`;
+    }
+  });
+},{threshold:0.1});
+document.querySelectorAll('.feat-card,.step-card,.tool-card').forEach(el=>{
+  el.style.opacity='0';obs.observe(el);
+});
+</script>
+<style>
+@keyframes fadeUp{from{opacity:0;transform:translateY(25px);}to{opacity:1;transform:translateY(0);}}
+</style>
+</body>
+</html>
