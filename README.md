@@ -39,6 +39,30 @@ comments as a follow-up item. Everything else (sign, house, nakshatra,
 Lagna, Dasha, and the five dosha checks) is computed from real planetary
 positions, not randomized.
 
+## AI Quick-Fill
+
+Both forms have an "⚡ AI Quick-Fill" box at the top: paste a messy
+free-text birth detail (Hindi/English/Hinglish, e.g. copied from
+WhatsApp) and it auto-fills the individual fields.
+
+This uses a **bring-your-own-key** pattern — there is no backend:
+
+- The browser sends the pasted text directly to
+  `https://api.anthropic.com/v1/messages` (Claude Haiku 4.5) using
+  the `anthropic-dangerous-direct-browser-access` CORS header, with
+  the visitor's own Anthropic API key.
+- The key is stored only in that browser's `localStorage`
+  (`kp_ai_key`) and is never sent to any Kundli Pro server — there
+  isn't one.
+- The prompt includes a one-shot example (sample input → expected
+  JSON output) so the model returns predictable, parseable fields.
+
+Get a key at [console.anthropic.com](https://console.anthropic.com/settings/keys).
+Anyone who can view the page source/devtools on a visitor's own
+machine can see a key they typed in — that's an accepted trade-off
+of the no-backend design, and it only exposes *that visitor's own*
+key, never anyone else's.
+
 ## Running locally
 
 No build step — just open the HTML files in a browser, or serve the folder:
