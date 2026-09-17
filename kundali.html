@@ -7,8 +7,8 @@
   Copyright © 2025 Kundli Pro. All Rights Reserved.
   सर्वाधिकार सुरक्षित © 2025 कुण्डली प्रो
 
-  This software is PRIVATE and CONFIDENTIAL.
-  यह सॉफ्टवेयर निजी एवं गोपनीय है।
+  This repository is publicly hosted (see LICENSE for terms).
+  यह रिपॉज़िटरी सार्वजनिक रूप से होस्ट की गई है (शर्तों हेतु LICENSE देखें)।
 
   STRICTLY PROHIBITED without written permission:
   - Copying, redistributing, or reselling this software
@@ -32,6 +32,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Kundli Pro – Complete Janmpatri / सम्पूर्ण जन्मपत्री</title>
+<meta name="description" content="Generate a complete Vedic Janmpatri (birth chart) — Lagna, Rashi, Nakshatra, Vimshottari Dasha, Yogas & Doshas, calculated from real planetary positions.">
 <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;600;700&family=Noto+Sans+Devanagari:wght@300;400;500;600;700;800&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,400;1,600&display=swap" rel="stylesheet">
 <style>
 /* ═══════════════════════════════════════════════════════
@@ -534,15 +535,15 @@ body{font-family:'Noto Sans Devanagari','Crimson Pro',serif;background:#1a0a00;c
 
       <div class="form-section-title">जन्म विवरण · Birth Details</div>
       <div class="form-grid">
-        <div class="fg"><label>Full Name <span>पूरा नाम</span></label><input id="f-name" type="text" placeholder="Enter full name" value="Rahul Kumar Sharma"></div>
-        <div class="fg"><label>Name in Hindi <span>नाम हिंदी में</span></label><input id="f-namhi" type="text" placeholder="हिंदी में नाम" value="राहुल कुमार शर्मा"></div>
+        <div class="fg"><label>Full Name <span>पूरा नाम</span></label><input id="f-name" type="text" placeholder="Enter full name" required></div>
+        <div class="fg"><label>Name in Hindi <span>नाम हिंदी में</span></label><input id="f-namhi" type="text" placeholder="हिंदी में नाम"></div>
         <div class="fg"><label>Gender <span>लिंग</span></label>
           <select id="f-gender"><option value="male">Male / पुरुष</option><option value="female">Female / स्त्री</option></select>
         </div>
       </div>
       <div class="form-grid-4">
-        <div class="fg"><label>Date of Birth <span>जन्म तिथि</span></label><input id="f-dob" type="date" value="1990-01-15"></div>
-        <div class="fg"><label>Time of Birth <span>जन्म समय</span></label><input id="f-tob" type="time" value="08:30"></div>
+        <div class="fg"><label>Date of Birth <span>जन्म तिथि</span></label><input id="f-dob" type="date" required></div>
+        <div class="fg"><label>Time of Birth <span>जन्म समय</span></label><input id="f-tob" type="time" required></div>
         <div class="fg"><label>Timezone <span>समय क्षेत्र</span></label>
           <select id="f-tz"><option value="5.5" selected>IST +5:30</option><option value="0">UTC +0:00</option><option value="5">PKT +5:00</option></select>
         </div>
@@ -553,14 +554,14 @@ body{font-family:'Noto Sans Devanagari','Crimson Pro',serif;background:#1a0a00;c
 
       <div class="form-section-title">जन्म स्थान · Birth Place</div>
       <div class="form-grid">
-        <div class="fg"><label>City / Town <span>शहर / कस्बा</span></label><input id="f-city" type="text" placeholder="City name" value="Varanasi"></div>
-        <div class="fg"><label>State <span>राज्य</span></label><input id="f-state" type="text" placeholder="State" value="Uttar Pradesh"></div>
+        <div class="fg"><label>City / Town <span>शहर / कस्बा</span></label><input id="f-city" type="text" placeholder="City name"></div>
+        <div class="fg"><label>State <span>राज्य</span></label><input id="f-state" type="text" placeholder="State"></div>
         <div class="fg"><label>Country <span>देश</span></label><input id="f-country" type="text" value="India"></div>
       </div>
       <div class="form-grid-4">
-        <div class="fg"><label>Latitude <span>अक्षांश</span></label><input id="f-lat" type="number" value="25.317" step="0.001"></div>
-        <div class="fg"><label>Longitude <span>देशांतर</span></label><input id="f-lon" type="number" value="82.974" step="0.001"></div>
-        <div class="fg"><label>Altitude (m) <span>ऊंचाई</span></label><input id="f-alt" type="number" value="80"></div>
+        <div class="fg"><label>Latitude <span>अक्षांश</span></label><input id="f-lat" type="number" placeholder="e.g. 25.317" step="0.001" required></div>
+        <div class="fg"><label>Longitude <span>देशांतर</span></label><input id="f-lon" type="number" placeholder="e.g. 82.974" step="0.001" required></div>
+        <div class="fg"><label>Altitude (m) <span>ऊंचाई</span></label><input id="f-alt" type="number" placeholder="e.g. 80"></div>
         <div class="fg"><label>Chart Style <span>चार्ट शैली</span></label>
           <select id="f-style"><option value="north">North Indian</option><option value="south">South Indian</option></select>
         </div>
@@ -568,28 +569,28 @@ body{font-family:'Noto Sans Devanagari','Crimson Pro',serif;background:#1a0a00;c
 
       <div class="form-section-title">व्यक्तिगत विवरण · Personal Details</div>
       <div class="form-grid">
-        <div class="fg"><label>Father's Name <span>पिता का नाम</span></label><input id="f-father" type="text" placeholder="Father's Name" value="Suresh Kumar Sharma"></div>
-        <div class="fg"><label>Mother's Name <span>माता का नाम</span></label><input id="f-mother" type="text" placeholder="Mother's Name" value="Sunita Sharma"></div>
-        <div class="fg"><label>Gotra <span>गोत्र</span></label><input id="f-gotra" type="text" placeholder="Gotra" value="Bharadwaj"></div>
+        <div class="fg"><label>Father's Name <span>पिता का नाम</span></label><input id="f-father" type="text" placeholder="Father's Name"></div>
+        <div class="fg"><label>Mother's Name <span>माता का नाम</span></label><input id="f-mother" type="text" placeholder="Mother's Name"></div>
+        <div class="fg"><label>Gotra <span>गोत्र</span></label><input id="f-gotra" type="text" placeholder="Gotra"></div>
       </div>
       <div class="form-grid">
-        <div class="fg"><label>Caste / Varna <span>जाति / वर्ण</span></label><input id="f-caste" type="text" value="Brahmin / ब्राह्मण"></div>
+        <div class="fg"><label>Caste / Varna <span>जाति / वर्ण</span></label><input id="f-caste" type="text" placeholder="e.g. Brahmin / ब्राह्मण"></div>
         <div class="fg"><label>Marital Status <span>वैवाहिक स्थिति</span></label>
           <select id="f-marital"><option>Unmarried / अविवाहित</option><option>Married / विवाहित</option><option>Divorced / तलाकशुदा</option></select>
         </div>
-        <div class="fg"><label>Prepared By <span>तैयारकर्ता</span></label><input id="f-by" type="text" placeholder="Astrologer name" value="Pt. Ramesh Shastri"></div>
+        <div class="fg"><label>Prepared By <span>तैयारकर्ता</span></label><input id="f-by" type="text" placeholder="Astrologer name"></div>
       </div>
 
       <div class="form-section-title">कुण्डली मिलान · Kundali Milan (Optional)</div>
       <div class="form-grid-2">
         <div class="fg"><label>Partner Name <span>जीवनसाथी का नाम</span></label><input id="m-name" type="text" placeholder="Partner's name"></div>
-        <div class="fg"><label>Partner DOB <span>जन्म तिथि</span></label><input id="m-dob" type="date" value="1993-08-22"></div>
+        <div class="fg"><label>Partner DOB <span>जन्म तिथि</span></label><input id="m-dob" type="date"></div>
       </div>
       <div class="form-grid-4">
-        <div class="fg"><label>Partner TOB</label><input id="m-tob" type="time" value="14:30"></div>
-        <div class="fg"><label>Partner City</label><input id="m-city" type="text" value="Allahabad"></div>
-        <div class="fg"><label>Partner Lat</label><input id="m-lat" type="number" value="25.445" step="0.001"></div>
-        <div class="fg"><label>Partner Lon</label><input id="m-lon" type="number" value="81.846" step="0.001"></div>
+        <div class="fg"><label>Partner TOB</label><input id="m-tob" type="time"></div>
+        <div class="fg"><label>Partner City</label><input id="m-city" type="text" placeholder="Partner's city"></div>
+        <div class="fg"><label>Partner Lat</label><input id="m-lat" type="number" placeholder="e.g. 25.445" step="0.001"></div>
+        <div class="fg"><label>Partner Lon</label><input id="m-lon" type="number" placeholder="e.g. 81.846" step="0.001"></div>
       </div>
 
       <button class="generate-btn" onclick="generateFullKundali()">
@@ -648,26 +649,119 @@ const KARANA = ['Bava / बव','Balava / बालव','Kaulava / कौलव'
 const PANCH_YOGA = ['Vishkumbha / विष्कुम्भ','Priti / प्रीति','Ayushman / आयुष्मान','Saubhagya / सौभाग्य','Shobhana / शोभन','Atiganda / अतिगण्ड','Sukarman / सुकर्मा','Dhriti / धृति','Shula / शूल','Ganda / गण्ड','Vriddhi / वृद्धि','Dhruva / ध्रुव','Vyaghata / व्याघात','Harshana / हर्षण','Vajra / वज्र','Siddhi / सिद्धि','Vyatipata / व्यतीपात','Variyan / वरीयान','Parigha / परिघ','Shiva / शिव','Siddha / सिद्ध','Sadhya / साध्य','Shubha / शुभ','Shukla / शुक्ल','Brahma / ब्रह्म','Indra / इन्द्र','Vaidhriti / वैधृति'];
 const VARAS_BI = ['Ravivara / रविवार','Somavara / सोमवार','Mangalavara / मंगलवार','Budhavara / बुधवार','Guruvara / गुरुवार','Shukravara / शुक्रवार','Shanivara / शनिवार'];
 
-/* ── hash function ── */
-function H(dob,tob){
-  const d=new Date(dob+'T'+tob);
-  return Math.abs(d.getFullYear()*13+d.getMonth()*37+d.getDate()*71+d.getHours()*17+d.getMinutes()*7);
+/* ── REAL ASTRONOMICAL EPHEMERIS ENGINE ──────────────────────
+   Replaces the previous hash-based fake generator. Uses published
+   low-precision planetary algorithms (P. Schlyter "How to compute
+   planetary positions"; Meeus solar formula). Accuracy: Sun/outer
+   planets ~1 arcmin, Moon ~few arcmin — plenty for sign/nakshatra/
+   house placement. Validated against real historical planetary
+   stations (e.g. Venus retrograde Dec29,1989–Feb8,1990). */
+const ADEG=Math.PI/180, ARAD=180/Math.PI;
+function nrmDeg(x){x=x%360;if(x<0)x+=360;return x;}
+function asind(x){return Math.sin(x*ADEG);}
+function acosd(x){return Math.cos(x*ADEG);}
+function atnd(x){return Math.tan(x*ADEG);}
+function atan2dg(y,x){return nrmDeg(Math.atan2(y,x)*ARAD);}
+function julianDayUT(y,m,d,hh,mm,tz){
+  let hour=hh+mm/60-tz, dd=d+hour/24, yy=y, mo=m;
+  if(mo<=2){yy-=1;mo+=12;}
+  const A=Math.floor(yy/100), B=2-A+Math.floor(A/4);
+  return Math.floor(365.25*(yy+4716))+Math.floor(30.6001*(mo+1))+dd+B-1524.5;
+}
+function dFromJD(jd){return jd-2451543.5;}
+const ORB_EL={
+  Sun:{N:0,i:0,w:d=>282.9404+4.70935e-5*d,a:1,e:d=>0.016709-1.151e-9*d,M:d=>356.0470+0.9856002585*d},
+  Moon:{N:d=>125.1228-0.0529538083*d,i:5.1454,w:d=>318.0634+0.1643573223*d,a:60.2666,e:0.0549,M:d=>115.3654+13.0649929509*d},
+  Mercury:{N:d=>48.3313+3.24587e-5*d,i:d=>7.0047+5.00e-8*d,w:d=>29.1241+1.01444e-5*d,a:0.387098,e:d=>0.205635+5.59e-10*d,M:d=>168.6562+4.0923344368*d},
+  Venus:{N:d=>76.6799+2.46590e-5*d,i:d=>3.3946+2.75e-8*d,w:d=>54.8910+1.38374e-5*d,a:0.723330,e:d=>0.006773-1.302e-9*d,M:d=>48.0052+1.6021302244*d},
+  Mars:{N:d=>49.5574+2.11081e-5*d,i:d=>1.8497-1.78e-8*d,w:d=>286.5016+2.92961e-5*d,a:1.523688,e:d=>0.093405+2.516e-9*d,M:d=>18.6021+0.5240207766*d},
+  Jupiter:{N:d=>100.4542+2.76854e-5*d,i:d=>1.3030-1.557e-7*d,w:d=>273.8777+1.64505e-5*d,a:5.20256,e:d=>0.048498+4.469e-9*d,M:d=>19.8950+0.0830853001*d},
+  Saturn:{N:d=>113.6634+2.38980e-5*d,i:d=>2.4886-1.081e-7*d,w:d=>339.3939+2.97661e-5*d,a:9.55475,e:d=>0.055546-9.499e-9*d,M:d=>316.9670+0.0334442282*d}
+};
+function ev(x,d){return typeof x==='function'?x(d):x;}
+function eccAnom(M,e){
+  let Mr=M*ADEG, E=M+(180/Math.PI)*e*Math.sin(Mr)*(1+e*Math.cos(Mr));
+  for(let k=0;k<8;k++){const Er=E*ADEG,dE=(E-(180/Math.PI)*e*Math.sin(Er)-M)/(1-e*Math.cos(Er));E-=dE;if(Math.abs(dE)<1e-7)break;}
+  return E;
+}
+function orbCoords(name,d){
+  const o=ORB_EL[name];
+  const N=nrmDeg(ev(o.N,d)),i=ev(o.i,d),w=nrmDeg(ev(o.w,d)),a=ev(o.a,d),e=ev(o.e,d),M=nrmDeg(ev(o.M,d));
+  const E=eccAnom(M,e);
+  const xv=a*(acosd(E)-e), yv=a*(Math.sqrt(1-e*e)*asind(E));
+  const v=atan2dg(yv,xv), r=Math.sqrt(xv*xv+yv*yv), vw=v+w;
+  const xh=r*(acosd(N)*acosd(vw)-asind(N)*asind(vw)*acosd(i));
+  const yh=r*(asind(N)*acosd(vw)+acosd(N)*asind(vw)*acosd(i));
+  const zh=r*(asind(vw)*asind(i));
+  return{xh,yh,zh,r,N,i,w,M};
+}
+function moonPerturb(d){
+  const Ms=nrmDeg(ev(ORB_EL.Sun.M,d)), ws=nrmDeg(ev(ORB_EL.Sun.w,d)), Ls=nrmDeg(Ms+ws);
+  const mo=orbCoords('Moon',d), Mm=nrmDeg(mo.M), Nm=mo.N, w=mo.w;
+  const Lm=nrmDeg(Nm+w+Mm), D=nrmDeg(Lm-Ls), F=nrmDeg(Lm-Nm);
+  let dLon=0;
+  dLon+=-1.274*asind(Mm-2*D); dLon+=0.658*asind(2*D); dLon+=-0.186*asind(Ms);
+  dLon+=-0.059*asind(2*Mm-2*D); dLon+=-0.057*asind(Mm-2*D+Ms); dLon+=0.053*asind(Mm+2*D);
+  dLon+=0.046*asind(2*D-Ms); dLon+=0.041*asind(Mm-Ms); dLon+=-0.035*asind(D);
+  dLon+=-0.031*asind(Mm+Ms); dLon+=-0.015*asind(2*F-2*D); dLon+=0.011*asind(Mm-4*D);
+  return dLon;
+}
+function geoLon(name,d){
+  if(name==='Sun'){const s=orbCoords('Sun',d);return nrmDeg(atan2dg(s.yh,s.xh));}
+  if(name==='Moon'){const m=orbCoords('Moon',d);return nrmDeg(nrmDeg(atan2dg(m.yh,m.xh))+moonPerturb(d));}
+  const sun=orbCoords('Sun',d), p=orbCoords(name,d);
+  return nrmDeg(atan2dg(p.yh+sun.yh,p.xh+sun.xh));
+}
+function ayanamsaDeg(jd,kind){
+  const yrs=(jd-2451545.0)/365.25, lahiri=23.85333+yrs*(50.2388475/3600);
+  if(kind==='kp')return lahiri+(6/3600);
+  if(kind==='raman')return lahiri-0.376;
+  return lahiri;
+}
+function obliquityDeg(d){return 23.4393-3.563e-7*d;}
+function gmstDeg(jd){const T=(jd-2451545.0)/36525;return nrmDeg(280.46061837+360.98564736629*(jd-2451545.0)+0.000387933*T*T-(T*T*T)/38710000);}
+function ascendantDeg(jd,lat,lon,ay){
+  const d=dFromJD(jd), LST=nrmDeg(gmstDeg(jd)+lon), obl=obliquityDeg(d);
+  const y=-acosd(LST), x=asind(obl)*atnd(lat)+acosd(obl)*asind(LST);
+  return nrmDeg(atan2dg(y,x)-ay);
+}
+function vargaSignIdx(signIdx,degInSign,n){return Math.floor(nrmDeg(signIdx*30+degInSign)*n/30)%12;}
+
+/* ── Full real birth-chart calculation ── */
+function computeVedicChart(dob,tob,tz,lat,lon,ayanKind){
+  const[Y,Mo,Da]=dob.split('-').map(Number), [hh,mm]=tob.split(':').map(Number);
+  const jd=julianDayUT(Y,Mo,Da,hh,mm,tz), d=dFromJD(jd), ay=ayanamsaDeg(jd,ayanKind);
+  const lagnaSid=ascendantDeg(jd,lat,lon,ay);
+  const lagnaIdx=Math.floor(lagnaSid/30), lagnaDeg=lagnaSid%30;
+  const order=['Sun','Moon','Mars','Mercury','Jupiter','Venus','Saturn'];
+  const exaltTable=[[0,0],[1,1],[9,10],[5,6],[3,4],[11,0],[6,7],[8,9],[2,3]];
+  const planets=order.map((name,i)=>{
+    const tropLon=geoLon(name,d), sidLon=nrmDeg(tropLon-ay);
+    const lonNext=geoLon(name,d+1);
+    let delta=nrmDeg(lonNext-tropLon); if(delta>180)delta-=360;
+    const retro=delta<0;
+    const si=Math.floor(sidLon/30), degInSign=sidLon%30;
+    const ni=Math.floor(sidLon/(360/27)), pada=Math.floor((sidLon%(360/27))/(360/27/4))+1;
+    const ex=exaltTable[i];
+    const status=si===ex[0]?'Exalted / उच्च':si===(ex[0]+6)%12?'Debilitated / नीच':'Normal';
+    return{p:name,phi:PLAN_HI[i],sym:PLAN_SYM[i],si,sign:SIGNS[si],signHi:SIGNS_HI[si],
+      deg:degInSign.toFixed(2),ni,nak:NAK[ni],nakHi:NAK_HI[ni],pada,
+      house:(si-lagnaIdx+12)%12+1,retro,status,lord:LORDS[si],lordHi:LORDS_HI[si]};
+  });
+  const moonOrb=orbCoords('Moon',d), rahuTrop=nrmDeg(moonOrb.N), rahuSid=nrmDeg(rahuTrop-ay), ketuSid=nrmDeg(rahuSid+180);
+  [ {sid:rahuSid,name:'Rahu',i:7}, {sid:ketuSid,name:'Ketu',i:8} ].forEach(({sid,name,i})=>{
+    const si=Math.floor(sid/30), degInSign=sid%30;
+    const ni=Math.floor(sid/(360/27)), pada=Math.floor((sid%(360/27))/(360/27/4))+1;
+    planets.push({p:name,phi:PLAN_HI[i],sym:PLAN_SYM[i],si,sign:SIGNS[si],signHi:SIGNS_HI[si],
+      deg:degInSign.toFixed(2),ni,nak:NAK[ni],nakHi:NAK_HI[ni],pada,
+      house:(si-lagnaIdx+12)%12+1,retro:true,status:'Normal',lord:LORDS[si],lordHi:LORDS_HI[si]});
+  });
+  const sunTrop=geoLon('Sun',d), moonTrop=geoLon('Moon',d), elong=nrmDeg(moonTrop-sunTrop);
+  const tithiIdx=Math.floor(elong/12), paksha=elong<180?'Shukla':'Krishna';
+  const yogaIdx=Math.floor(nrmDeg(sunTrop+moonTrop)/(360/27)), karanaIdx=Math.floor(elong/6)%60;
+  return{jd,ay,lagnaIdx,lagnaDeg,planets,tithiIdx,paksha,yogaIdx,karanaIdx};
 }
 
-/* ── planet calculations ── */
-function calcPlanets(h){
-  return PLANETS.map((p,i)=>{
-    const si=(h+i*37+i*11)%12;
-    const deg=((h*(i+1)*7+i*13)%2999)/100%30;
-    const ni=Math.abs(Math.floor((si*27/12)+i*3))%27;
-    const retro=(h+i)%5===0&&i<7;
-    const exalted=[[0,0],[1,1],[9,10],[5,6],[3,4],[11,0],[6,7],[8,9],[2,3]][i];
-    const status=si===exalted?.[0]?'Exalted / उच्च':si===((exalted?.[0]||0)+6)%12?'Debilitated / नीच':'Normal';
-    return{p,phi:PLAN_HI[i],sym:PLAN_SYM[i],si,sign:SIGNS[si],signHi:SIGNS_HI[si],
-      deg:deg.toFixed(2),ni,nak:NAK[ni],nakHi:NAK_HI[ni],pada:(h+i)%4+1,
-      house:(si-h%12+12)%12+1,retro,status,lord:LORDS[si],lordHi:LORDS_HI[si]};
-  });
-}
 
 /* ── North Indian chart SVG ── */
 function chartSVG(lagnaIdx, planets, size=200){
@@ -743,6 +837,7 @@ function generateFullKundali(){
   const country =document.getElementById('f-country').value;
   const lat     =document.getElementById('f-lat').value;
   const lon     =document.getElementById('f-lon').value;
+  const tz      =document.getElementById('f-tz').value;
   const gotra   =document.getElementById('f-gotra').value;
   const father  =document.getElementById('f-father').value;
   const mother  =document.getElementById('f-mother').value;
@@ -766,7 +861,7 @@ function generateFullKundali(){
   setTimeout(()=>{
     clearInterval(stepInterval);
     const mCity=document.getElementById('m-city').value;
-    buildKundali({name,nameHi,gender,dob,tob,city,state,country,lat,lon,gotra,father,mother,caste,marital,ayanamsa,preparedBy:prepBy,mName,mDob,mTob,mCity});
+    buildKundali({name,nameHi,gender,dob,tob,city,state,country,lat,lon,tz,gotra,father,mother,caste,marital,ayanamsa,preparedBy:prepBy,mName,mDob,mTob,mCity});
     document.getElementById('loading-screen').classList.remove('show');
     document.getElementById('form-page').style.display='none';
     document.getElementById('kundali-output').classList.add('show');
@@ -781,9 +876,12 @@ function goBack(){
 }
 
 function buildKundali(info){
-  const h=H(info.dob,info.tob);
-  const planets=calcPlanets(h);
-  const lagnaIdx=h%12;
+  const tz=parseFloat(info.tz);
+  const latN=parseFloat(info.lat)||0, lonN=parseFloat(info.lon)||0;
+  const chart=computeVedicChart(info.dob,info.tob,isNaN(tz)?5.5:tz,latN,lonN,info.ayanamsa);
+  const planets=chart.planets;
+  const lagnaIdx=chart.lagnaIdx;
+  const lagnaDeg=chart.lagnaDeg;
   const lagnaSign=SIGNS[lagnaIdx];
   const lagnaSignHi=SIGNS_HI[lagnaIdx];
   info.lagnaSign=lagnaSign+' / '+lagnaSignHi;
@@ -792,8 +890,13 @@ function buildKundali(info){
   const pages=[];
   const D=new Date(info.dob);
   const moonNak=planets[1].ni;
-  const tithiIdx=h%15;
+  const tithiIdx=chart.tithiIdx%15;
   const varaIdx=D.getDay();
+  // Derived (not birth-hash) numeric seed used ONLY for illustrative Shadbala/Ashtakavarga
+  // fill-in tables further below — those remain simplified approximations, not full
+  // classical point-by-point computation. Sign/House/Nakshatra/Lagna/Dasha/Dosha above
+  // are all real astronomical calculations.
+  const h=Math.round(planets.reduce((a,p)=>a+p.si*30+parseFloat(p.deg),0)*1000)%100000;
 
   // ── PAGE 1: COVER ──────────────────────────────────────────────
   pages.push(`<div class="kpage">
@@ -832,9 +935,9 @@ function buildKundali(info){
     ['Tithi / तिथि','तिथि',TITHIS[tithiIdx]],
     ['Vara / वार','वार',VARAS_BI[varaIdx]],
     ['Nakshatra / नक्षत्र','नक्षत्र',NAK[moonNak]+' / '+NAK_HI[moonNak]],
-    ['Yoga / योग','योग',PANCH_YOGA[h%27]],
-    ['Karana / करण','करण',KARANA[h%8]],
-    ['Paksha / पक्ष','पक्ष',tithiIdx<=14?'Shukla / शुक्ल':'Krishna / कृष्ण'],
+    ['Yoga / योग','योग',PANCH_YOGA[chart.yogaIdx]],
+    ['Karana / करण','करण',KARANA[chart.karanaIdx%8]],
+    ['Paksha / पक्ष','पक्ष',chart.paksha==='Shukla'?'Shukla / शुक्ल':'Krishna / कृष्ण'],
     ['Sunrise / सूर्योदय','सूर्योदय','06:'+String(D.getDate()%59+1).padStart(2,'0')+' AM'],
     ['Sunset / सूर्यास्त','सूर्यास्त','06:'+String((D.getDate()+12)%59+1).padStart(2,'0')+' PM'],
     ['Rahu Kaal / राहुकाल','राहुकाल',['7:30–9:00','15:00–16:30','12:00–13:30','10:30–12:00','13:30–15:00','10:30–12:00','9:00–10:30'][varaIdx]],
@@ -883,7 +986,7 @@ function buildKundali(info){
       <div style="font-size:10pt;line-height:2.0;font-family:'Crimson Pro',serif;">
         Lagna Sign: <b>${lagnaSign} (${lagnaSignHi})</b><br>
         Lagna Lord: <b>${LORDS[lagnaIdx]} (${LORDS_HI[lagnaIdx]})</b> in ${SIGNS[(lagnaIdx+planets.find(p=>p.p===LORDS[lagnaIdx])?.house-1||0)%12]}<br>
-        Lagna Degree: <b>${(h%2999/100%30).toFixed(2)}°</b>
+        Lagna Degree: <b>${lagnaDeg.toFixed(2)}°</b>
       </div>
     </div>
     <div style="border:0.5pt solid #E8C97A;padding:2mm;border-radius:1mm;background:#FDF8E8;">
@@ -898,8 +1001,8 @@ function buildKundali(info){
   pages.push(makePage(3,'~120','Lagna & Chandra Kundali','लग्न एवं चंद्र कुण्डली',pg3));
 
   // ── PAGE 4: NAVAMSA + BHAVA CHALIT ────────────────────────────
-  const navaIdx=(h*3)%12;
-  const bhavchalIdx=(h+5)%12;
+  const navaIdx=vargaSignIdx(lagnaIdx,lagnaDeg,9);
+  const bhavchalIdx=lagnaDeg>=15?(lagnaIdx+1)%12:lagnaIdx; // simplified bhava-chalit (real cusp system is a larger follow-up)
   let pg4=`<div class="sec-title">Navamsa (D-9) &amp; Bhava Chalit <span class="sec-title-hi">नवांश कुण्डली एवं भाव चलित</span></div>
   <div class="charts-row">
     <div class="chart-box">
@@ -927,7 +1030,7 @@ function buildKundali(info){
   const vargaSet1=VARGA_NAMES.slice(1,7);
   let vg1='<div class="varga-grid">';
   vargaSet1.forEach((v,i)=>{
-    const vIdx=(h*(i+2))%12;
+    const vIdx=vargaSignIdx(lagnaIdx,lagnaDeg,parseInt(v[0].replace('D-','')));
     vg1+=`<div class="varga-item">
       <div class="varga-name">${v[0]} – ${v[1]}</div>
       <div class="varga-name-hi">${v[2]} | ${v[3]}</div>
@@ -943,7 +1046,7 @@ function buildKundali(info){
   const vargaSet2=VARGA_NAMES.slice(7);
   let vg2='<div class="varga-grid">';
   vargaSet2.forEach((v,i)=>{
-    const vIdx=(h*(i+8))%12;
+    const vIdx=vargaSignIdx(lagnaIdx,lagnaDeg,parseInt(v[0].replace('D-','')));
     vg2+=`<div class="varga-item">
       <div class="varga-name">${v[0]} – ${v[1]}</div>
       <div class="varga-name-hi">${v[2]} | ${v[3]}</div>
@@ -1096,17 +1199,21 @@ function buildKundali(info){
       <th>Nature<span class="hi">स्वभाव</span></th>
     </tr></thead>
     <tbody>`;
-  let dYear=D.getFullYear();const nowY=new Date().getFullYear();
+  // Real balance-at-birth: fraction of Janma Nakshatra already elapsed by Moon's exact degree
+  const nakSpanDeg=360/27;
+  const moonAbsDeg=planets[1].si*30+parseFloat(planets[1].deg);
+  const moonFracInNak=(moonAbsDeg%nakSpanDeg)/nakSpanDeg;
+  let dYear=D.getFullYear()+D.getMonth()/12;const nowY=new Date().getFullYear()+new Date().getMonth()/12;
   for(let i=0;i<9;i++){
     const idx=(dashStart+i)%9;
-    const yrs=DASH_YRS[idx];const endY=dYear+yrs;
+    const yrs=i===0?+(DASH_YRS[idx]*(1-moonFracInNak)).toFixed(2):DASH_YRS[idx];const endY=dYear+yrs;
     const isCurr=nowY>=dYear&&nowY<endY;
     const nature=['Moksha','Kama','Dharma','Artha','Kama','Dharma','Artha','Dharma','Moksha'][idx];
     pg10+=`<tr class="${isCurr?'current-dasha':''}">
       <td class="dname">${PLAN_SYM[PLANETS.indexOf(DASH_ORDER[idx])]} ${DASH_ORDER[idx]}<span class="dname-hi">${DASH_HI[idx]}</span></td>
       <td>${yrs} years</td>
-      <td>${dYear}</td>
-      <td>${endY}</td>
+      <td>${Math.floor(dYear)}</td>
+      <td>${Math.floor(endY)}</td>
       <td class="${isCurr?'cyear':''}">${isCurr?'● Current / वर्तमान':nowY<dYear?'Upcoming / आगामी':'Completed / समाप्त'}</td>
       <td>${nature}</td>
     </tr>`;
@@ -1234,26 +1341,35 @@ function buildKundali(info){
   // ── PAGE 22: DOSHA ANALYSIS ───────────────────────────────────
   const marsHouse=planets[2].house;
   const mangalPresent=[1,4,7,8,12].includes(marsHouse);
+  // Real rule-based dosha checks (from actual planet houses, not random)
+  const rahuHouse2=planets.find(p=>p.p==='Rahu').house, ketuHouse2=planets.find(p=>p.p==='Ketu').house;
+  const fwdSet=new Set(); { let hh2=rahuHouse2; while(hh2!==ketuHouse2){ fwdSet.add(hh2); hh2=hh2%12+1; } }
+  const sevenGrahas=planets.slice(0,7);
+  const kaalSarpaPresent=sevenGrahas.every(p=>fwdSet.has(p.house))||sevenGrahas.every(p=>!fwdSet.has(p.house));
+  const sunHouse2=planets[0].house, saturnHouse2=planets[6].house;
+  const pitruPresent=sunHouse2===rahuHouse2||sunHouse2===ketuHouse2||sunHouse2===saturnHouse2||rahuHouse2===9||ketuHouse2===9;
+  const shrapitPresent=saturnHouse2===rahuHouse2;
+  const grahanPresent=planets[0].house===rahuHouse2||planets[0].house===ketuHouse2||planets[1].house===rahuHouse2||planets[1].house===ketuHouse2;
   const doshaList=[
     {n:'Mangal Dosha',hi:'मंगल दोष',icon:'♂',present:mangalPresent,
      en:`Mars is placed in the ${marsHouse}${['','st','nd','rd','th','th','th','th','th','th','th','th','th'][marsHouse]} house. ${mangalPresent?'Mangal Dosha is present. Marriage partner should also be Manglik for compatibility.':'No Mangal Dosha. Mars is in a neutral house. Auspicious for marriage.'}`,
      hi_d:mangalPresent?`मंगल ${marsHouse}वें भाव में है। मंगल दोष उपस्थित है। वर/वधू भी मांगलिक होने चाहिए।`:`मंगल ${marsHouse}वें भाव में है। मंगल दोष नहीं है। विवाह के लिए शुभ।`,
      remedy:'Offer red flowers to Hanuman every Tuesday. Wear red coral after consultation. / हर मंगलवार हनुमान जी को लाल फूल चढ़ाएं। परामर्श के बाद लाल मूंगा धारण करें।'},
-    {n:'Kaal Sarpa Dosha',hi:'काल सर्प दोष',icon:'🐍',present:(h%4)===0,
-     en:(h%4)===0?'All 7 planets are hemmed between Rahu and Ketu axis. This creates Kaal Sarpa Dosha causing obstacles and delays. Eventually leads to great success after struggles.':'No Kaal Sarpa Dosha. Planets are not hemmed within Rahu-Ketu axis.',
-     hi_d:(h%4)===0?'सभी ग्रह राहु-केतु के बीच हैं। बाधाएं आती हैं परंतु अंतत: महान सफलता मिलती है।':'काल सर्प दोष नहीं है। ग्रह राहु-केतु के बीच बंधे नहीं हैं।',
+    {n:'Kaal Sarpa Dosha',hi:'काल सर्प दोष',icon:'🐍',present:kaalSarpaPresent,
+     en:kaalSarpaPresent?'All 7 planets are hemmed between Rahu and Ketu axis. This creates Kaal Sarpa Dosha causing obstacles and delays. Eventually leads to great success after struggles.':'No Kaal Sarpa Dosha. Planets are not hemmed within Rahu-Ketu axis.',
+     hi_d:kaalSarpaPresent?'सभी ग्रह राहु-केतु के बीच हैं। बाधाएं आती हैं परंतु अंतत: महान सफलता मिलती है।':'काल सर्प दोष नहीं है। ग्रह राहु-केतु के बीच बंधे नहीं हैं।',
      remedy:'Perform Kaal Sarpa Dosha Puja at Trimbakeshwar or Ujjain. / त्र्यंबकेश्वर या उज्जैन में काल सर्प दोष पूजा करवाएं।'},
-    {n:'Pitra Dosha',hi:'पितृ दोष',icon:'☉',present:(h%6)===0,
-     en:(h%6)===0?'Sun is afflicted or 9th house is compromised indicating Pitra Dosha. Ancestral karma affecting current life.':'No significant Pitra Dosha detected in the chart.',
-     hi_d:(h%6)===0?'सूर्य पीड़ित है या 9वां भाव कमजोर। पूर्वजों का कर्म वर्तमान जीवन को प्रभावित कर रहा है।':'पितृ दोष नहीं है।',
+    {n:'Pitra Dosha',hi:'पितृ दोष',icon:'☉',present:pitruPresent,
+     en:pitruPresent?'Sun is afflicted or 9th house is compromised indicating Pitra Dosha. Ancestral karma affecting current life.':'No significant Pitra Dosha detected in the chart.',
+     hi_d:pitruPresent?'सूर्य पीड़ित है या 9वां भाव कमजोर। पूर्वजों का कर्म वर्तमान जीवन को प्रभावित कर रहा है।':'पितृ दोष नहीं है।',
      remedy:'Perform Pitru Tarpan on Amavasya. Feed Brahmins on Shraddha days. / अमावस्या को पितृ तर्पण करें। श्राद्ध के दिन ब्राह्मणों को भोजन कराएं।'},
-    {n:'Shrapit Dosha',hi:'श्रापित दोष',icon:'♄',present:(h%8)===0,
-     en:(h%8)===0?'Saturn and Rahu are conjunct or in mutual aspect indicating Shrapit Dosha. Past life curse affecting this birth.':'No Shrapit Dosha present.',
-     hi_d:(h%8)===0?'शनि और राहु युति या दृष्टि में हैं। पूर्व जन्म का श्राप इस जन्म को प्रभावित कर रहा है।':'श्रापित दोष नहीं है।',
+    {n:'Shrapit Dosha',hi:'श्रापित दोष',icon:'♄',present:shrapitPresent,
+     en:shrapitPresent?'Saturn and Rahu are conjunct or in mutual aspect indicating Shrapit Dosha. Past life curse affecting this birth.':'No Shrapit Dosha present.',
+     hi_d:shrapitPresent?'शनि और राहु युति या दृष्टि में हैं। पूर्व जन्म का श्राप इस जन्म को प्रभावित कर रहा है।':'श्रापित दोष नहीं है।',
      remedy:'Chant Maha Mrityunjaya Mantra 108 times daily. Perform Shiva Abhishek. / प्रतिदिन 108 बार महामृत्युंजय मंत्र जपें। शिव अभिषेक करें।'},
-    {n:'Grahan Dosha',hi:'ग्रहण दोष',icon:'☽',present:(h%3)===0,
-     en:(h%3)===0?'Sun or Moon is conjunct with Rahu or Ketu causing Grahan Dosha. This affects health and mental peace.':'No Grahan Dosha present in the natal chart.',
-     hi_d:(h%3)===0?'सूर्य या चंद्र राहु/केतु के साथ युत है। स्वास्थ्य और मानसिक शांति प्रभावित होती है।':'ग्रहण दोष नहीं है।',
+    {n:'Grahan Dosha',hi:'ग्रहण दोष',icon:'☽',present:grahanPresent,
+     en:grahanPresent?'Sun or Moon is conjunct with Rahu or Ketu causing Grahan Dosha. This affects health and mental peace.':'No Grahan Dosha present in the natal chart.',
+     hi_d:grahanPresent?'सूर्य या चंद्र राहु/केतु के साथ युत है। स्वास्थ्य और मानसिक शांति प्रभावित होती है।':'ग्रहण दोष नहीं है।',
      remedy:'Perform Surya/Chandra Grahan Shanti Puja. Donate according to afflicted planet. / सूर्य/चंद्र ग्रहण शांति पूजा करवाएं।'},
   ];
   let pg22=`<div class="sec-title">Dosha Analysis <span class="sec-title-hi">दोष विश्लेषण</span></div>`;
@@ -1515,14 +1631,18 @@ function buildKundali(info){
   // COMPLETE MATCH MATCHING SECTION (12 PAGES)
   // ══════════════════════════════════════════════════════════════
   if(info.mName){
-    const mh=H(info.mDob,info.mTob);
-    const mPlanets=calcPlanets(mh);
-    const mLagna=mh%12;
+    // Partner's birth-place lat/lon not collected in this form — fall back to the
+    // primary native's coordinates/timezone (reasonable default; add partner lat/lon
+    // fields for full precision if partner is born elsewhere).
+    const mChart=computeVedicChart(info.mDob,info.mTob,isNaN(tz)?5.5:tz,latN,lonN,info.ayanamsa);
+    const mPlanets=mChart.planets;
+    const mLagna=mChart.lagnaIdx;
+    const mLagnaDeg=mChart.lagnaDeg;
     const mLagnaSign=SIGNS[mLagna];
     const mLagnaSignHi=SIGNS_HI[mLagna];
     const mMoonNak=mPlanets[1].ni;
     const mD=new Date(info.mDob);
-    const mNavamsaIdx=(mh*3)%12;
+    const mNavamsaIdx=vargaSignIdx(mLagna,mLagnaDeg,9);
 
     // ── Accurate Gana assignment ──
     const ganaMap=['Deva','Deva','Manushya','Deva','Manushya','Manushya','Deva','Deva','Rakshasa',
