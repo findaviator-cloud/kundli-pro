@@ -547,15 +547,14 @@ body{font-family:'Noto Sans Devanagari','Crimson Pro',serif;background:#1a0a00;c
     <div class="form-body">
 
       <div class="ai-fill-box">
-        <div class="ai-fill-title">⚡ AI Quick-Fill <span>· विवरण पेस्ट कीजिए, AI फॉर्म भर देगा</span></div>
-        <div class="ai-fill-sub">WhatsApp/email se copy किया हुआ birth detail paste kariye (kisi bhi format me, Hindi/English mix chalega) — AI khud sahi fields me bhar dega.</div>
+        <div class="ai-fill-title">⚡ Quick-Fill <span>· विवरण पेस्ट कीजिए, फॉर्म खुद भर जाएगा (पूरी तरह offline)</span></div>
+        <div class="ai-fill-sub">WhatsApp/email se copy किया हुआ birth detail paste kariye (Hindi/English mix chalega) — koi internet ya API key nahi chahiye, sab kuch aapke browser me hi hota hai.</div>
         <textarea id="ai-raw-input" class="ai-textarea" rows="3" placeholder="उदाहरण: मेरा नाम अमित वर्मा है, जन्म 12 मार्च 1995 शाम 7:15 बजे लखनऊ, उत्तर प्रदेश में हुआ। पिता राजेश वर्मा, माता सुनीता वर्मा, गोत्र कश्यप।"></textarea>
         <div class="ai-fill-row">
-          <input id="ai-key" type="password" class="ai-key-input" placeholder="Anthropic API key (sk-ant-...) — सिर्फ आपके browser में save होती है">
-          <button type="button" id="ai-fill-btn" class="ai-fill-btn" onclick="aiQuickFill()">✨ Fill with AI</button>
+          <button type="button" id="ai-fill-btn" class="ai-fill-btn" onclick="aiQuickFill()">⚡ Auto-Fill</button>
         </div>
         <div id="ai-status" class="ai-status"></div>
-        <div class="ai-fill-note">API key <a href="https://console.anthropic.com/settings/keys" target="_blank" rel="noopener">console.anthropic.com</a> se free bana sakte hain। Key sirf seedhe aapke browser se Anthropic ko jaati hai — Kundli Pro server par kabhi nahi jaati.</div>
+        <div class="ai-fill-note">Naam, जन्म-तिथि (DD Month YYYY), समय (सुबह/दोपहर/शाम/रात + बजे), aur शहर clearly likhein to behtar result milega।</div>
       </div>
 
       <div class="form-section-title">जन्म विवरण · Birth Details</div>
@@ -674,64 +673,143 @@ const KARANA = ['Bava / बव','Balava / बालव','Kaulava / कौलव'
 const PANCH_YOGA = ['Vishkumbha / विष्कुम्भ','Priti / प्रीति','Ayushman / आयुष्मान','Saubhagya / सौभाग्य','Shobhana / शोभन','Atiganda / अतिगण्ड','Sukarman / सुकर्मा','Dhriti / धृति','Shula / शूल','Ganda / गण्ड','Vriddhi / वृद्धि','Dhruva / ध्रुव','Vyaghata / व्याघात','Harshana / हर्षण','Vajra / वज्र','Siddhi / सिद्धि','Vyatipata / व्यतीपात','Variyan / वरीयान','Parigha / परिघ','Shiva / शिव','Siddha / सिद्ध','Sadhya / साध्य','Shubha / शुभ','Shukla / शुक्ल','Brahma / ब्रह्म','Indra / इन्द्र','Vaidhriti / वैधृति'];
 const VARAS_BI = ['Ravivara / रविवार','Somavara / सोमवार','Mangalavara / मंगलवार','Budhavara / बुधवार','Guruvara / गुरुवार','Shukravara / शुक्रवार','Shanivara / शनिवार'];
 
-/* ── AI QUICK-FILL (bring-your-own Anthropic API key) ──────────
-   Sends the user's pasted free-text birth details directly from
-   the browser to the Anthropic Messages API (no Kundli Pro server
-   involved) and auto-fills the form. Uses a one-shot example in
-   the prompt so the model returns predictable, parseable JSON. */
-function aiKeyStorageGet(){ try{return localStorage.getItem('kp_ai_key')||'';}catch(e){return '';} }
-function aiKeyStorageSet(k){ try{localStorage.setItem('kp_ai_key',k);}catch(e){} }
-window.addEventListener('DOMContentLoaded',()=>{
-  const ke=document.getElementById('ai-key');
-  if(ke){ const saved=aiKeyStorageGet(); if(saved) ke.value=saved; }
-});
-async function aiQuickFill(){
-  const keyInput=document.getElementById('ai-key');
-  const key=keyInput.value.trim();
-  if(key) aiKeyStorageSet(key);
+/* ── OFFLINE Quick-Fill Parser (no API, no internet, 100% local) ──
+   Pure regex/heuristic extraction from pasted free-text — runs
+   entirely in the browser, nothing ever leaves the device. */
+const MONTHS_HI={'जनवरी':1,'फरवरी':2,'मार्च':3,'अप्रैल':4,'मई':5,'जून':6,'जुलाई':7,'अगस्त':8,'सितंबर':9,'सितम्बर':9,'अक्टूबर':10,'अक्तूबर':10,'नवंबर':11,'नवम्बर':11,'दिसंबर':12,'दिसम्बर':12};
+const MONTHS_EN={'january':1,'jan':1,'february':2,'feb':2,'march':3,'mar':3,'april':4,'apr':4,'may':5,'june':6,'jun':6,'july':7,'jul':7,'august':8,'aug':8,'september':9,'sep':9,'sept':9,'october':10,'oct':10,'november':11,'nov':11,'december':12,'dec':12};
+const CITY_DB={
+ 'varanasi':['Uttar Pradesh',25.317,82.974],'वाराणसी':['Uttar Pradesh',25.317,82.974],'बनारस':['Uttar Pradesh',25.317,82.974],'banaras':['Uttar Pradesh',25.317,82.974],
+ 'lucknow':['Uttar Pradesh',26.8467,80.9462],'लखनऊ':['Uttar Pradesh',26.8467,80.9462],
+ 'kanpur':['Uttar Pradesh',26.4499,80.3319],'कानपुर':['Uttar Pradesh',26.4499,80.3319],
+ 'prayagraj':['Uttar Pradesh',25.4358,81.8463],'allahabad':['Uttar Pradesh',25.4358,81.8463],'प्रयागराज':['Uttar Pradesh',25.4358,81.8463],'इलाहाबाद':['Uttar Pradesh',25.4358,81.8463],
+ 'delhi':['Delhi',28.7041,77.1025],'नई दिल्ली':['Delhi',28.7041,77.1025],'दिल्ली':['Delhi',28.7041,77.1025],'new delhi':['Delhi',28.7041,77.1025],
+ 'mumbai':['Maharashtra',19.0760,72.8777],'मुंबई':['Maharashtra',19.0760,72.8777],'बम्बई':['Maharashtra',19.0760,72.8777],
+ 'bengaluru':['Karnataka',12.9716,77.5946],'bangalore':['Karnataka',12.9716,77.5946],'बेंगलुरु':['Karnataka',12.9716,77.5946],
+ 'chennai':['Tamil Nadu',13.0827,80.2707],'चेन्नई':['Tamil Nadu',13.0827,80.2707],
+ 'kolkata':['West Bengal',22.5726,88.3639],'कोलकाता':['West Bengal',22.5726,88.3639],
+ 'hyderabad':['Telangana',17.3850,78.4867],'हैदराबाद':['Telangana',17.3850,78.4867],
+ 'pune':['Maharashtra',18.5204,73.8567],'पुणे':['Maharashtra',18.5204,73.8567],
+ 'ahmedabad':['Gujarat',23.0225,72.5714],'अहमदाबाद':['Gujarat',23.0225,72.5714],
+ 'jaipur':['Rajasthan',26.9124,75.7873],'जयपुर':['Rajasthan',26.9124,75.7873],
+ 'patna':['Bihar',25.5941,85.1376],'पटना':['Bihar',25.5941,85.1376],
+ 'bhopal':['Madhya Pradesh',23.2599,77.4126],'भोपाल':['Madhya Pradesh',23.2599,77.4126],
+ 'indore':['Madhya Pradesh',22.7196,75.8577],'इंदौर':['Madhya Pradesh',22.7196,75.8577],
+ 'nagpur':['Maharashtra',21.1458,79.0882],'नागपुर':['Maharashtra',21.1458,79.0882],
+ 'surat':['Gujarat',21.1702,72.8311],'सूरत':['Gujarat',21.1702,72.8311],
+ 'agra':['Uttar Pradesh',27.1767,78.0081],'आगरा':['Uttar Pradesh',27.1767,78.0081],
+ 'meerut':['Uttar Pradesh',28.9845,77.7064],'मेरठ':['Uttar Pradesh',28.9845,77.7064],
+ 'ghaziabad':['Uttar Pradesh',28.6692,77.4538],'गाजियाबाद':['Uttar Pradesh',28.6692,77.4538],
+ 'ludhiana':['Punjab',30.9010,75.8573],'लुधियाना':['Punjab',30.9010,75.8573],
+ 'amritsar':['Punjab',31.6340,74.8723],'अमृतसर':['Punjab',31.6340,74.8723],
+ 'chandigarh':['Chandigarh',30.7333,76.7794],'चंडीगढ़':['Chandigarh',30.7333,76.7794],
+ 'dehradun':['Uttarakhand',30.3165,78.0322],'देहरादून':['Uttarakhand',30.3165,78.0322],
+ 'gorakhpur':['Uttar Pradesh',26.7606,83.3732],'गोरखपुर':['Uttar Pradesh',26.7606,83.3732],
+ 'bareilly':['Uttar Pradesh',28.3670,79.4304],'बरेली':['Uttar Pradesh',28.3670,79.4304],
+ 'aligarh':['Uttar Pradesh',27.8974,78.0880],'अलीगढ़':['Uttar Pradesh',27.8974,78.0880],
+ 'moradabad':['Uttar Pradesh',28.8386,78.7733],'मुरादाबाद':['Uttar Pradesh',28.8386,78.7733],
+ 'saharanpur':['Uttar Pradesh',29.9640,77.5460],'सहारनपुर':['Uttar Pradesh',29.9640,77.5460],
+ 'noida':['Uttar Pradesh',28.5355,77.3910],'नोएडा':['Uttar Pradesh',28.5355,77.3910],
+ 'gurugram':['Haryana',28.4595,77.0266],'gurgaon':['Haryana',28.4595,77.0266],'गुरुग्राम':['Haryana',28.4595,77.0266],
+ 'faridabad':['Haryana',28.4089,77.3178],'फरीदाबाद':['Haryana',28.4089,77.3178],
+ 'ranchi':['Jharkhand',23.3441,85.3096],'रांची':['Jharkhand',23.3441,85.3096],
+ 'jamshedpur':['Jharkhand',22.8046,86.2029],'जमशेदपुर':['Jharkhand',22.8046,86.2029],
+ 'bhubaneswar':['Odisha',20.2961,85.8245],'भुवनेश्वर':['Odisha',20.2961,85.8245],
+ 'guwahati':['Assam',26.1445,91.7362],'गुवाहाटी':['Assam',26.1445,91.7362],
+ 'raipur':['Chhattisgarh',21.2514,81.6296],'रायपुर':['Chhattisgarh',21.2514,81.6296],
+ 'jodhpur':['Rajasthan',26.2389,73.0243],'जोधपुर':['Rajasthan',26.2389,73.0243],
+ 'udaipur':['Rajasthan',24.5854,73.7125],'उदयपुर':['Rajasthan',24.5854,73.7125],
+ 'kota':['Rajasthan',25.2138,75.8648],'कोटा':['Rajasthan',25.2138,75.8648],
+ 'gwalior':['Madhya Pradesh',26.2183,78.1828],'ग्वालियर':['Madhya Pradesh',26.2183,78.1828],
+ 'jabalpur':['Madhya Pradesh',23.1815,79.9864],'जबलपुर':['Madhya Pradesh',23.1815,79.9864],
+ 'vadodara':['Gujarat',22.3072,73.1812],'वडोदरा':['Gujarat',22.3072,73.1812],
+ 'rajkot':['Gujarat',22.3039,70.8022],'राजकोट':['Gujarat',22.3039,70.8022],
+ 'nashik':['Maharashtra',19.9975,73.7898],'नासिक':['Maharashtra',19.9975,73.7898],
+ 'thane':['Maharashtra',19.2183,72.9781],'ठाणे':['Maharashtra',19.2183,72.9781],
+ 'kochi':['Kerala',9.9312,76.2673],'cochin':['Kerala',9.9312,76.2673],'कोच्चि':['Kerala',9.9312,76.2673],
+ 'coimbatore':['Tamil Nadu',11.0168,76.9558],'कोयंबटूर':['Tamil Nadu',11.0168,76.9558],
+ 'madurai':['Tamil Nadu',9.9252,78.1198],'मदुरै':['Tamil Nadu',9.9252,78.1198],
+ 'visakhapatnam':['Andhra Pradesh',17.6868,83.2185],'vizag':['Andhra Pradesh',17.6868,83.2185],'विशाखापत्तनम':['Andhra Pradesh',17.6868,83.2185],
+ 'vijayawada':['Andhra Pradesh',16.5062,80.6480],'विजयवाड़ा':['Andhra Pradesh',16.5062,80.6480],
+ 'mysuru':['Karnataka',12.2958,76.6394],'mysore':['Karnataka',12.2958,76.6394],'मैसूर':['Karnataka',12.2958,76.6394],
+ 'thiruvananthapuram':['Kerala',8.5241,76.9366],'trivandrum':['Kerala',8.5241,76.9366],'तिरुवनंतपुरम':['Kerala',8.5241,76.9366],
+ 'shimla':['Himachal Pradesh',31.1048,77.1734],'शिमला':['Himachal Pradesh',31.1048,77.1734],
+ 'srinagar':['Jammu and Kashmir',34.0837,74.7973],'श्रीनगर':['Jammu and Kashmir',34.0837,74.7973],
+ 'jammu':['Jammu and Kashmir',32.7266,74.8570],'जम्मू':['Jammu and Kashmir',32.7266,74.8570],
+ 'panaji':['Goa',15.4909,73.8278],'पणजी':['Goa',15.4909,73.8278],
+ 'puducherry':['Puducherry',11.9416,79.8083],'pondicherry':['Puducherry',11.9416,79.8083],'पुडुचेरी':['Puducherry',11.9416,79.8083]
+};
+function findCityLocal(text){
+  const low=text.toLowerCase(); let best=null,bestIdx=Infinity;
+  for(const key in CITY_DB){ const idx=low.indexOf(key.toLowerCase()); if(idx>=0&&idx<bestIdx){bestIdx=idx;best=key;} }
+  if(!best) return null;
+  const[state,lat,lon]=CITY_DB[best];
+  return{city:best.charAt(0).toUpperCase()+best.slice(1),state,lat:String(lat),lon:String(lon)};
+}
+function extractDateLocal(text){
+  let m=text.match(/(\d{4})[-\/](\d{1,2})[-\/](\d{1,2})(?!\d)/);
+  if(m){const y=+m[1],mo=+m[2],d=+m[3];if(mo>=1&&mo<=12&&d>=1&&d<=31)return fmtDateLocal(y,mo,d);}
+  const monthPat=Object.keys(MONTHS_HI).concat(Object.keys(MONTHS_EN)).join('|');
+  const re=new RegExp('(\\d{1,2})\\s*(?:st|nd|rd|th)?\\s*(?:of\\s*)?('+monthPat+')\\.?\\s*,?\\s*(\\d{4})','i');
+  m=text.match(re);
+  if(m){const d=+m[1];const mo=MONTHS_HI[m[2]]||MONTHS_EN[m[2].toLowerCase()];const y=+m[3];if(mo)return fmtDateLocal(y,mo,d);}
+  m=text.match(/(\d{1,2})[-\/](\d{1,2})[-\/](\d{4})/);
+  if(m){const d=+m[1],mo=+m[2],y=+m[3];if(mo>=1&&mo<=12&&d>=1&&d<=31)return fmtDateLocal(y,mo,d);}
+  return '';
+}
+function fmtDateLocal(y,mo,d){return y+'-'+String(mo).padStart(2,'0')+'-'+String(d).padStart(2,'0');}
+function extractTimeLocal(text){
+  let m=text.match(/(सुबह|प्रातः|प्रात:|दोपहर|शाम|सायं|रात)\s*(\d{1,2})(?:[:.](\d{2}))?\s*(?:बजे)?/);
+  if(m){
+    const period=m[1];let h=+m[2];const min=m[3]?+m[3]:0;
+    if(period==='सुबह'||period==='प्रातः'||period==='प्रात:'){if(h===12)h=0;}
+    else if(period==='दोपहर'||period==='शाम'||period==='सायं'){if(h<12)h+=12;}
+    else if(period==='रात'){if(h>=7&&h<=11)h+=12;else if(h===12)h=0;}
+    return String(h).padStart(2,'0')+':'+String(min).padStart(2,'0');
+  }
+  m=text.match(/(\d{1,2})[:.](\d{2})\s*(AM|PM|am|pm|a\.m\.|p\.m\.)/);
+  if(m){let h=+m[1];const min=+m[2];const ap=m[3].toLowerCase()[0];if(ap==='p'&&h<12)h+=12;if(ap==='a'&&h===12)h=0;return String(h).padStart(2,'0')+':'+String(min).padStart(2,'0');}
+  m=text.match(/(\d{1,2}):(\d{2})/);
+  if(m){return String(+m[1]).padStart(2,'0')+':'+m[2];}
+  return '';
+}
+function extractFieldLocal(text,patterns){
+  for(const re of patterns){const m=text.match(re);if(m&&m[1])return m[1].trim().replace(/[.,।]+$/,'').trim();}
+  return '';
+}
+function parsePersonBlockLocal(text){
+  const name=extractFieldLocal(text,[
+    /मेरा\s*नाम\s+([^,।.\n]+?)\s*(?:है|hai)/i,
+    /(?:वर|वधू|वधु|groom|bride)\s*का\s*नाम\s+([^,।.\n]+?)(?:\s*,|\s*है|$)/i,
+    /नाम\s*[:\-]?\s+([^,।.\n]+?)\s*(?:है|,|$)/i,
+    /name\s*(?:is)?\s*[:\-]?\s*([A-Za-z][A-Za-z .]+?)(?:,|\.|$)/i
+  ]);
+  const father=extractFieldLocal(text,[
+    /पिता(?:\s*जी)?\s*(?:का)?\s*नाम\s+([^,।.\n]+?)(?:\s*(?:और|है|,|$))/i,
+    /पिता\s+([^,।.\n]+?)(?:\s*,|\s*और|\s*गोत्र|$)/i,
+    /father(?:'s)?\s*(?:name)?\s*[:\-]?\s*([A-Za-z][A-Za-z .]+?)(?:,|\.|$)/i
+  ]);
+  const mother=extractFieldLocal(text,[
+    /माता(?:\s*जी)?\s*(?:का)?\s*नाम\s+([^,।.\n]+?)(?:\s*(?:है|,|$))/i,
+    /mother(?:'s)?\s*(?:name)?\s*[:\-]?\s*([A-Za-z][A-Za-z .]+?)(?:,|\.|$)/i
+  ]);
+  const gotra=extractFieldLocal(text,[/गोत्र\s+([^\s,।.]+)/i,/gotra\s*[:\-]?\s*([A-Za-z]+)/i]);
+  const caste=extractFieldLocal(text,[/जाति\s+([^\s,।.]+)/i,/caste\s*[:\-]?\s*([A-Za-z]+)/i]);
+  const dob=extractDateLocal(text), tob=extractTimeLocal(text);
+  const cityInfo=findCityLocal(text)||{city:'',state:'',lat:'',lon:''};
+  return{name,father,mother,gotra,caste,dob,tob,...cityInfo};
+}
+function aiQuickFill(){
   const statusEl=document.getElementById('ai-status');
-  if(!key){ statusEl.style.color='#b00020'; statusEl.textContent='❌ Pehle apni Anthropic API key daaliye (upar wale box me).'; return; }
   const raw=document.getElementById('ai-raw-input').value.trim();
   if(!raw){ statusEl.style.color='#b00020'; statusEl.textContent='❌ Pehle apna detail paste kariye.'; return; }
-
-  const btn=document.getElementById('ai-fill-btn'); const orig=btn.textContent;
-  btn.textContent='⏳ Parsing...'; btn.disabled=true; statusEl.style.color='#6b5433'; statusEl.textContent='AI se poochh rahe hain...';
-
-  const EXAMPLE_INPUT=`मेरा नाम अमित वर्मा है, जन्म 12 मार्च 1995 को शाम 7:15 बजे लखनऊ, उत्तर प्रदेश में हुआ था। पिता जी का नाम राजेश वर्मा और माता जी का नाम सुनीता वर्मा है। गोत्र कश्यप है।`;
-  const EXAMPLE_OUTPUT=JSON.stringify({name:"Amit Verma",nameHi:"अमित वर्मा",gender:"male",dob:"1995-03-12",tob:"19:15",city:"Lucknow",state:"Uttar Pradesh",country:"India",lat:"26.8467",lon:"80.9462",father:"Rajesh Verma",mother:"Sunita Verma",gotra:"Kashyap",caste:""});
-  const systemPrompt=`You extract structured birth-detail fields from messy Hindi/English/Hinglish text for a Vedic astrology form. Reply with ONLY one JSON object — no markdown, no code fences, no explanation. Keys (all strings): name, nameHi, gender ("male" or "female"), dob ("YYYY-MM-DD"), tob ("HH:MM" 24-hour), city, state, country (default "India" if not stated), lat, lon (decimal degrees of the city centre, only if you are confident of a well-known Indian city's coordinates, else ""), father, mother, gotra, caste. Convert relative time phrases like "शाम 7:15"/"7:15 PM" or "सुबह 6 बजे"/"6 AM" to 24-hour "HH:MM". Leave any field not mentioned as "".
-
-Example input:
-${EXAMPLE_INPUT}
-
-Example output:
-${EXAMPLE_OUTPUT}`;
-
-  try{
-    const resp=await fetch('https://api.anthropic.com/v1/messages',{
-      method:'POST',
-      headers:{'content-type':'application/json','x-api-key':key,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
-      body:JSON.stringify({model:'claude-haiku-4-5-20251001',max_tokens:1024,system:systemPrompt,messages:[{role:'user',content:raw}]})
-    });
-    if(!resp.ok){ const t=await resp.text(); throw new Error('API error '+resp.status+': '+t.slice(0,200)); }
-    const data=await resp.json();
-    const textBlock=(data.content||[]).find(b=>b.type==='text');
-    if(!textBlock) throw new Error('AI se text response nahi mila.');
-    let js=textBlock.text.trim().replace(/^```json\s*/i,'').replace(/```\s*$/,'').trim();
-    const f=JSON.parse(js);
-    const map={'f-name':f.name,'f-namhi':f.nameHi,'f-dob':f.dob,'f-tob':f.tob,'f-city':f.city,'f-state':f.state,
-      'f-country':f.country,'f-lat':f.lat,'f-lon':f.lon,'f-father':f.father,'f-mother':f.mother,'f-gotra':f.gotra,'f-caste':f.caste};
-    let n=0;
-    Object.entries(map).forEach(([id,val])=>{ if(val){const el=document.getElementById(id); if(el){el.value=val; n++;}} });
-    if(f.gender){ const g=document.getElementById('f-gender'); if(g){ g.value=(f.gender==='female'?'female':'male'); n++; } }
-    statusEl.style.color='#1a7a1a';
-    statusEl.textContent=`✅ ${n} fields AI se bhar diye — check karke confirm kar lijiye, phir "Generate Kundali" dabaiye.`;
-  }catch(e){
-    statusEl.style.color='#b00020';
-    statusEl.textContent='❌ '+e.message;
-  }finally{
-    btn.textContent=orig; btn.disabled=false;
-  }
+  const f=parsePersonBlockLocal(raw);
+  const map={'f-name':f.name,'f-dob':f.dob,'f-tob':f.tob,'f-city':f.city,'f-state':f.state,
+    'f-lat':f.lat,'f-lon':f.lon,'f-father':f.father,'f-mother':f.mother,'f-gotra':f.gotra,'f-caste':f.caste};
+  let n=0;
+  Object.entries(map).forEach(([id,val])=>{ if(val){const el=document.getElementById(id); if(el){el.value=val; n++;}} });
+  if(n>0){ statusEl.style.color='#1a7a1a'; statusEl.textContent=`✅ ${n} fields bhar diye — check karke confirm kar lijiye, baaki khud bhar dijiye.`; }
+  else { statusEl.style.color='#b00020'; statusEl.textContent='⚠️ Kuch samajh nahi aaya — naam, janm-tithi, samay aur shahar clearly likhne ki koshish kariye.'; }
 }
 
 /* ── REAL ASTRONOMICAL EPHEMERIS ENGINE ──────────────────────

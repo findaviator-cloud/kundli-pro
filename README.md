@@ -39,29 +39,28 @@ comments as a follow-up item. Everything else (sign, house, nakshatra,
 Lagna, Dasha, and the five dosha checks) is computed from real planetary
 positions, not randomized.
 
-## AI Quick-Fill
+## Quick-Fill (offline, no AI, no API key)
 
-Both forms have an "⚡ AI Quick-Fill" box at the top: paste a messy
+Both forms have an "⚡ Quick-Fill" box at the top: paste a messy
 free-text birth detail (Hindi/English/Hinglish, e.g. copied from
 WhatsApp) and it auto-fills the individual fields.
 
-This uses a **bring-your-own-key** pattern — there is no backend:
+This is a plain **regex/heuristic parser that runs entirely in the
+browser** — no API calls, no internet dependency, no key to manage:
 
-- The browser sends the pasted text directly to
-  `https://api.anthropic.com/v1/messages` (Claude Haiku 4.5) using
-  the `anthropic-dangerous-direct-browser-access` CORS header, with
-  the visitor's own Anthropic API key.
-- The key is stored only in that browser's `localStorage`
-  (`kp_ai_key`) and is never sent to any Kundli Pro server — there
-  isn't one.
-- The prompt includes a one-shot example (sample input → expected
-  JSON output) so the model returns predictable, parseable fields.
+- Recognises Hindi and English month names, numeric date formats
+  (`YYYY-MM-DD`, `DD/MM/YYYY`, `DD Month YYYY`), and time-of-day
+  words (सुबह/दोपहर/शाम/रात, AM/PM) to derive `dob`/`tob`.
+- Matches common phrasing for name, father's/mother's name, gotra,
+  and caste (`मेरा नाम X है`, `पिता जी का नाम X`, `gotra X`, etc.).
+- Looks up city/state/lat/lon from a bundled table of ~65 major
+  Indian cities.
+- `milan.html` splits the pasted text on "वधू"/"bride" (or blank
+  lines) to fill both the groom and bride panels from one paste.
 
-Get a key at [console.anthropic.com](https://console.anthropic.com/settings/keys).
-Anyone who can view the page source/devtools on a visitor's own
-machine can see a key they typed in — that's an accepted trade-off
-of the no-backend design, and it only exposes *that visitor's own*
-key, never anyone else's.
+Nothing leaves the device — this works even with no internet
+connection. Accuracy depends on how clearly the text is phrased;
+fields it can't confidently identify are left blank for manual entry.
 
 ## Running locally
 
