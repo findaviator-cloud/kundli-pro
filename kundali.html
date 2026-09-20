@@ -799,15 +799,119 @@ function parsePersonBlockLocal(text){
   const cityInfo=findCityLocal(text)||{city:'',state:'',lat:'',lon:''};
   return{name,father,mother,gotra,caste,dob,tob,...cityInfo};
 }
+
+/* ── Devanagari → Latin transliteration (for the separate "Full Name"
+   field when the pasted text gives the name in Hindi) ── */
+const TL_VOWEL_INDEP={'अ':'a','आ':'a','इ':'i','ई':'i','उ':'u','ऊ':'u','ऋ':'ri','ए':'e','ऐ':'ai','ओ':'o','औ':'au'};
+const TL_MATRA={'ा':'a','ि':'i','ी':'i','ु':'u','ू':'u','ृ':'ri','े':'e','ै':'ai','ो':'o','ौ':'au'};
+const TL_CONS={'क':'k','ख':'kh','ग':'g','घ':'gh','ङ':'ng','च':'ch','छ':'chh','ज':'j','झ':'jh','ञ':'ny',
+ 'ट':'t','ठ':'th','ड':'d','ढ':'dh','ण':'n','त':'t','थ':'th','द':'d','ध':'dh','न':'n',
+ 'प':'p','फ':'ph','ब':'b','भ':'bh','म':'m','य':'y','र':'r','ल':'l','व':'v',
+ 'श':'sh','ष':'sh','स':'s','ह':'h','क्ष':'ksh','त्र':'tr','ज्ञ':'gy','ड़':'r','ढ़':'rh'};
+const TL_WORD_OVERRIDE={'सिंह':'Singh'};
+function tlWord(word){
+  let out='';let i=0;const chars=[...word];
+  while(i<chars.length){
+    const c=chars[i];
+    if(TL_VOWEL_INDEP[c]){out+=TL_VOWEL_INDEP[c].charAt(0).toUpperCase()+TL_VOWEL_INDEP[c].slice(1);i++;continue;}
+    if(TL_CONS[c]){
+      const cs=TL_CONS[c];const j=i+1;
+      if(chars[j]==='्'){out+=cs;i=j+1;continue;}
+      if(TL_MATRA[chars[j]]){out+=cs+TL_MATRA[chars[j]];i=j+1;continue;}
+      if(chars[j]==='ं'){out+=cs+'a'+'n';i=j+1;continue;}
+      const isLast=(j>=chars.length)||(chars[j]===' ');
+      out+=isLast?cs:cs+'a';i=j;continue;
+    }
+    if(c==='ं'){out+='n';i++;continue;}
+    if(c===' '){out+=' ';i++;continue;}
+    out+=c;i++;
+  }
+  return out.split(' ').map(w=>w?w.charAt(0).toUpperCase()+w.slice(1):w).join(' ');
+}
+function transliterateNameLocal(text){ return text.split(' ').map(w=>TL_WORD_OVERRIDE[w]||tlWord(w)).join(' '); }
+function isDevanagariLocal(s){ return /[\u0900-\u097F]/.test(s); }
+
+function detectGenderLocal(text){
+  const words=text.split(/[\s,।.]+/);
+  const femaleWords=new Set(['बेटी','पुत्री','लड़की','daughter','female','स्त्री','महिला']);
+  const maleWords=new Set(['बेटा','पुत्र','लड़का','son','male','पुरुष','आदमी']);
+  for(const w of words){ if(femaleWords.has(w)||femaleWords.has(w.toLowerCase())) return 'female'; }
+  for(const w of words){ if(maleWords.has(w)||maleWords.has(w.toLowerCase())) return 'male'; }
+  return '';
+}
+function detectChartStyleLocal(text,state){
+  if(/south indian|दक्षिण भारतीय/i.test(text)) return 'south';
+  if(/north indian|उत्तर भारतीय/i.test(text)) return 'north';
+  const south=['tamil nadu','kerala','karnataka','andhra pradesh','telangana'];
+  if(state && south.includes(state.toLowerCase())) return 'south';
+  return '';
+}
+function detectAyanamsaLocal(text){
+  if(/kp ayanamsa|कृष्णमूर्ति/i.test(text)) return 'kp';
+  if(/\braman\b|रमन/i.test(text)) return 'raman';
+  return '';
+}
+function detectTimezoneLocal(text){
+  if(/\bUTC\b/i.test(text)) return '0';
+  if(/\bPKT\b|pakistan|पाकिस्तान/i.test(text)) return '5';
+  return '';
+}
+function extractPreparedByLocal(text){
+  return extractFieldLocal(text,[/(?:ज्योतिषी|prepared by|astrologer)\s*[:\-]?\s*([^,।.\n]+?)(?:\s*,|\.|।|$)/i]);
+}
+function splitPartnerBlockLocal(text){
+  const idx=text.search(/जीवनसाथी|पति का नाम|पत्नी का नाम|partner/i);
+  if(idx>0) return{mainText:text.slice(0,idx),partnerText:text.slice(idx)};
+  return{mainText:text,partnerText:''};
+}
+function fillNameFields(f,text,prefixEn,prefixHi){
+  if(!f.name) return 0;
+  let n=0;
+  if(isDevanagariLocal(f.name)){
+    if(prefixHi){ const el=document.getElementById(prefixHi); if(el){el.value=f.name;n++;} }
+    const enEl=document.getElementById(prefixEn); if(enEl){enEl.value=transliterateNameLocal(f.name);n++;}
+  } else {
+    const enEl=document.getElementById(prefixEn); if(enEl){enEl.value=f.name;n++;}
+  }
+  return n;
+}
+function setIfEmpty(id,val){
+  if(!val) return 0;
+  const el=document.getElementById(id); if(!el) return 0;
+  if(!el.value){ el.value=val; return 1; }
+  return 0;
+}
+function setVal(id,val){
+  if(!val) return 0;
+  const el=document.getElementById(id); if(!el) return 0;
+  el.value=val; return 1;
+}
 function aiQuickFill(){
   const statusEl=document.getElementById('ai-status');
   const raw=document.getElementById('ai-raw-input').value.trim();
   if(!raw){ statusEl.style.color='#b00020'; statusEl.textContent='❌ Pehle apna detail paste kariye.'; return; }
-  const f=parsePersonBlockLocal(raw);
-  const map={'f-name':f.name,'f-dob':f.dob,'f-tob':f.tob,'f-city':f.city,'f-state':f.state,
-    'f-lat':f.lat,'f-lon':f.lon,'f-father':f.father,'f-mother':f.mother,'f-gotra':f.gotra,'f-caste':f.caste};
+  const {mainText,partnerText}=splitPartnerBlockLocal(raw);
+  const f=parsePersonBlockLocal(mainText);
   let n=0;
-  Object.entries(map).forEach(([id,val])=>{ if(val){const el=document.getElementById(id); if(el){el.value=val; n++;}} });
+  n+=fillNameFields(f,mainText,'f-name','f-namhi');
+  n+=setVal('f-dob',f.dob); n+=setVal('f-tob',f.tob);
+  n+=setVal('f-city',f.city); n+=setVal('f-state',f.state);
+  n+=setVal('f-lat',f.lat); n+=setVal('f-lon',f.lon);
+  n+=setVal('f-father',f.father); n+=setVal('f-mother',f.mother);
+  n+=setVal('f-gotra',f.gotra); n+=setVal('f-caste',f.caste);
+  const gender=detectGenderLocal(mainText); if(gender){ const g=document.getElementById('f-gender'); if(g){g.value=gender;n++;} }
+  const style=detectChartStyleLocal(raw,f.state); if(style){ const s=document.getElementById('f-style'); if(s){s.value=style;n++;} }
+  const ay=detectAyanamsaLocal(raw); if(ay){ const a=document.getElementById('f-ayanamsa'); if(a){a.value=ay;n++;} }
+  const tz=detectTimezoneLocal(raw); if(tz){ const t=document.getElementById('f-tz'); if(t){t.value=tz;n++;} }
+  n+=setIfEmpty('f-alt', f.city ? '0' : '');
+  n+=setVal('f-by', extractPreparedByLocal(mainText));
+  if(partnerText){
+    const pf=parsePersonBlockLocal(partnerText);
+    n+=fillNameFields(pf,partnerText,'m-name',null);
+    n+=setVal('m-dob',pf.dob); n+=setVal('m-tob',pf.tob);
+    n+=setVal('m-city', pf.city&&pf.state?pf.city+', '+pf.state:pf.city);
+    n+=setVal('m-lat',pf.lat); n+=setVal('m-lon',pf.lon);
+  }
   if(n>0){ statusEl.style.color='#1a7a1a'; statusEl.textContent=`✅ ${n} fields bhar diye — check karke confirm kar lijiye, baaki khud bhar dijiye.`; }
   else { statusEl.style.color='#b00020'; statusEl.textContent='⚠️ Kuch samajh nahi aaya — naam, janm-tithi, samay aur shahar clearly likhne ki koshish kariye.'; }
 }

@@ -975,6 +975,93 @@ function parsePersonBlockLocal(text){
   const cityInfo=findCityLocal(text)||{city:'',state:'',lat:'',lon:''};
   return{name,father,mother,gotra,caste,dob,tob,...cityInfo};
 }
+
+/* ── Devanagari → Latin transliteration (for the separate "Full Name"
+   field when the pasted text gives the name in Hindi) ── */
+const TL_VOWEL_INDEP={'अ':'a','आ':'a','इ':'i','ई':'i','उ':'u','ऊ':'u','ऋ':'ri','ए':'e','ऐ':'ai','ओ':'o','औ':'au'};
+const TL_MATRA={'ा':'a','ि':'i','ी':'i','ु':'u','ू':'u','ृ':'ri','े':'e','ै':'ai','ो':'o','ौ':'au'};
+const TL_CONS={'क':'k','ख':'kh','ग':'g','घ':'gh','ङ':'ng','च':'ch','छ':'chh','ज':'j','झ':'jh','ञ':'ny',
+ 'ट':'t','ठ':'th','ड':'d','ढ':'dh','ण':'n','त':'t','थ':'th','द':'d','ध':'dh','न':'n',
+ 'प':'p','फ':'ph','ब':'b','भ':'bh','म':'m','य':'y','र':'r','ल':'l','व':'v',
+ 'श':'sh','ष':'sh','स':'s','ह':'h','क्ष':'ksh','त्र':'tr','ज्ञ':'gy','ड़':'r','ढ़':'rh'};
+const TL_WORD_OVERRIDE={'सिंह':'Singh'};
+function tlWord(word){
+  let out='';let i=0;const chars=[...word];
+  while(i<chars.length){
+    const c=chars[i];
+    if(TL_VOWEL_INDEP[c]){out+=TL_VOWEL_INDEP[c].charAt(0).toUpperCase()+TL_VOWEL_INDEP[c].slice(1);i++;continue;}
+    if(TL_CONS[c]){
+      const cs=TL_CONS[c];const j=i+1;
+      if(chars[j]==='्'){out+=cs;i=j+1;continue;}
+      if(TL_MATRA[chars[j]]){out+=cs+TL_MATRA[chars[j]];i=j+1;continue;}
+      if(chars[j]==='ं'){out+=cs+'a'+'n';i=j+1;continue;}
+      const isLast=(j>=chars.length)||(chars[j]===' ');
+      out+=isLast?cs:cs+'a';i=j;continue;
+    }
+    if(c==='ं'){out+='n';i++;continue;}
+    if(c===' '){out+=' ';i++;continue;}
+    out+=c;i++;
+  }
+  return out.split(' ').map(w=>w?w.charAt(0).toUpperCase()+w.slice(1):w).join(' ');
+}
+function transliterateNameLocal(text){ return text.split(' ').map(w=>TL_WORD_OVERRIDE[w]||tlWord(w)).join(' '); }
+function isDevanagariLocal(s){ return /[\u0900-\u097F]/.test(s); }
+
+function detectGenderLocal(text){
+  const words=text.split(/[\s,।.]+/);
+  const femaleWords=new Set(['बेटी','पुत्री','लड़की','daughter','female','स्त्री','महिला']);
+  const maleWords=new Set(['बेटा','पुत्र','लड़का','son','male','पुरुष','आदमी']);
+  for(const w of words){ if(femaleWords.has(w)||femaleWords.has(w.toLowerCase())) return 'female'; }
+  for(const w of words){ if(maleWords.has(w)||maleWords.has(w.toLowerCase())) return 'male'; }
+  return '';
+}
+function detectChartStyleLocal(text,state){
+  if(/south indian|दक्षिण भारतीय/i.test(text)) return 'south';
+  if(/north indian|उत्तर भारतीय/i.test(text)) return 'north';
+  const south=['tamil nadu','kerala','karnataka','andhra pradesh','telangana'];
+  if(state && south.includes(state.toLowerCase())) return 'south';
+  return '';
+}
+function detectAyanamsaLocal(text){
+  if(/kp ayanamsa|कृष्णमूर्ति/i.test(text)) return 'kp';
+  if(/\braman\b|रमन/i.test(text)) return 'raman';
+  return '';
+}
+function detectTimezoneLocal(text){
+  if(/\bUTC\b/i.test(text)) return '0';
+  if(/\bPKT\b|pakistan|पाकिस्तान/i.test(text)) return '5';
+  return '';
+}
+function extractPreparedByLocal(text){
+  return extractFieldLocal(text,[/(?:ज्योतिषी|prepared by|astrologer)\s*[:\-]?\s*([^,।.\n]+?)(?:\s*,|\.|।|$)/i]);
+}
+function splitPartnerBlockLocal(text){
+  const idx=text.search(/जीवनसाथी|पति का नाम|पत्नी का नाम|partner/i);
+  if(idx>0) return{mainText:text.slice(0,idx),partnerText:text.slice(idx)};
+  return{mainText:text,partnerText:''};
+}
+function fillNameFields(f,text,prefixEn,prefixHi){
+  if(!f.name) return 0;
+  let n=0;
+  if(isDevanagariLocal(f.name)){
+    if(prefixHi){ const el=document.getElementById(prefixHi); if(el){el.value=f.name;n++;} }
+    const enEl=document.getElementById(prefixEn); if(enEl){enEl.value=transliterateNameLocal(f.name);n++;}
+  } else {
+    const enEl=document.getElementById(prefixEn); if(enEl){enEl.value=f.name;n++;}
+  }
+  return n;
+}
+function setIfEmpty(id,val){
+  if(!val) return 0;
+  const el=document.getElementById(id); if(!el) return 0;
+  if(!el.value){ el.value=val; return 1; }
+  return 0;
+}
+function setVal(id,val){
+  if(!val) return 0;
+  const el=document.getElementById(id); if(!el) return 0;
+  el.value=val; return 1;
+}
 function splitGroomBrideLocal(text){
   const idx=text.search(/वधू|वधु|bride/i);
   if(idx>0) return { groomText:text.slice(0,idx), brideText:text.slice(idx) };
@@ -989,12 +1076,21 @@ function aiQuickFill(){
   const {groomText,brideText}=splitGroomBrideLocal(raw);
   const bf=parsePersonBlockLocal(groomText);
   const gf=brideText?parsePersonBlockLocal(brideText):{};
-  const bmap={'b-name':bf.name,'b-dob':bf.dob,'b-tob':bf.tob,'b-city':bf.city&&bf.state?bf.city+', '+bf.state:bf.city,
-    'b-lat':bf.lat,'b-lon':bf.lon,'b-father':bf.father,'b-gotra':bf.gotra,'b-caste':bf.caste};
-  const gmap={'g-name':gf.name,'g-dob':gf.dob,'g-tob':gf.tob,'g-city':gf.city&&gf.state?gf.city+', '+gf.state:gf.city,
-    'g-lat':gf.lat,'g-lon':gf.lon,'g-father':gf.father,'g-gotra':gf.gotra,'g-caste':gf.caste};
   let n=0;
-  Object.entries({...bmap,...gmap}).forEach(([id,val])=>{ if(val){const el=document.getElementById(id); if(el){el.value=val; n++;}} });
+  n+=fillNameFields(bf,groomText,'b-name','b-namhi');
+  n+=setVal('b-dob',bf.dob); n+=setVal('b-tob',bf.tob);
+  n+=setVal('b-city', bf.city&&bf.state?bf.city+', '+bf.state:bf.city);
+  n+=setVal('b-lat',bf.lat); n+=setVal('b-lon',bf.lon);
+  n+=setVal('b-father',bf.father); n+=setVal('b-gotra',bf.gotra); n+=setVal('b-caste',bf.caste);
+  if(gf.name){
+    n+=fillNameFields(gf,brideText,'g-name','g-namhi');
+    n+=setVal('g-dob',gf.dob); n+=setVal('g-tob',gf.tob);
+    n+=setVal('g-city', gf.city&&gf.state?gf.city+', '+gf.state:gf.city);
+    n+=setVal('g-lat',gf.lat); n+=setVal('g-lon',gf.lon);
+    n+=setVal('g-father',gf.father); n+=setVal('g-gotra',gf.gotra); n+=setVal('g-caste',gf.caste);
+  }
+  n+=setVal('f-prepby', extractPreparedByLocal(raw));
+  const ay=detectAyanamsaLocal(raw); if(ay){ const a=document.getElementById('f-ayanamsa'); if(a){a.value=ay;n++;} }
   if(n>0){ statusEl.style.color='#1a7a1a'; statusEl.textContent=`✅ ${n} fields bhar diye (dono panel) — check karke confirm kar lijiye, baaki khud bhar dijiye.`; }
   else { statusEl.style.color='#b00020'; statusEl.textContent='⚠️ Kuch samajh nahi aaya — दोनों ka naam, janm-tithi, samay aur shahar clearly likhne ki koshish kariye.'; }
 }

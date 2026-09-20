@@ -53,8 +53,16 @@ browser** — no API calls, no internet dependency, no key to manage:
   words (सुबह/दोपहर/शाम/रात, AM/PM) to derive `dob`/`tob`.
 - Matches common phrasing for name, father's/mother's name, gotra,
   and caste (`मेरा नाम X है`, `पिता जी का नाम X`, `gotra X`, etc.).
+- Detects gender (बेटा/पुत्र vs बेटी/पुत्री etc.), chart style
+  (North/South Indian — from an explicit mention or from the
+  matched city's state), ayanamsa (Lahiri/KP/Raman), and timezone
+  (IST/UTC/PKT) when the text gives a signal.
+- Transliterates a Hindi name into the separate "Name" (Latin) and
+  "Name in Hindi" fields using a basic Devanagari→Latin scheme.
 - Looks up city/state/lat/lon from a bundled table of ~65 major
   Indian cities.
+- `kundali.html` also fills the optional partner section if the
+  text includes a second person introduced by "जीवनसाथी"/"partner".
 - `milan.html` splits the pasted text on "वधू"/"bride" (or blank
   lines) to fill both the groom and bride panels from one paste.
 
