@@ -64,7 +64,10 @@ browser** — no API calls, no internet dependency, no key to manage:
 - `kundali.html` also fills the optional partner section if the
   text includes a second person introduced by "जीवनसाथी"/"partner".
 - `milan.html` splits the pasted text on "वधू"/"bride" (or blank
-  lines) to fill both the groom and bride panels from one paste.
+  lines) to fill both the groom and bride panels from one paste,
+  including Prepared By and Education/Profession (from an explicit
+  label or a small built-in list of common degrees/occupations in
+  Hindi and English).
 
 Nothing leaves the device — this works even with no internet
 connection. Accuracy depends on how clearly the text is phrased;

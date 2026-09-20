@@ -1032,6 +1032,28 @@ function detectTimezoneLocal(text){
   if(/\bPKT\b|pakistan|पाकिस्तान/i.test(text)) return '5';
   return '';
 }
+const EDU_EN=['B\\.?Tech','M\\.?Tech','B\\.?A\\.?','M\\.?A\\.?','B\\.?Sc\\.?','M\\.?Sc\\.?','B\\.?E\\.?','M\\.?E\\.?','MBA','B\\.?Com\\.?','M\\.?Com\\.?','Ph\\.?D\\.?','Graduate','Post[- ]?Graduate','Diploma','12th','10th','Intermediate'];
+const EDU_HI=['स्नातक','परास्नातक'];
+function extractEducationLocal(text){
+  const lbl=extractFieldLocal(text,[/(?:शिक्षा|qualification|education)\s*[:\-]?\s*([^,।\n]+?)(?:\s*,|।|$)/i]);
+  if(lbl) return lbl;
+  const re=new RegExp('\\b('+EDU_EN.join('|')+')\\b','i');
+  const m=text.match(re); if(m) return m[1];
+  const words=text.split(/[\s,।.]+/);
+  for(const w of words){ if(EDU_HI.includes(w)) return w; }
+  return '';
+}
+const PROF_EN=['Software Engineer','Engineer','Doctor','Teacher','Businessman','Business','Farmer','Lawyer','Advocate','Chartered Accountant','\\bCA\\b','Nurse','Police','Army','Soldier','Government (?:job|employee)','Sarkari naukri'];
+const PROF_HI=['इंजीनियर','डॉक्टर','अध्यापक','शिक्षक','टीचर','व्यापारी','बिज़नेस','बिजनेस','किसान','वकील','नर्स','पुलिस'];
+function extractProfessionLocal(text){
+  const lbl=extractFieldLocal(text,[/(?:व्यवसाय|पेशा|profession|occupation|works as)\s*[:\-]?\s*([^,।\n]+?)(?:\s*,|।|$)/i]);
+  if(lbl) return lbl;
+  const re=new RegExp('\\b('+PROF_EN.join('|')+')\\b','i');
+  const m=text.match(re); if(m) return m[1];
+  const words=text.split(/[\s,।.]+/);
+  for(const w of words){ if(PROF_HI.includes(w)) return w; }
+  return '';
+}
 function extractPreparedByLocal(text){
   return extractFieldLocal(text,[/(?:ज्योतिषी|prepared by|astrologer)\s*[:\-]?\s*([^,।.\n]+?)(?:\s*,|\.|।|$)/i]);
 }
@@ -1082,12 +1104,14 @@ function aiQuickFill(){
   n+=setVal('b-city', bf.city&&bf.state?bf.city+', '+bf.state:bf.city);
   n+=setVal('b-lat',bf.lat); n+=setVal('b-lon',bf.lon);
   n+=setVal('b-father',bf.father); n+=setVal('b-gotra',bf.gotra); n+=setVal('b-caste',bf.caste);
+  n+=setVal('b-edu', extractEducationLocal(groomText)); n+=setVal('b-prof', extractProfessionLocal(groomText));
   if(gf.name){
     n+=fillNameFields(gf,brideText,'g-name','g-namhi');
     n+=setVal('g-dob',gf.dob); n+=setVal('g-tob',gf.tob);
     n+=setVal('g-city', gf.city&&gf.state?gf.city+', '+gf.state:gf.city);
     n+=setVal('g-lat',gf.lat); n+=setVal('g-lon',gf.lon);
     n+=setVal('g-father',gf.father); n+=setVal('g-gotra',gf.gotra); n+=setVal('g-caste',gf.caste);
+    n+=setVal('g-edu', extractEducationLocal(brideText)); n+=setVal('g-prof', extractProfessionLocal(brideText));
   }
   n+=setVal('f-prepby', extractPreparedByLocal(raw));
   const ay=detectAyanamsaLocal(raw); if(ay){ const a=document.getElementById('f-ayanamsa'); if(a){a.value=ay;n++;} }
